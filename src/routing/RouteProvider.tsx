@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/home/HomeScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-export default function Providers() {
+export default function RouteProvider() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
