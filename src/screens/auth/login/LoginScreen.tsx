@@ -9,9 +9,37 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { StackActions, useNavigation } from '@react-navigation/native';
+import { Controller, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { InferType } from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const loginFormSchema = yup
+  .object({
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+  })
+  .required();
+
+type LoginFormValues = InferType<typeof loginFormSchema>;
 
 export default function LoginScreen() {
   const { dispatch } = useNavigation();
+
+  const { control, handleSubmit, formState, setFocus } =
+    useForm<LoginFormValues>({
+      defaultValues: {
+        email: '',
+        password: '',
+      },
+      resolver: yupResolver(loginFormSchema),
+    });
+
+  const disableSubmit = !formState.isValid;
+
+  const onSubmit = (values: LoginFormValues) => {
+    console.log(values);
+  };
 
   return (
     <SafeAreaView className="bg-white">
@@ -26,19 +54,40 @@ export default function LoginScreen() {
           <View className="space-y-4">
             <View>
               <Text className="mb-2 font-medium">Email</Text>
-              <TextInput
-                placeholder="john.doe@gmail.com"
-                textContentType="emailAddress"
-                className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
+              <Controller
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    onChangeText={field.onChange}
+                    autoCapitalize="none"
+                    placeholder="john.doe@gmail.com"
+                    textContentType="emailAddress"
+                    className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
+                    returnKeyType="next"
+                    onSubmitEditing={() => setFocus('password')}
+                  />
+                )}
+                name="email"
               />
             </View>
             <View>
               <Text className="mb-2 font-medium">Password</Text>
-              <TextInput
-                placeholder="••••••••"
-                textContentType="password"
-                secureTextEntry
-                className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
+              <Controller
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    onChangeText={field.onChange}
+                    placeholder="••••••••"
+                    textContentType="password"
+                    secureTextEntry
+                    className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
+                    returnKeyType="done"
+                    onSubmitEditing={handleSubmit(onSubmit)}
+                  />
+                )}
+                name="password"
               />
             </View>
           </View>
@@ -53,7 +102,11 @@ export default function LoginScreen() {
               and Privacy Policy
             </Text>
           </View>
-          <TouchableOpacity className="bg-red-400 py-4 rounded">
+          <TouchableOpacity
+            className={`bg-red-400 py-4 rounded ${disableSubmit && 'opacity-50'}`}
+            onPress={handleSubmit(onSubmit)}
+            disabled={disableSubmit}
+          >
             <Text className="text-white text-center">Continue</Text>
           </TouchableOpacity>
           <View className="flex flex-row justify-center space-x-1">

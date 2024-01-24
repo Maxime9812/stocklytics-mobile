@@ -1,5 +1,5 @@
-import { AuthGateway, LoginPayload } from '../../gateways/auth.gateway';
-import { AuthUser } from '../../models/auth-user';
+import { AuthGateway, LoginPayload } from '../../hexagon/gateways/auth.gateway';
+import { AuthUser } from '../../hexagon/models/auth-user';
 
 export class StubAuthGateway implements AuthGateway {
   async login(payload: LoginPayload): Promise<AuthUser> {

@@ -1,6 +1,6 @@
 import { Action, configureStore, ThunkDispatch } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
-import { AuthGateway } from './auth/gateways/auth.gateway';
+import { AuthGateway } from './auth/hexagon/gateways/auth.gateway';
 
 export type Dependencies = {
   authGateway: AuthGateway;
