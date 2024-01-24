@@ -8,11 +8,12 @@ import {
   View,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StackActions, useNavigation } from '@react-navigation/native';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
+import { AuthStackScreenProps } from '../../../navigation/NavigationProvider';
 
 const loginFormSchema = yup
   .object({
@@ -23,15 +24,13 @@ const loginFormSchema = yup
 
 type LoginFormValues = InferType<typeof loginFormSchema>;
 
-export default function LoginScreen() {
-  const { dispatch } = useNavigation();
+export default function LoginScreen({
+  navigation,
+}: AuthStackScreenProps<'Login'>) {
+  const { replace, addListener } = navigation;
 
   const { control, handleSubmit, formState, setFocus } =
     useForm<LoginFormValues>({
-      defaultValues: {
-        email: '',
-        password: '',
-      },
       resolver: yupResolver(loginFormSchema),
     });
 
@@ -40,6 +39,13 @@ export default function LoginScreen() {
   const onSubmit = (values: LoginFormValues) => {
     console.log(values);
   };
+
+  useEffect(() => {
+    return addListener('transitionEnd', (e: any) => {
+      if (e.data.closing) return;
+      setFocus('email');
+    });
+  }, [addListener]);
 
   return (
     <SafeAreaView className="bg-white">
@@ -111,9 +117,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
           <View className="flex flex-row justify-center space-x-1">
             <Text>New here ?</Text>
-            <TouchableOpacity
-              onPress={() => dispatch(StackActions.replace('register'))}
-            >
+            <TouchableOpacity onPress={() => replace('Register')}>
               <Text className="text-blue-500">Create an account</Text>
             </TouchableOpacity>
           </View>

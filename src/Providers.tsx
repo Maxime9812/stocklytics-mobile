@@ -1,11 +1,11 @@
 import { Provider } from 'react-redux';
-import RouteProvider from './routing/RouteProvider';
+import NavigationProvider from './navigation/NavigationProvider';
 import { AppStore } from './core/create-store';
 
 export default function Providers({ store }: { store: AppStore }) {
   return (
     <Provider store={store}>
-      <RouteProvider />
+      <NavigationProvider />
     </Provider>
   );
 }
