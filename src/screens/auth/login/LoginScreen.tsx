@@ -14,6 +14,8 @@ import { InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { AuthStackScreenProps } from '../../../navigation/NavigationProvider';
+import { useAppDispatch } from '../../../store-hooks';
+import { loginUseCase } from '../../../core/auth/hexagon/usecases/login/login.usecase';
 
 const loginFormSchema = yup
   .object({
@@ -27,9 +29,8 @@ type LoginFormValues = InferType<typeof loginFormSchema>;
 export default function LoginScreen({
   navigation,
 }: AuthStackScreenProps<'Login'>) {
-  const { replace, addListener } = navigation;
-
-  const { control, handleSubmit, formState, setFocus } =
+  const appDispatch = useAppDispatch();
+  const { control, handleSubmit, formState, setFocus, getValues } =
     useForm<LoginFormValues>({
       resolver: yupResolver(loginFormSchema),
     });
@@ -37,15 +38,19 @@ export default function LoginScreen({
   const disableSubmit = !formState.isValid;
 
   const onSubmit = (values: LoginFormValues) => {
-    console.log(values);
+    appDispatch(loginUseCase(values));
   };
 
-  useEffect(() => {
-    return addListener('transitionEnd', (e: any) => {
+  const focusOnTransitionEnd = () => {
+    return navigation.addListener('transitionEnd', (e) => {
       if (e.data.closing) return;
       setFocus('email');
     });
-  }, [addListener]);
+  };
+
+  useEffect(() => {
+    return focusOnTransitionEnd();
+  }, [focusOnTransitionEnd]);
 
   return (
     <SafeAreaView className="bg-white">
@@ -98,7 +103,11 @@ export default function LoginScreen({
             </View>
           </View>
           <View className="space-y-2">
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.push('ResetPassword', { email: getValues('email') })
+              }
+            >
               <Text className="text-blue-500 text-center">
                 Forgot password ?
               </Text>
@@ -117,7 +126,7 @@ export default function LoginScreen({
           </TouchableOpacity>
           <View className="flex flex-row justify-center space-x-1">
             <Text>New here ?</Text>
-            <TouchableOpacity onPress={() => replace('Register')}>
+            <TouchableOpacity onPress={() => navigation.replace('Register')}>
               <Text className="text-blue-500">Create an account</Text>
             </TouchableOpacity>
           </View>

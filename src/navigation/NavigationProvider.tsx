@@ -11,6 +11,7 @@ import LoginScreen from '../screens/auth/login/LoginScreen';
 import RegisterScreen from '../screens/auth/register/RegisterScreen';
 import WelcomeScreen from '../screens/auth/welcome/WelcomeScreen';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import ResetPasswordScreen from '../screens/auth/reset-password/ResetPasswordScreen';
 
 export type RootStack = {
   Auth: NavigatorScreenParams<AuthStack>;
@@ -24,6 +25,7 @@ export type AuthStack = {
   Welcome: undefined;
   Login: undefined;
   Register: undefined;
+  ResetPassword: { email?: string } | undefined;
 };
 
 export type HomeTabParamList = {};
@@ -62,6 +64,14 @@ export default function NavigationProvider() {
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
+          options={{
+            headerTitle: '',
+            headerTransparent: true,
+          }}
+        />
+        <Stack.Screen
+          name={'ResetPassword'}
+          component={ResetPasswordScreen}
           options={{
             headerTitle: '',
             headerTransparent: true,

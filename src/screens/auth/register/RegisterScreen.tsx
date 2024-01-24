@@ -28,8 +28,6 @@ type RegisterFormValues = InferType<typeof registerFormSchema>;
 export default function RegisterScreen({
   navigation,
 }: AuthStackScreenProps<'Register'>) {
-  const { addListener, replace } = navigation;
-
   const { control, handleSubmit, formState, setFocus } =
     useForm<RegisterFormValues>({
       resolver: yupResolver(registerFormSchema),
@@ -41,12 +39,16 @@ export default function RegisterScreen({
     console.log(data);
   };
 
-  useEffect(() => {
-    return addListener('transitionEnd', (e) => {
+  const focusOnTransitionEnd = () => {
+    return navigation.addListener('transitionEnd', (e) => {
       if (e.data.closing) return;
       setFocus('fullName');
     });
-  }, [addListener]);
+  };
+
+  useEffect(() => {
+    return focusOnTransitionEnd();
+  }, [focusOnTransitionEnd]);
 
   return (
     <SafeAreaView className="bg-white">
@@ -130,7 +132,7 @@ export default function RegisterScreen({
           </TouchableOpacity>
           <View className="flex flex-row justify-center space-x-1">
             <Text>Already have an account ?</Text>
-            <TouchableOpacity onPress={() => replace('Login')}>
+            <TouchableOpacity onPress={() => navigation.replace('Login')}>
               <Text className="text-blue-500">Sign in</Text>
             </TouchableOpacity>
           </View>
