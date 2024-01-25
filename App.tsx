@@ -24,10 +24,7 @@ const axiosInstance = axios.create({
 });
 const axiosAuthGateway = new AxiosAuthGateway(axiosInstance);
 
-const store = createStore(
-  { authGateway: axiosAuthGateway },
-  stateBuilder().build(),
-);
+const store = createStore({ authGateway }, stateBuilder().build());
 
 export default function App() {
   return <Providers store={store} />;

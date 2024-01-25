@@ -10,6 +10,7 @@ import { isRejected } from '@reduxjs/toolkit';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
 import AuthLayout from '../../../components/layouts/auth/AuthLayout';
 import { createLoginScreenViewModel } from './login-screen.viewmodel';
+import FeatherIcon from '@expo/vector-icons/Feather';
 
 const loginFormSchema = yup
   .object({
@@ -30,7 +31,8 @@ export default function LoginScreen({
       resolver: yupResolver(loginFormSchema),
     });
 
-  const disableSubmit = !formState.isValid;
+  const isLoading = formState.isSubmitting;
+  const disableSubmit = !formState.isValid || isLoading;
 
   const onWrongCredentials = () => {
     resetField('password');
@@ -123,11 +125,16 @@ export default function LoginScreen({
             </Text>
           </View>
           <TouchableOpacity
-            className={`bg-red-400 py-4 rounded ${disableSubmit && 'opacity-50'}`}
+            className={`bg-red-400 py-4 rounded flex-row justify-center items-center space-x-1 ${disableSubmit && 'opacity-50'}`}
             onPress={handleSubmit(onSubmit)}
             disabled={disableSubmit}
           >
-            <Text className="text-white text-center">Continue</Text>
+            {isLoading && (
+              <Text className="text-white">
+                <FeatherIcon name="loader" size={16} />
+              </Text>
+            )}
+            <Text className="text-white">Continue</Text>
           </TouchableOpacity>
           <View className="flex flex-row justify-center space-x-1">
             <Text>New here ?</Text>
