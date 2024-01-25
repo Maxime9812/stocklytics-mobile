@@ -47,36 +47,21 @@ const Stack = createNativeStackNavigator<AuthStack>();
 export default function NavigationProvider() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
+      <Stack.Navigator
+        initialRouteName="Welcome"
+        screenOptions={{
+          headerTitle: '',
+          headerTransparent: true,
+        }}
+      >
         <Stack.Screen
           name="Welcome"
           component={WelcomeScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            headerTitle: '',
-            headerTransparent: true,
-          }}
-        />
-        <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-          options={{
-            headerTitle: '',
-            headerTransparent: true,
-          }}
-        />
-        <Stack.Screen
-          name={'ResetPassword'}
-          component={ResetPasswordScreen}
-          options={{
-            headerTitle: '',
-            headerTransparent: true,
-          }}
-        />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name={'ResetPassword'} component={ResetPasswordScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
