@@ -8,7 +8,7 @@ import { AuthUser } from './auth/hexagon/models/auth-user';
 
 const initialState = rootReducer(undefined, createAction('')());
 
-const withAuthUser = createAction<AuthUser>('withAuthUser');
+const withAuthUser = createAction<AuthUser | undefined>('withAuthUser');
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(withAuthUser, (state, action) => {

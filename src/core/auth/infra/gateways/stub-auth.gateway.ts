@@ -11,6 +11,11 @@ export class StubAuthGateway implements AuthGateway {
   private onAuthStateChangedCallback:
     | ((user: AuthUser | undefined) => void)
     | undefined;
+  private _logoutWasCalled: boolean = false;
+
+  get logoutWasCalled(): boolean {
+    return this._logoutWasCalled;
+  }
 
   constructor(private readonly delay: number = 0) {}
 
@@ -28,6 +33,7 @@ export class StubAuthGateway implements AuthGateway {
   }
 
   logout(): Promise<void> {
+    this._logoutWasCalled = true;
     return Promise.resolve(undefined);
   }
 

@@ -2,6 +2,7 @@ import { createAction, createSlice } from '@reduxjs/toolkit';
 import { AuthUser } from './hexagon/models/auth-user';
 import { loginUseCase } from './hexagon/usecases/login/login.usecase';
 import { RootState } from '../create-store';
+import { logoutUseCase } from './hexagon/usecases/logout/logout.usecase';
 
 export type AuthSliceState = {
   authUser?: AuthUser;
@@ -28,6 +29,10 @@ export const authSlice = createSlice({
       })
       .addCase(userAuthenticated, (state, action) => {
         state.authUser = action.payload;
+        state.hasCheckedAuthState = true;
+      })
+      .addCase(logoutUseCase.fulfilled, (state) => {
+        state.authUser = undefined;
         state.hasCheckedAuthState = true;
       });
   },

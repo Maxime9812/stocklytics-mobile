@@ -9,6 +9,7 @@ import {
 } from '../usecases/login/login.usecase';
 import { AuthUser } from '../models/auth-user';
 import { stateBuilder } from '../../../state-builder';
+import { logoutUseCase } from '../usecases/logout/logout.usecase';
 
 export const createAuthFixture = () => {
   const authGateway = new StubAuthGateway();
@@ -26,10 +27,22 @@ export const createAuthFixture = () => {
       store = createTestStore({ authGateway });
       return store.dispatch(loginUseCase(payload));
     },
+    whenLogout: () => {
+      store = createTestStore({ authGateway });
+      return store.dispatch(logoutUseCase());
+    },
     thenUserIsLoggedInAs: (authUser: AuthUser) => {
       expect(store.getState()).toEqual(
         stateBuilder().withAuthUser(authUser).build(),
       );
+    },
+    thenUserIsNotLoggedIn: () => {
+      expect(store.getState()).toEqual(
+        stateBuilder().withAuthUser(undefined).build(),
+      );
+    },
+    thenLogoutWasCalled: () => {
+      expect(authGateway.logoutWasCalled).toBeTruthy();
     },
   };
 };
