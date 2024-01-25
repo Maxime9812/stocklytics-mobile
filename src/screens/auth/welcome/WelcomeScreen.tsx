@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import {
   Image,
   SafeAreaView,
@@ -18,9 +17,8 @@ export default function WelcomeScreen({
 
   return (
     <SafeAreaView className="bg-white h-screen">
-      <StatusBar style="auto" />
       <CloseKeyboardOnTouch>
-        <View className="p-4 flex  h-full">
+        <View className="p-4 flex h-full">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
           <Image source={WelcomeBackground1} className="flex-1 w-full h-full" />
           <View className="space-y-2">

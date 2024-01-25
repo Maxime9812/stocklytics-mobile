@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { InferType } from 'yup';
@@ -58,7 +57,6 @@ export default function LoginScreen({
 
   return (
     <SafeAreaView className="bg-white">
-      <StatusBar style="auto" />
       <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>

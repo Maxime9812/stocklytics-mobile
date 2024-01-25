@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import {
   SafeAreaView,
   Text,
@@ -51,7 +50,6 @@ export default function ResetPasswordScreen({
 
   return (
     <SafeAreaView className="bg-white">
-      <StatusBar style="auto" />
       <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
