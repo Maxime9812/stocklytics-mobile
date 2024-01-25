@@ -1,11 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import {
-  Keyboard,
   SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
@@ -14,6 +12,7 @@ import { InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { AuthStackScreenProps } from '../../../navigation/NavigationProvider';
+import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 
 const registerFormSchema = yup
   .object({
@@ -46,6 +45,8 @@ export default function RegisterScreen({
     });
   };
 
+  const goToLogin = () => navigation.replace('Login');
+
   useEffect(() => {
     return focusOnTransitionEnd();
   }, [focusOnTransitionEnd]);
@@ -53,7 +54,7 @@ export default function RegisterScreen({
   return (
     <SafeAreaView className="bg-white">
       <StatusBar style="auto" />
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
           <View className="flex items-center">
@@ -132,12 +133,12 @@ export default function RegisterScreen({
           </TouchableOpacity>
           <View className="flex flex-row justify-center space-x-1">
             <Text>Already have an account ?</Text>
-            <TouchableOpacity onPress={() => navigation.replace('Login')}>
+            <TouchableOpacity onPress={goToLogin}>
               <Text className="text-blue-500">Sign in</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </CloseKeyboardOnTouch>
     </SafeAreaView>
   );
 }

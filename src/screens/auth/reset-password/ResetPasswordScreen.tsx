@@ -1,11 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import {
-  Keyboard,
   SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { AuthStackScreenProps } from '../../../navigation/NavigationProvider';
@@ -14,6 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { InferType } from 'yup';
 import { useEffect } from 'react';
+import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 
 const resetPasswordFormSchema = yup
   .object({
@@ -53,7 +52,7 @@ export default function ResetPasswordScreen({
   return (
     <SafeAreaView className="bg-white">
       <StatusBar style="auto" />
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
           <Text className="text-xl font-bold">Reset Password</Text>
@@ -78,12 +77,13 @@ export default function ResetPasswordScreen({
           </View>
           <TouchableOpacity
             className={`bg-red-400 py-4 rounded ${disableSubmit && 'opacity-50'}`}
+            onPress={handleSubmit(onSubmit)}
             disabled={disableSubmit}
           >
             <Text className="text-white text-center">Send Link</Text>
           </TouchableOpacity>
         </View>
-      </TouchableWithoutFeedback>
+      </CloseKeyboardOnTouch>
     </SafeAreaView>
   );
 }

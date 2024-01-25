@@ -1,10 +1,8 @@
 import {
-  Keyboard,
   SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -16,6 +14,7 @@ import { useEffect } from 'react';
 import { AuthStackScreenProps } from '../../../navigation/NavigationProvider';
 import { useAppDispatch } from '../../../store-hooks';
 import { loginUseCase } from '../../../core/auth/hexagon/usecases/login/login.usecase';
+import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 
 const loginFormSchema = yup
   .object({
@@ -48,6 +47,11 @@ export default function LoginScreen({
     });
   };
 
+  const goToResetPassword = () =>
+    navigation.push('ResetPassword', { email: getValues('email') });
+
+  const goToRegister = () => navigation.replace('Register');
+
   useEffect(() => {
     return focusOnTransitionEnd();
   }, [focusOnTransitionEnd]);
@@ -55,7 +59,7 @@ export default function LoginScreen({
   return (
     <SafeAreaView className="bg-white">
       <StatusBar style="auto" />
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
           <View className="flex items-center">
@@ -103,11 +107,7 @@ export default function LoginScreen({
             </View>
           </View>
           <View className="space-y-2">
-            <TouchableOpacity
-              onPress={() =>
-                navigation.push('ResetPassword', { email: getValues('email') })
-              }
-            >
+            <TouchableOpacity onPress={goToResetPassword}>
               <Text className="text-blue-500 text-center">
                 Forgot password ?
               </Text>
@@ -126,12 +126,12 @@ export default function LoginScreen({
           </TouchableOpacity>
           <View className="flex flex-row justify-center space-x-1">
             <Text>New here ?</Text>
-            <TouchableOpacity onPress={() => navigation.replace('Register')}>
+            <TouchableOpacity onPress={goToRegister}>
               <Text className="text-blue-500">Create an account</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </CloseKeyboardOnTouch>
     </SafeAreaView>
   );
 }
