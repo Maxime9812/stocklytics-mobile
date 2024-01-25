@@ -1,0 +1,16 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": "../",
+  "testRegex": ".*\\.it-spec\\.ts$",
+  "testEnvironment": "node",
+  "roots": [
+    "<rootDir>/src/"
+  ],
+  "moduleNameMapper": {
+    "^@app/core(|/.*)$": "<rootDir>/src/core/$1"
+  }
+}

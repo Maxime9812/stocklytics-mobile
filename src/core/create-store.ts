@@ -8,7 +8,7 @@ import {
 } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
 import { AuthGateway } from './auth/hexagon/gateways/auth.gateway';
-import { StubAuthGateway } from './auth/infra/gateways/stub-auth.gateway';
+import { StubAuthGateway } from './auth/infra/gateways/auth/stub-auth.gateway';
 import { onAuthStateChangeListener } from './auth/hexagon/listeners/on-auth-state-change.listener';
 import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 

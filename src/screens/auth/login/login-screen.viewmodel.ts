@@ -6,7 +6,7 @@ import {
 
 export const createLoginScreenViewModel = (dispatch: AppDispatch) => () => {
   const login = async (payload: LoginUseCasePayload) => {
-    await dispatch(loginUseCase(payload));
+    return dispatch(loginUseCase(payload));
   };
   return { login };
 };

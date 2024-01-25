@@ -1,5 +1,8 @@
-import { AuthGateway, LoginPayload } from '../../hexagon/gateways/auth.gateway';
-import { AuthUser } from '../../hexagon/models/auth-user';
+import {
+  AuthGateway,
+  LoginPayload,
+} from '../../../hexagon/gateways/auth.gateway';
+import { AuthUser } from '../../../hexagon/models/auth-user';
 
 export type UserWithCredentials = {
   credentials: LoginPayload;

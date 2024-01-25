@@ -39,7 +39,6 @@ export default function LoginScreen({
 
   const onSubmit = async (values: LoginFormValues) => {
     const action = await login(values);
-
     if (isRejected(action)) {
       return onWrongCredentials();
     }

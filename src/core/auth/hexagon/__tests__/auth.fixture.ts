@@ -1,7 +1,7 @@
 import {
   StubAuthGateway,
   UserWithCredentials,
-} from '../../infra/gateways/stub-auth.gateway';
+} from '../../infra/gateways/auth/stub-auth.gateway';
 import { AppStore, createTestStore } from '../../../create-store';
 import {
   loginUseCase,

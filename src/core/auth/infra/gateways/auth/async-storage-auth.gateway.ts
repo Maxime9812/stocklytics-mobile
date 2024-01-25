@@ -1,5 +1,8 @@
-import { AuthGateway, LoginPayload } from '../../hexagon/gateways/auth.gateway';
-import { AuthUser } from '../../hexagon/models/auth-user';
+import {
+  AuthGateway,
+  LoginPayload,
+} from '../../../hexagon/gateways/auth.gateway';
+import { AuthUser } from '../../../hexagon/models/auth-user';
 import { StubAuthGateway } from './stub-auth.gateway';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
