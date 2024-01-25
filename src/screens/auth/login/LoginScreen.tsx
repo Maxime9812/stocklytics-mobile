@@ -5,11 +5,11 @@ import { InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../../store-hooks';
-import { loginUseCase } from '../../../core/auth/hexagon/usecases/login/login.usecase';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 import { isRejected } from '@reduxjs/toolkit';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
 import AuthLayout from '../../../components/layouts/auth/AuthLayout';
+import { createLoginScreenViewModel } from './login-screen.viewmodel';
 
 const loginFormSchema = yup
   .object({
@@ -24,17 +24,25 @@ export default function LoginScreen({
   navigation,
 }: AuthStackScreenProps<'Login'>) {
   const appDispatch = useAppDispatch();
-  const { control, handleSubmit, formState, setFocus, getValues } =
+  const { login } = createLoginScreenViewModel(appDispatch)();
+  const { control, handleSubmit, formState, setFocus, getValues, resetField } =
     useForm<LoginFormValues>({
       resolver: yupResolver(loginFormSchema),
     });
 
   const disableSubmit = !formState.isValid;
 
-  const onSubmit = async (values: LoginFormValues) => {
-    const action = await appDispatch(loginUseCase(values));
+  const onWrongCredentials = () => {
+    resetField('password');
+    setFocus('password');
+  };
 
-    if (isRejected(action)) return;
+  const onSubmit = async (values: LoginFormValues) => {
+    const action = await login(values);
+
+    if (isRejected(action)) {
+      return onWrongCredentials();
+    }
 
     navigation.replace('Home', { screen: 'Items' });
   };
