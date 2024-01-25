@@ -1,17 +1,12 @@
-import {
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
-import { AuthStackScreenProps } from '../../../navigation/NavigationProvider';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
+import AuthLayout from '../../../components/layouts/auth/AuthLayout';
+import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
 
 const registerFormSchema = yup
   .object({
@@ -51,7 +46,7 @@ export default function RegisterScreen({
   }, [focusOnTransitionEnd]);
 
   return (
-    <SafeAreaView className="bg-white">
+    <AuthLayout>
       <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
@@ -137,6 +132,6 @@ export default function RegisterScreen({
           </View>
         </View>
       </CloseKeyboardOnTouch>
-    </SafeAreaView>
+    </AuthLayout>
   );
 }

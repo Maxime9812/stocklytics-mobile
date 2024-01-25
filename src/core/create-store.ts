@@ -1,6 +1,7 @@
 import { Action, configureStore, ThunkDispatch } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
 import { AuthGateway } from './auth/hexagon/gateways/auth.gateway';
+import { StubAuthGateway } from './auth/infra/gateways/stub-auth.gateway';
 
 export type Dependencies = {
   authGateway: AuthGateway;
@@ -19,6 +20,14 @@ export const createStore = (
           extraArgument: dependencies,
         },
       }),
+  });
+};
+
+export const createTestStore = ({
+  authGateway = new StubAuthGateway(),
+}: Partial<Dependencies> = {}) => {
+  return createStore({
+    authGateway,
   });
 };
 

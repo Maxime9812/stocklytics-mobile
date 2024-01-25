@@ -6,6 +6,6 @@ export type LoginPayload = {
 };
 
 export interface AuthGateway {
-  login(payload: LoginPayload): Promise<AuthUser>;
+  login(payload: LoginPayload): Promise<AuthUser | undefined>;
   logout(): Promise<void>;
 }

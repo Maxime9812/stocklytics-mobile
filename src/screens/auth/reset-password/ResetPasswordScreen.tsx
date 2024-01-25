@@ -1,17 +1,12 @@
-import {
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { AuthStackScreenProps } from '../../../navigation/NavigationProvider';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { InferType } from 'yup';
 import { useEffect } from 'react';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
+import AuthLayout from '../../../components/layouts/auth/AuthLayout';
+import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
 
 const resetPasswordFormSchema = yup
   .object({
@@ -49,7 +44,7 @@ export default function ResetPasswordScreen({
   }, [focusOnTransitionEnd]);
 
   return (
-    <SafeAreaView className="bg-white">
+    <AuthLayout>
       <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
@@ -82,6 +77,6 @@ export default function ResetPasswordScreen({
           </TouchableOpacity>
         </View>
       </CloseKeyboardOnTouch>
-    </SafeAreaView>
+    </AuthLayout>
   );
 }

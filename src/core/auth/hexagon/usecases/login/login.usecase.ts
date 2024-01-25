@@ -7,5 +7,14 @@ export type LoginUseCasePayload = {
 
 export const loginUseCase = createAppAsyncThunk(
   'aut/login',
-  async (payload: LoginUseCasePayload, { extra: { authGateway } }) => {},
+  async (
+    payload: LoginUseCasePayload,
+    { extra: { authGateway }, rejectWithValue },
+  ) => {
+    const user = await authGateway.login(payload);
+    if (!user) {
+      return rejectWithValue('Invalid credentials');
+    }
+    return user;
+  },
 );

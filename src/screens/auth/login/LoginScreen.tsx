@@ -1,19 +1,15 @@
-import {
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
-import { AuthStackScreenProps } from '../../../navigation/NavigationProvider';
 import { useAppDispatch } from '../../../store-hooks';
 import { loginUseCase } from '../../../core/auth/hexagon/usecases/login/login.usecase';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
+import { isRejected } from '@reduxjs/toolkit';
+import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
+import AuthLayout from '../../../components/layouts/auth/AuthLayout';
 
 const loginFormSchema = yup
   .object({
@@ -35,8 +31,12 @@ export default function LoginScreen({
 
   const disableSubmit = !formState.isValid;
 
-  const onSubmit = (values: LoginFormValues) => {
-    appDispatch(loginUseCase(values));
+  const onSubmit = async (values: LoginFormValues) => {
+    const action = await appDispatch(loginUseCase(values));
+
+    if (isRejected(action)) return;
+
+    navigation.navigate('Home', { screen: 'Items' });
   };
 
   const focusOnTransitionEnd = () => {
@@ -56,7 +56,7 @@ export default function LoginScreen({
   }, [focusOnTransitionEnd]);
 
   return (
-    <SafeAreaView className="bg-white">
+    <AuthLayout>
       <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
@@ -130,6 +130,6 @@ export default function LoginScreen({
           </View>
         </View>
       </CloseKeyboardOnTouch>
-    </SafeAreaView>
+    </AuthLayout>
   );
 }
