@@ -12,7 +12,8 @@ const withAuthUser = createAction<AuthUser>('withAuthUser');
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(withAuthUser, (state, action) => {
-    state.auth.currentUser = action.payload;
+    state.auth.authUser = action.payload;
+    state.auth.hasCheckedAuthState = true;
   });
 });
 

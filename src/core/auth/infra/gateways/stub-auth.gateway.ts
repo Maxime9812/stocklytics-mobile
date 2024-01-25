@@ -8,12 +8,31 @@ export type UserWithCredentials = {
 
 export class StubAuthGateway implements AuthGateway {
   private userForLogin: Map<string, AuthUser> = new Map();
+  private onAuthStateChangedCallback:
+    | ((user: AuthUser | undefined) => void)
+    | undefined;
+
+  constructor(private readonly delay: number = 0) {}
+
+  onAuthStateChanged(callback: (user: AuthUser | undefined) => void): void {
+    this.onAuthStateChangedCallback = callback;
+  }
+
   async login(payload: LoginPayload): Promise<AuthUser | undefined> {
-    return this.userForLogin.get(this.credentialsToString(payload));
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const user = this.userForLogin.get(this.credentialsToString(payload));
+        resolve(user);
+      }, this.delay);
+    });
   }
 
   logout(): Promise<void> {
     return Promise.resolve(undefined);
+  }
+
+  simulateAuthStateChanged(user: AuthUser | undefined) {
+    this.onAuthStateChangedCallback?.(user);
   }
 
   givenUserWithCredentials(userWithCredentials: UserWithCredentials) {

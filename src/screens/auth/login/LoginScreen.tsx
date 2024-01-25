@@ -36,7 +36,7 @@ export default function LoginScreen({
 
     if (isRejected(action)) return;
 
-    navigation.navigate('Home', { screen: 'Items' });
+    navigation.replace('Home', { screen: 'Items' });
   };
 
   const focusOnTransitionEnd = () => {

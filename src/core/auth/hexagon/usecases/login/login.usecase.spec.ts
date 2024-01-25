@@ -1,13 +1,7 @@
-import { AppStore, createTestStore } from '../../../../create-store';
-import { stateBuilder } from '../../../../state-builder';
-import {
-  StubAuthGateway,
-  UserWithCredentials,
-} from '../../../infra/gateways/stub-auth.gateway';
-import { loginUseCase, LoginUseCasePayload } from './login.usecase';
 import { AuthUser } from '../../models/auth-user';
 import { LoginPayload } from '../../gateways/auth.gateway';
 import { isRejected } from '@reduxjs/toolkit';
+import { AuthFixture, createAuthFixture } from '../../__tests__/auth.fixture';
 
 describe('Feature: Login user', () => {
   let fixture: AuthFixture;
@@ -44,25 +38,3 @@ describe('Feature: Login user', () => {
     expect(isRejected(result)).toBeTruthy();
   });
 });
-
-const createAuthFixture = () => {
-  const authGateway = new StubAuthGateway();
-  let store: AppStore;
-
-  return {
-    givenUserCredentials: (userWithCredentials: UserWithCredentials) => {
-      authGateway.givenUserWithCredentials(userWithCredentials);
-    },
-    whenLogin: (payload: LoginUseCasePayload) => {
-      store = createTestStore({ authGateway });
-      return store.dispatch(loginUseCase(payload));
-    },
-    thenUserIsLoggedInAs: (authUser: AuthUser) => {
-      expect(store.getState()).toEqual(
-        stateBuilder().withAuthUser(authUser).build(),
-      );
-    },
-  };
-};
-
-type AuthFixture = ReturnType<typeof createAuthFixture>;

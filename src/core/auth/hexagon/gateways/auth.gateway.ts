@@ -8,4 +8,5 @@ export type LoginPayload = {
 export interface AuthGateway {
   login(payload: LoginPayload): Promise<AuthUser | undefined>;
   logout(): Promise<void>;
+  onAuthStateChanged(callback: (user: AuthUser | undefined) => void): void;
 }
