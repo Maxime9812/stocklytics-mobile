@@ -8,7 +8,7 @@ import { useAppDispatch } from '../../../store-hooks';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 import { isRejected } from '@reduxjs/toolkit';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
-import AuthLayout from '../../../components/layouts/auth/AuthLayout';
+import BaseLayout from '../../../components/layouts/BaseLayout';
 import { createLoginScreenViewModel } from './login-screen.viewmodel';
 import FeatherIcon from '@expo/vector-icons/Feather';
 
@@ -45,7 +45,10 @@ export default function LoginScreen({
       return onWrongCredentials();
     }
 
-    navigation.replace('Home', { screen: 'Items' });
+    navigation.replace('Home', {
+      screen: 'Items',
+      params: { screen: 'Folder' },
+    });
   };
 
   const focusOnTransitionEnd = () => {
@@ -65,9 +68,9 @@ export default function LoginScreen({
   }, [focusOnTransitionEnd]);
 
   return (
-    <AuthLayout>
+    <BaseLayout>
       <CloseKeyboardOnTouch>
-        <View className="p-4 flex h-screen space-y-2">
+        <View className="p-4 flex space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
           <View className="flex items-center">
             <Text className="text-2xl font-bold">Welcome back !</Text>
@@ -144,6 +147,6 @@ export default function LoginScreen({
           </View>
         </View>
       </CloseKeyboardOnTouch>
-    </AuthLayout>
+    </BaseLayout>
   );
 }

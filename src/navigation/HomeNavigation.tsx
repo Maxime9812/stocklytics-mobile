@@ -8,29 +8,28 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { RootStack, RootStackScreenProps } from './NavigationProvider';
 import DashboardScreen from '../screens/home/dashboard/DashboardScreen';
-import ItemsScreen from '../screens/home/items/ItemsScreen';
 import SearchScreen from '../screens/home/Search/SearchScreen';
 import NotificationScreen from '../screens/home/notification/NotificationScreen';
 import MenuScreen from '../screens/home/menu/MenuScreen';
 import { MaterialCommunityIcons, Feather, Ionicons } from '@expo/vector-icons';
+import ItemsNavigation, { ItemsNavigator } from './ItemsNavigation';
 
-export type HomeTabParamList = {
+export type HomeTab = {
   Dashboard: undefined;
-  Items: undefined;
+  Items: ItemsNavigator;
   Search: undefined;
   Notifications: undefined;
   Menu: undefined;
 };
 
-export type HomeTabScreenProps<T extends keyof HomeTabParamList> =
-  CompositeScreenProps<
-    BottomTabScreenProps<HomeTabParamList, T>,
-    RootStackScreenProps<keyof RootStack>
-  >;
+export type HomeTabScreenProps<T extends keyof HomeTab> = CompositeScreenProps<
+  BottomTabScreenProps<HomeTab, T>,
+  RootStackScreenProps<keyof RootStack>
+>;
 
-export type HomeTabNavigator = NavigatorScreenParams<HomeTabParamList>;
+export type HomeTabNavigator = NavigatorScreenParams<HomeTab>;
 
-const Tab = createBottomTabNavigator<HomeTabParamList>();
+const Tab = createBottomTabNavigator<HomeTab>();
 
 type IconProps = {
   focused: boolean;
@@ -79,7 +78,7 @@ export default function HomeNavigation() {
       />
       <Tab.Screen
         name="Items"
-        component={ItemsScreen}
+        component={ItemsNavigation}
         options={{ tabBarIcon: ItemsIcon }}
       />
       <Tab.Screen

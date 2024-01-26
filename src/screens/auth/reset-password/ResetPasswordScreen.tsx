@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { InferType } from 'yup';
 import { useEffect } from 'react';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
-import AuthLayout from '../../../components/layouts/auth/AuthLayout';
+import BaseLayout from '../../../components/layouts/BaseLayout';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
 
 const resetPasswordFormSchema = yup
@@ -44,7 +44,7 @@ export default function ResetPasswordScreen({
   }, [focusOnTransitionEnd]);
 
   return (
-    <AuthLayout>
+    <BaseLayout>
       <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
@@ -77,6 +77,6 @@ export default function ResetPasswordScreen({
           </TouchableOpacity>
         </View>
       </CloseKeyboardOnTouch>
-    </AuthLayout>
+    </BaseLayout>
   );
 }

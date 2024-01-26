@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { HomeTabScreenProps } from '../../../navigation/HomeNavigation';
 import { useAppDispatch } from '../../../store-hooks';
 import { logoutUseCase } from '../../../core/auth/hexagon/usecases/logout/logout.usecase';
+import BaseLayout from '../../../components/layouts/BaseLayout';
 
 export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
   const appDispatch = useAppDispatch();
@@ -12,11 +13,11 @@ export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
   };
 
   return (
-    <View className="flex-1 items-center justify-center">
+    <BaseLayout>
       <TouchableOpacity onPress={logout}>
         <Text>Logout</Text>
       </TouchableOpacity>
       <Text>Menu</Text>
-    </View>
+    </BaseLayout>
   );
 }

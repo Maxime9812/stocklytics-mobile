@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { HomeTabScreenProps } from '../../../navigation/HomeNavigation';
+import BaseLayout from '../../../components/layouts/BaseLayout';
 
 export default function NotificationScreen({}: HomeTabScreenProps<'Notifications'>) {
   return (
-    <View className="flex-1 items-center justify-center">
+    <BaseLayout>
       <Text>Notification</Text>
-    </View>
+    </BaseLayout>
   );
 }

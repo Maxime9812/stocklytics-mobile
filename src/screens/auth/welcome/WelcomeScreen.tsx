@@ -2,7 +2,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import WelcomeBackground1 from '../../../../assets/welcome-background-1.png';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
-import AuthLayout from '../../../components/layouts/auth/AuthLayout';
+import BaseLayout from '../../../components/layouts/BaseLayout';
 
 export default function WelcomeScreen({
   navigation,
@@ -11,7 +11,7 @@ export default function WelcomeScreen({
   const goToRegister = () => navigation.push('Register');
 
   return (
-    <AuthLayout>
+    <BaseLayout>
       <CloseKeyboardOnTouch>
         <View className="p-4 flex h-full">
           <Text className="text-2xl font-bold text-center">Stocklytics</Text>
@@ -33,6 +33,6 @@ export default function WelcomeScreen({
           </View>
         </View>
       </CloseKeyboardOnTouch>
-    </AuthLayout>
+    </BaseLayout>
   );
 }
