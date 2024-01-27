@@ -30,7 +30,7 @@ export const createStore = (
         thunk: {
           extraArgument: dependencies,
         },
-      }).prepend(middleware),
+      }).concat(middleware),
   });
 
   onAuthStateChangeListener(store, dependencies.authGateway);
