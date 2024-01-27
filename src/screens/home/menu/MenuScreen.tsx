@@ -14,6 +14,7 @@ import BaseLayout from '../../../components/layouts/BaseLayout';
 import { useSelector } from 'react-redux';
 import { authUserSelector } from '../../../core/auth/auth.slice';
 import Avatar from '../../../components/avatar/Avatar';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
   const appDispatch = useAppDispatch();
@@ -51,19 +52,26 @@ export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
 
   return (
     <BaseLayout>
-      {authUser && (
-        <View className="items-center space-y-4">
-          <Avatar name={authUser.fullName} />
-          <View className="items-center">
-            <Text className="text-xl font-bold">{authUser.fullName}</Text>
-            <Text className="text-lg text-gray-400">{authUser.email}</Text>
+      <View className="p-4 space-y-4">
+        {authUser && (
+          <View className="items-center space-y-4">
+            <Avatar name={authUser.fullName} />
+            <View className="items-center">
+              <Text className="text-xl font-bold">{authUser.fullName}</Text>
+              <Text className="text-lg text-gray-400">{authUser.email}</Text>
+            </View>
           </View>
+        )}
+        <View className="bg-gray-100 p-2 rounded">
+          <TouchableOpacity
+            onPress={requestLogout}
+            className="flex-row items-center space-x-2"
+          >
+            <MaterialIcons name="logout" size={24} color="black" />
+            <Text>Sign out</Text>
+          </TouchableOpacity>
         </View>
-      )}
-      <TouchableOpacity onPress={requestLogout}>
-        <Text>Sign Out</Text>
-      </TouchableOpacity>
-      <Text>Menu</Text>
+      </View>
     </BaseLayout>
   );
 }
