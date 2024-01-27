@@ -3,6 +3,7 @@ import { AuthUser } from './hexagon/models/auth-user';
 import { loginUseCase } from './hexagon/usecases/login/login.usecase';
 import { RootState } from '../create-store';
 import { logoutUseCase } from './hexagon/usecases/logout/logout.usecase';
+import { registerUseCase } from './hexagon/usecases/register/register.usecase';
 
 export type AuthSliceState = {
   authUser?: AuthUser;
@@ -33,6 +34,10 @@ export const authSlice = createSlice({
       })
       .addCase(logoutUseCase.fulfilled, (state) => {
         state.authUser = undefined;
+        state.hasCheckedAuthState = true;
+      })
+      .addCase(registerUseCase.fulfilled, (state, action) => {
+        state.authUser = action.payload;
         state.hasCheckedAuthState = true;
       });
   },

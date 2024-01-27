@@ -7,6 +7,9 @@ import { useEffect } from 'react';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 import BaseLayout from '../../../components/layouts/BaseLayout';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
+import { useAppDispatch } from '../../../store-hooks';
+import { registerUseCase } from '../../../core/auth/hexagon/usecases/register/register.usecase';
+import { isRejected } from '@reduxjs/toolkit';
 
 const registerFormSchema = yup
   .object({
@@ -21,6 +24,7 @@ type RegisterFormValues = InferType<typeof registerFormSchema>;
 export default function RegisterScreen({
   navigation,
 }: AuthStackScreenProps<'Register'>) {
+  const appDispatch = useAppDispatch();
   const { control, handleSubmit, formState, setFocus } =
     useForm<RegisterFormValues>({
       resolver: yupResolver(registerFormSchema),
@@ -29,7 +33,12 @@ export default function RegisterScreen({
   const disableSubmit = !formState.isValid;
 
   const onSubmit = (data: RegisterFormValues) => {
-    console.log(data);
+    const action = appDispatch(registerUseCase(data));
+    if (isRejected(action)) return;
+    navigation.replace('Home', {
+      screen: 'Items',
+      params: { screen: 'Folder' },
+    });
   };
 
   const focusOnTransitionEnd = () => {

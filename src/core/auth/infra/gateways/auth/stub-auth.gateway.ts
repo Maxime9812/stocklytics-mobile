@@ -1,6 +1,7 @@
 import {
   AuthGateway,
   LoginPayload,
+  RegisterPayload,
 } from '../../../hexagon/gateways/auth.gateway';
 import { AuthUser } from '../../../hexagon/models/auth-user';
 
@@ -9,8 +10,14 @@ export type UserWithCredentials = {
   user: AuthUser;
 };
 
+export type UserWithRegistration = {
+  registration: RegisterPayload;
+  user: AuthUser;
+};
+
 export class StubAuthGateway implements AuthGateway {
   private userForLogin: Map<string, AuthUser> = new Map();
+  private userForRegister: Map<string, AuthUser> = new Map();
   private onAuthStateChangedCallback:
     | ((user: AuthUser | undefined) => void)
     | undefined;
@@ -35,9 +42,19 @@ export class StubAuthGateway implements AuthGateway {
     });
   }
 
-  logout(): Promise<void> {
+  async logout(): Promise<void> {
     this._logoutWasCalled = true;
-    return Promise.resolve(undefined);
+  }
+
+  async register(payload: RegisterPayload): Promise<AuthUser | undefined> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const user = this.userForRegister.get(
+          this.registrationToString(payload),
+        );
+        resolve(user);
+      }, this.delay);
+    });
   }
 
   simulateAuthStateChanged(user: AuthUser | undefined) {
@@ -49,6 +66,17 @@ export class StubAuthGateway implements AuthGateway {
       this.credentialsToString(userWithCredentials.credentials),
       userWithCredentials.user,
     );
+  }
+
+  givenUserRegistered(userWithRegistration: UserWithRegistration) {
+    this.userForRegister.set(
+      this.registrationToString(userWithRegistration.registration),
+      userWithRegistration.user,
+    );
+  }
+
+  private registrationToString(registration: RegisterPayload): string {
+    return JSON.stringify(registration);
   }
 
   private credentialsToString(credentials: LoginPayload): string {

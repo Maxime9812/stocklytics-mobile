@@ -87,4 +87,30 @@ describe('AxiosAuthGateway', () => {
       expect(stateChangedCalled).toBeTruthy();
     });
   });
+
+  describe('register', () => {
+    it('Should return user', async () => {
+      nock(BASE_URL)
+        .post('/auth/register', {
+          fullName: 'John Doe',
+          email: 'john.doe@gmail.com',
+          password: '123456',
+        })
+        .reply(201, {
+          id: 'user-id',
+          email: 'john.doe@gmail.com',
+        });
+
+      const user = await axiosAuthGateway.register({
+        fullName: 'John Doe',
+        email: 'john.doe@gmail.com',
+        password: '123456',
+      });
+
+      expect(user).toEqual({
+        id: 'user-id',
+        email: 'john.doe@gmail.com',
+      });
+    });
+  });
 });

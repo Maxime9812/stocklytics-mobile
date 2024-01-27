@@ -1,6 +1,7 @@
 import {
   AuthGateway,
   LoginPayload,
+  RegisterPayload,
 } from '../../../hexagon/gateways/auth.gateway';
 import { AuthUser } from '../../../hexagon/models/auth-user';
 import { AxiosInstance } from 'axios';
@@ -9,6 +10,7 @@ export class AxiosAuthGateway implements AuthGateway {
   private _onAuthStateChangedCallback:
     | ((user: AuthUser | undefined) => void)
     | undefined;
+
   constructor(private readonly axios: AxiosInstance) {}
 
   async login(payload: LoginPayload): Promise<AuthUser | undefined> {
@@ -26,6 +28,21 @@ export class AxiosAuthGateway implements AuthGateway {
   async logout(): Promise<void> {
     await this.axios.post('/auth/logout');
     this._onAuthStateChangedCallback?.(undefined);
+  }
+
+  async register(payload: RegisterPayload): Promise<AuthUser | undefined> {
+    try {
+      const response = await this.axios.post<AuthUser>(
+        '/auth/register',
+        payload,
+      );
+      const user = response.data;
+      this._onAuthStateChangedCallback?.(user);
+      return user;
+    } catch (e) {
+      this._onAuthStateChangedCallback?.(undefined);
+      return undefined;
+    }
   }
 
   onAuthStateChanged(callback: (user: AuthUser | undefined) => void): void {

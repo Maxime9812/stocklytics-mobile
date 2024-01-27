@@ -4,7 +4,6 @@ import {
   isAsyncThunkAction,
   Middleware,
   ThunkDispatch,
-  UnknownAction,
 } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
 import { AuthGateway } from './auth/hexagon/gateways/auth.gateway';
@@ -43,10 +42,10 @@ export const createTestStore = (
   { authGateway = new StubAuthGateway() }: Partial<Dependencies> = {},
   preloadedState: Partial<RootState> = {},
 ) => {
-  const actions: UnknownAction[] = [];
+  const actions: Action<any>[] = [];
 
   const logActionsMiddleware: Middleware = () => (next) => (action) => {
-    actions.push(action as UnknownAction);
+    actions.push(action as Action<any>);
     return next(action);
   };
   const getAction = () => actions;
@@ -54,9 +53,9 @@ export const createTestStore = (
   const store = createStore({ authGateway }, preloadedState, [
     logActionsMiddleware,
   ]);
-  const getDispatchedUseCaseArgs = (usecase: AnyAsyncThunk) => {
+  const getDispatchedUseCaseArgs = (useCase: AnyAsyncThunk) => {
     const pendingUseCaseAction = getAction().find(
-      (a) => a.type == usecase.pending.toString(),
+      (a) => a.type == useCase.pending.toString(),
     );
 
     if (!pendingUseCaseAction) return;
@@ -71,6 +70,8 @@ export const createTestStore = (
     getDispatchedUseCaseArgs,
   };
 };
+
+export type TestStore = ReturnType<typeof createTestStore>;
 
 export type AppStore = ReturnType<typeof createStore>;
 export type AppDispatch = ThunkDispatch<RootState, Dependencies, Action<any>>;
