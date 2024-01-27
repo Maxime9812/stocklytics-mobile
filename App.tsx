@@ -14,6 +14,7 @@ stubAuthGateway.givenUserWithCredentials({
   },
   user: {
     id: 'user-id',
+    fullName: 'John Doe',
     email: 'john.doe@gmail.com',
   },
 });
@@ -24,7 +25,10 @@ const axiosInstance = axios.create({
 });
 const axiosAuthGateway = new AxiosAuthGateway(axiosInstance);
 
-const store = createStore({ authGateway }, stateBuilder().build());
+const store = createStore(
+  { authGateway: axiosAuthGateway },
+  stateBuilder().build(),
+);
 
 export default function App() {
   return <Providers store={store} />;

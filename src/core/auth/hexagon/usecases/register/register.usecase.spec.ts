@@ -1,5 +1,6 @@
 import { AuthFixture, createAuthFixture } from '../../__tests__/auth.fixture';
 import { AuthUser } from '../../models/auth-user';
+import { isRejected } from '@reduxjs/toolkit';
 
 describe('Feature: Register', () => {
   let fixture: AuthFixture;
@@ -10,6 +11,7 @@ describe('Feature: Register', () => {
   test('User can register', async () => {
     const user: AuthUser = {
       id: 'user-id',
+      fullName: 'John Doe',
       email: 'john.doe@gmail.com',
     };
     fixture.givenUserRegistered({
@@ -26,5 +28,14 @@ describe('Feature: Register', () => {
       password: 'password',
     });
     fixture.thenUserIsLoggedInAs(user);
+  });
+  test('An error occur', async () => {
+    const result = await fixture.whenRegister({
+      fullName: 'John Doe',
+      email: 'john.doe@gmail.com',
+      password: 'password',
+    });
+
+    expect(isRejected(result)).toBeTruthy();
   });
 });

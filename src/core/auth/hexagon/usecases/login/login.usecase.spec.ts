@@ -17,6 +17,7 @@ describe('Feature: Login user', () => {
     };
     const user: AuthUser = {
       id: 'user-id',
+      fullName: 'John Doe',
       email: 'john.doe@gmail.com',
     };
 

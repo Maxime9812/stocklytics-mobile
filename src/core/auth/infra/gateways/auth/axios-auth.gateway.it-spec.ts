@@ -20,14 +20,22 @@ describe('AxiosAuthGateway', () => {
           email: 'john.doe@gmail.com',
           password: '123456',
         })
-        .reply(201, { id: 'user-id', email: 'john.doe@gmail.com' });
+        .reply(201, {
+          id: 'user-id',
+          email: 'john.doe@gmail.com',
+          fullName: 'John Doe',
+        });
 
       const user = await axiosAuthGateway.login({
         email: 'john.doe@gmail.com',
         password: '123456',
       });
 
-      expect(user).toEqual({ id: 'user-id', email: 'john.doe@gmail.com' });
+      expect(user).toEqual<AuthUser>({
+        id: 'user-id',
+        fullName: 'John Doe',
+        email: 'john.doe@gmail.com',
+      });
     });
 
     it('Should call onAuthStateChanged', async () => {
@@ -36,7 +44,11 @@ describe('AxiosAuthGateway', () => {
           email: 'john.doe@gmail.com',
           password: '123456',
         })
-        .reply(201, { id: 'user-id', email: 'john.doe@gmail.com' });
+        .reply(201, {
+          id: 'user-id',
+          fullName: 'John Doe',
+          email: 'john.doe@gmail.com',
+        });
       let user: AuthUser | undefined;
 
       axiosAuthGateway.onAuthStateChanged((_user) => {
@@ -48,7 +60,11 @@ describe('AxiosAuthGateway', () => {
         password: '123456',
       });
 
-      expect(user).toEqual({ id: 'user-id', email: 'john.doe@gmail.com' });
+      expect(user).toEqual<AuthUser>({
+        id: 'user-id',
+        fullName: 'John Doe',
+        email: 'john.doe@gmail.com',
+      });
     });
 
     it('Should return undefined when credentials are wrong', async () => {
@@ -98,6 +114,7 @@ describe('AxiosAuthGateway', () => {
         })
         .reply(201, {
           id: 'user-id',
+          fullName: 'John Doe',
           email: 'john.doe@gmail.com',
         });
 
@@ -107,8 +124,9 @@ describe('AxiosAuthGateway', () => {
         password: '123456',
       });
 
-      expect(user).toEqual({
+      expect(user).toEqual<AuthUser>({
         id: 'user-id',
+        fullName: 'John Doe',
         email: 'john.doe@gmail.com',
       });
     });
