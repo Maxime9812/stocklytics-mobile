@@ -12,10 +12,13 @@ import { onAuthStateChangeListener } from './auth/hexagon/listeners/on-auth-stat
 import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 import { ItemsGateway } from './items/hexagon/gateways/items.gateway';
 import { StubItemsGateway } from './items/infra/gateways/stub-items.gateway';
+import { FoldersGateway } from './folders/hexagon/gateways/folders.gateway';
+import { StubFoldersGateway } from './folders/infra/gateways/stub-folders.gateway';
 
 export type Dependencies = {
   authGateway: AuthGateway;
   itemsGateway: ItemsGateway;
+  foldersGateway: FoldersGateway;
 };
 
 export const EMPTY_ARGS = 'EMPTY_ARGS' as const;
@@ -45,6 +48,7 @@ export const createTestStore = (
   {
     authGateway = new StubAuthGateway(),
     itemsGateway = new StubItemsGateway(),
+    foldersGateway = new StubFoldersGateway(),
   }: Partial<Dependencies> = {},
   preloadedState: Partial<RootState> = {},
 ) => {
@@ -56,9 +60,11 @@ export const createTestStore = (
   };
   const getAction = () => actions;
 
-  const store = createStore({ authGateway, itemsGateway }, preloadedState, [
-    logActionsMiddleware,
-  ]);
+  const store = createStore(
+    { authGateway, itemsGateway, foldersGateway },
+    preloadedState,
+    [logActionsMiddleware],
+  );
   const getDispatchedUseCaseArgs = (useCase: AnyAsyncThunk) => {
     const pendingUseCaseAction = getAction().find(
       (a) => a.type == useCase.pending.toString(),

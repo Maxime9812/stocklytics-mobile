@@ -39,7 +39,7 @@ export const itemsSlice = createSlice({
   },
 });
 
-export const folderIsLoadingSelector =
+export const folderItemsIsLoadingSelector =
   (state: RootState) => (folderId?: string) =>
     state.items.isLoadingFoldersItemsById[folderId ?? 'root'] ?? false;
 

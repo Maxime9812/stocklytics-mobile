@@ -14,6 +14,7 @@ import { exhaustiveGuard } from '../../../../core/common/utils/exhaustive-guard'
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../../../store-hooks';
 import { getItemsInFolderUseCase } from '../../../../core/items/hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
+import { getFoldersInFolderUseCase } from '../../../../core/folders/hexagon/usecases/get-folders-in-folder/get-folders-in-folder.usecase';
 
 export default function FolderScreen({
   navigation,
@@ -34,6 +35,7 @@ export default function FolderScreen({
 
   useEffect(() => {
     appDispatch(getItemsInFolderUseCase(params.id));
+    appDispatch(getFoldersInFolderUseCase(params.id));
   }, [appDispatch]);
 
   switch (viewModel.type) {
@@ -41,15 +43,14 @@ export default function FolderScreen({
       return (
         <BaseLayout>
           <FolderListHeader
-            foldersCount={2}
+            foldersCount={viewModel.stats.totalFolders}
             itemsCount={viewModel.stats.totalItems}
             totalQuantity={viewModel.stats.totalQuantity}
           />
           <ScrollView>
-            <FolderRow
-              goToFolder={goToFolder}
-              folder={{ id: '1', name: 'Electronics', quantity: 1 }}
-            />
+            {viewModel.folders.map((folder) => (
+              <FolderRow goToFolder={goToFolder} folder={folder} />
+            ))}
             {viewModel.items.map((item) => (
               <ItemRow goToItem={goToItem} item={item} />
             ))}

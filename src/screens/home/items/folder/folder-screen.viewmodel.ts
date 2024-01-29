@@ -1,8 +1,12 @@
 import { RootState } from '../../../../core/create-store';
 import {
-  folderIsLoadingSelector,
+  folderItemsIsLoadingSelector,
   itemsInFolderSelector,
 } from '../../../../core/items/items.slice';
+import {
+  folderFoldersIsLoadingSelector,
+  foldersInFolderSelector,
+} from '../../../../core/folders/folders.slice';
 
 export type FolderScreenViewModelParams = {
   folderId?: string;
@@ -19,16 +23,24 @@ export type FolderScreenViewModelState =
         name: string;
         quantity: number;
       }[];
+      folders: {
+        id: string;
+        name: string;
+        quantity: number;
+      }[];
       stats: {
         totalItems: number;
         totalQuantity: number;
+        totalFolders: number;
       };
     };
 
 export const createFolderScreenViewModel =
   (state: RootState) =>
   ({ folderId }: FolderScreenViewModelParams): FolderScreenViewModelState => {
-    const isLoading = folderIsLoadingSelector(state)(folderId);
+    const itemsIsLoading = folderItemsIsLoadingSelector(state)(folderId);
+    const foldersIsLoading = folderFoldersIsLoadingSelector(state)(folderId);
+    const isLoading = foldersIsLoading || itemsIsLoading;
 
     if (isLoading)
       return {
@@ -36,6 +48,14 @@ export const createFolderScreenViewModel =
       };
 
     const items = itemsInFolderSelector(state)(folderId);
+    const folders = foldersInFolderSelector(state)(folderId);
+
+    const itemsQuantity = items.reduce((acc, item) => acc + item.quantity, 0);
+    const foldersItemsQuantity = folders.reduce(
+      (acc, folder) => acc + folder.itemQuantity,
+      0,
+    );
+    const totalQuantity = itemsQuantity + foldersItemsQuantity;
 
     return {
       type: 'loaded',
@@ -44,9 +64,15 @@ export const createFolderScreenViewModel =
         name: item.name,
         quantity: item.quantity,
       })),
+      folders: folders.map((folder) => ({
+        id: folder.id,
+        name: folder.name,
+        quantity: folder.itemQuantity,
+      })),
       stats: {
         totalItems: items.length,
-        totalQuantity: items.reduce((acc, item) => acc + item.quantity, 0),
+        totalQuantity,
+        totalFolders: folders.length,
       },
     };
   };

@@ -6,6 +6,10 @@ import {
 } from '@reduxjs/toolkit';
 import { AuthUser } from './auth/hexagon/models/auth-user';
 import { ItemModel, itemsAdapter } from './items/hexagon/models/item.model';
+import {
+  folderAdapter,
+  FolderModel,
+} from './folders/hexagon/models/folder.model';
 
 const initialState = rootReducer(undefined, createAction('')());
 
@@ -21,6 +25,14 @@ const withNotLoadingFoldersItems = createAction<string[]>(
   'withNotLoadingFoldersItems',
 );
 
+const withFolders = createAction<FolderModel[]>('withFolders');
+const withFolderInFolderLoading = createAction<string | undefined>(
+  'withFolderInFolderLoading',
+);
+const withFolderInFolderNotLoading = createAction<string | undefined>(
+  'withFolderInFolderNotLoading',
+);
+
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(withAuthUser, (state, action) => {
@@ -28,7 +40,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.auth.hasCheckedAuthState = true;
     })
     .addCase(withItems, (state, action) => {
-      itemsAdapter.setAll(state.items, action.payload);
+      itemsAdapter.addMany(state.items, action.payload);
     })
     .addCase(withItemLoading, (state, action) => {
       action.payload.forEach((id) => {
@@ -49,6 +61,15 @@ const reducer = createReducer(initialState, (builder) => {
       action.payload.forEach((id) => {
         state.items.isLoadingFoldersItemsById[id] = false;
       });
+    })
+    .addCase(withFolders, (state, action) => {
+      folderAdapter.addMany(state.folders, action.payload);
+    })
+    .addCase(withFolderInFolderLoading, (state, action) => {
+      state.folders.foldersInFolderLoading[action.payload ?? 'root'] = true;
+    })
+    .addCase(withFolderInFolderNotLoading, (state, action) => {
+      state.folders.foldersInFolderLoading[action.payload ?? 'root'] = false;
     });
 });
 
@@ -65,6 +86,9 @@ export const stateBuilder = (baseState = initialState) => {
     withNotLoadingItem: reduce(withItemNotLoading),
     withLoadingFoldersItems: reduce(withLoadingFoldersItems),
     withNotLoadingFoldersItems: reduce(withNotLoadingFoldersItems),
+    withFolders: reduce(withFolders),
+    withFolderInFolderLoading: reduce(withFolderInFolderLoading),
+    withFolderInFolderNotLoading: reduce(withFolderInFolderNotLoading),
     build: () => baseState,
   };
 };
