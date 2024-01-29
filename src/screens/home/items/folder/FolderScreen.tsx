@@ -17,6 +17,7 @@ import { getItemsInFolderUseCase } from '../../../../core/items/hexagon/usecases
 
 export default function FolderScreen({
   navigation,
+  route: { params = {} },
 }: ItemsStackScreenProps<'Folder'>) {
   const appDispatch = useAppDispatch();
   const goToItem = (id: string) => {
@@ -28,11 +29,11 @@ export default function FolderScreen({
   };
 
   const viewModel = useSelector<RootState, FolderScreenViewModelState>(
-    (state) => createFolderScreenViewModel(state)({ folderId: undefined }),
+    (state) => createFolderScreenViewModel(state)({ folderId: params.id }),
   );
 
   useEffect(() => {
-    appDispatch(getItemsInFolderUseCase(undefined));
+    appDispatch(getItemsInFolderUseCase(params.id));
   }, [appDispatch]);
 
   switch (viewModel.type) {
