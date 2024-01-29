@@ -10,9 +10,12 @@ import { AuthGateway } from './auth/hexagon/gateways/auth.gateway';
 import { StubAuthGateway } from './auth/infra/gateways/auth/stub-auth.gateway';
 import { onAuthStateChangeListener } from './auth/hexagon/listeners/on-auth-state-change.listener';
 import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
+import { ItemsGateway } from './items/hexagon/gateways/items.gateway';
+import { StubItemsGateway } from './items/infra/gateways/stub-items.gateway';
 
 export type Dependencies = {
   authGateway: AuthGateway;
+  itemsGateway: ItemsGateway;
 };
 
 export const EMPTY_ARGS = 'EMPTY_ARGS' as const;
@@ -39,7 +42,10 @@ export const createStore = (
 };
 
 export const createTestStore = (
-  { authGateway = new StubAuthGateway() }: Partial<Dependencies> = {},
+  {
+    authGateway = new StubAuthGateway(),
+    itemsGateway = new StubItemsGateway(),
+  }: Partial<Dependencies> = {},
   preloadedState: Partial<RootState> = {},
 ) => {
   const actions: Action<any>[] = [];
@@ -50,7 +56,7 @@ export const createTestStore = (
   };
   const getAction = () => actions;
 
-  const store = createStore({ authGateway }, preloadedState, [
+  const store = createStore({ authGateway, itemsGateway }, preloadedState, [
     logActionsMiddleware,
   ]);
   const getDispatchedUseCaseArgs = (useCase: AnyAsyncThunk) => {

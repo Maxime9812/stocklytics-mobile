@@ -3,8 +3,10 @@ import { createEntityAdapter, EntityState } from '@reduxjs/toolkit';
 export type ItemModel = {
   id: string;
   name: string;
+  quantity: number;
   description: string;
-  createdAt: Date;
+  folderId?: string;
+  createdAt: string;
 };
 
 export const itemsAdapter = createEntityAdapter<ItemModel>();

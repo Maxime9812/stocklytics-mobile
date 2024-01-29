@@ -5,6 +5,7 @@ import { stateBuilder } from './src/core/state-builder';
 import { AsyncStorageAuthGateway } from './src/core/auth/infra/gateways/auth/async-storage-auth.gateway';
 import axios from 'axios';
 import { AxiosAuthGateway } from './src/core/auth/infra/gateways/auth/axios-auth.gateway';
+import { StubItemsGateway } from './src/core/items/infra/gateways/stub-items.gateway';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -25,7 +26,21 @@ const axiosInstance = axios.create({
 });
 const axiosAuthGateway = new AxiosAuthGateway(axiosInstance);
 
-const store = createStore({ authGateway }, stateBuilder().build());
+const itemsGateway = new StubItemsGateway(1000);
+itemsGateway.givenItemsInFolder(undefined, [
+  {
+    id: 'item-1',
+    name: 'Iphone 13 pro max',
+    description: 'Item 1 description',
+    quantity: 1,
+    createdAt: new Date('2021-01-01T00:00:00.000Z').toISOString(),
+  },
+]);
+
+const store = createStore(
+  { authGateway, itemsGateway },
+  stateBuilder().build(),
+);
 
 export default function App() {
   return <Providers store={store} />;
