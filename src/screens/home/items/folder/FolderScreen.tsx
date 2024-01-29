@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import BaseLayout from '../../../../components/layouts/BaseLayout';
 import ItemRow from './components/ItemRow';
@@ -19,8 +19,12 @@ export default function FolderScreen({
   navigation,
 }: ItemsStackScreenProps<'Folder'>) {
   const appDispatch = useAppDispatch();
-  const goToItem = () => {
-    navigation.navigate('Item');
+  const goToItem = (id: string) => {
+    navigation.push('Item', { id });
+  };
+
+  const goToFolder = (id: string) => {
+    navigation.push('Folder', { id });
   };
 
   const viewModel = useSelector<RootState, FolderScreenViewModelState>(
@@ -42,7 +46,7 @@ export default function FolderScreen({
           />
           <ScrollView>
             <FolderRow
-              goToFolder={() => {}}
+              goToFolder={goToFolder}
               folder={{ id: '1', name: 'Electronics', quantity: 1 }}
             />
             {viewModel.items.map((item) => (
@@ -54,11 +58,7 @@ export default function FolderScreen({
     case 'loading':
       return (
         <BaseLayout>
-          <FolderListHeader
-            foldersCount={2}
-            itemsCount={2}
-            totalQuantity={102}
-          />
+          <Text>Loading</Text>
         </BaseLayout>
       );
     default:

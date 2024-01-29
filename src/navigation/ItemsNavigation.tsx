@@ -11,8 +11,8 @@ import ItemScreen from '../screens/home/items/item/ItemScreen';
 import FolderScreen from '../screens/home/items/folder/FolderScreen';
 
 export type ItemsStack = {
-  Folder: undefined;
-  Item: undefined;
+  Folder: { id?: string } | undefined;
+  Item: { id: string };
 };
 
 export type ItemsStackScreenProps<T extends keyof ItemsStack> =
@@ -34,11 +34,7 @@ export default function ItemsNavigation() {
         headerTransparent: true,
       }}
     >
-      <Stack.Screen
-        name="Folder"
-        component={FolderScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Folder" component={FolderScreen} />
       <Stack.Screen name="Item" component={ItemScreen} />
     </Stack.Navigator>
   );
