@@ -21,7 +21,7 @@ export default function FolderRow({ goToFolder, folder }: ItemRowProps) {
         </View>
         <View className="space-y-2">
           <Text className="text-lg font-bold">{folder.name}</Text>
-          <Text className="font-bold">{folder.quantity} unit</Text>
+          <Text className="text-gray-500">{folder.quantity} unit</Text>
         </View>
       </View>
       <TouchableOpacity className="px-2">

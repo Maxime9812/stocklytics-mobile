@@ -4,7 +4,7 @@ export type FolderModel = {
   id: string;
   name: string;
   createdAt: string;
-  parentId?: string;
+  parentId: string | null;
   itemQuantity: number;
 };
 

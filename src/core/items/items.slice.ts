@@ -40,11 +40,11 @@ export const itemsSlice = createSlice({
 });
 
 export const folderItemsIsLoadingSelector =
-  (state: RootState) => (folderId?: string) =>
+  (state: RootState) => (folderId: string | null) =>
     state.items.isLoadingFoldersItemsById[folderId ?? 'root'] ?? false;
 
 export const itemsInFolderSelector =
-  (state: RootState) => (folderId?: string) =>
+  (state: RootState) => (folderId: string | null) =>
     itemsAdapter
       .getSelectors()
       .selectAll(state.items)

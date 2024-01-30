@@ -6,7 +6,7 @@ export class StubFoldersGateway implements FoldersGateway {
 
   constructor(private readonly delay = 0) {}
 
-  async getInFolder(folderId?: string): Promise<FolderModel[]> {
+  async getInFolder(folderId: string | null): Promise<FolderModel[]> {
     return new Promise((resolve) =>
       setTimeout(
         () => resolve(this._foldersInFolder.get(folderId ?? 'root') ?? []),

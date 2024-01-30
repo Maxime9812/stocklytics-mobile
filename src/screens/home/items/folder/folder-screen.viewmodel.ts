@@ -9,7 +9,7 @@ import {
 } from '../../../../core/folders/folders.slice';
 
 export type FolderScreenViewModelParams = {
-  folderId?: string;
+  folderId: string | null;
 };
 
 export type FolderScreenViewModelState =
@@ -37,7 +37,9 @@ export type FolderScreenViewModelState =
 
 export const createFolderScreenViewModel =
   (state: RootState) =>
-  ({ folderId }: FolderScreenViewModelParams): FolderScreenViewModelState => {
+  ({
+    folderId = null,
+  }: FolderScreenViewModelParams): FolderScreenViewModelState => {
     const itemsIsLoading = folderItemsIsLoadingSelector(state)(folderId);
     const foldersIsLoading = folderFoldersIsLoadingSelector(state)(folderId);
     const isLoading = foldersIsLoading || itemsIsLoading;

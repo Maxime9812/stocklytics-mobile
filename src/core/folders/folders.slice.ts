@@ -30,11 +30,11 @@ export const foldersSlice = createSlice({
 });
 
 export const folderFoldersIsLoadingSelector =
-  (state: RootState) => (folderId?: string) =>
+  (state: RootState) => (folderId: string | null) =>
     state.folders.foldersInFolderLoading[folderId ?? 'root'] ?? false;
 
 export const foldersInFolderSelector =
-  (state: RootState) => (folderId?: string) =>
+  (state: RootState) => (folderId: string | null) =>
     folderAdapter
       .getSelectors()
       .selectAll(state.folders)

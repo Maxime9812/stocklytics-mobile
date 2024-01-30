@@ -5,7 +5,7 @@ export type ItemModel = {
   name: string;
   quantity: number;
   description: string;
-  folderId?: string;
+  folderId: string | null;
   createdAt: string;
 };
 

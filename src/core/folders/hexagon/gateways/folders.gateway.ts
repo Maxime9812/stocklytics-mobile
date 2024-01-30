@@ -1,5 +1,5 @@
 import { FolderModel } from '../models/folder.model';
 
 export interface FoldersGateway {
-  getInFolder(folderId?: string): Promise<FolderModel[]>;
+  getInFolder(folderId: string | null): Promise<FolderModel[]>;
 }
