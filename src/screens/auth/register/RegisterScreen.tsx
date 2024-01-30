@@ -32,8 +32,8 @@ export default function RegisterScreen({
 
   const disableSubmit = !formState.isValid;
 
-  const onSubmit = (data: RegisterFormValues) => {
-    const action = appDispatch(registerUseCase(data));
+  const onSubmit = async (data: RegisterFormValues) => {
+    const action = await appDispatch(registerUseCase(data));
     if (isRejected(action)) return;
     navigation.replace('Home', {
       screen: 'Items',
