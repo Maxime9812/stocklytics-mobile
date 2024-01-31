@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { itemsAdapter, ItemsEntityState } from './hexagon/models/item.model';
 import { getItemByIdUseCase } from './hexagon/usecases/get-item-by-id/get-item-by-id.usecase';
 import { getItemsInFolderUseCase } from './hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
@@ -39,13 +39,15 @@ export const itemsSlice = createSlice({
   },
 });
 
-export const folderItemsIsLoadingSelector =
-  (state: RootState) => (folderId: string | null) =>
+const itemsSelectors = itemsAdapter.getSelectors<RootState>(
+  (state) => state.items,
+);
+
+export const selectFolderItemsIsLoading =
+  (folderId: string | null) => (state: RootState) =>
     state.items.isLoadingFoldersItemsById[folderId ?? 'root'] ?? false;
 
-export const itemsInFolderSelector =
-  (state: RootState) => (folderId: string | null) =>
-    itemsAdapter
-      .getSelectors()
-      .selectAll(state.items)
-      .filter((item) => item.folderId === folderId);
+export const selectItemsInFolder = (folderId: string | null) =>
+  createSelector([itemsSelectors.selectAll], (items) =>
+    items.filter((item) => item.folderId === folderId),
+  );

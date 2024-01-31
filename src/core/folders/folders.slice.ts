@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import {
   folderAdapter,
   FolderEntityState,
@@ -29,13 +29,15 @@ export const foldersSlice = createSlice({
   },
 });
 
-export const folderFoldersIsLoadingSelector =
-  (state: RootState) => (folderId: string | null) =>
+const folderSelectors = folderAdapter.getSelectors<RootState>(
+  (state) => state.folders,
+);
+
+export const selectFolderFoldersIsLoading =
+  (folderId: string | null) => (state: RootState) =>
     state.folders.foldersInFolderLoading[folderId ?? 'root'] ?? false;
 
-export const foldersInFolderSelector =
-  (state: RootState) => (folderId: string | null) =>
-    folderAdapter
-      .getSelectors()
-      .selectAll(state.folders)
-      .filter((folder) => folder.parentId === folderId);
+export const selectFoldersInFolder = (folderId: string | null) =>
+  createSelector([folderSelectors.selectAll], (folders) =>
+    folders.filter((folder) => folder.parentId === folderId),
+  );

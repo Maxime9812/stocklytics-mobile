@@ -31,8 +31,7 @@ export default function FolderScreen({
   };
 
   const viewModel = useSelector<RootState, FolderScreenViewModelState>(
-    (state) =>
-      createFolderScreenViewModel(state)({ folderId: params.id ?? null }),
+    createFolderScreenViewModel({ folderId: params.id ?? null }),
   );
 
   useEffect(() => {
@@ -53,10 +52,14 @@ export default function FolderScreen({
             <ScrollView>
               <Card>
                 {viewModel.folders.map((folder) => (
-                  <FolderRow goToFolder={goToFolder} folder={folder} />
+                  <FolderRow
+                    key={folder.id}
+                    goToFolder={goToFolder}
+                    folder={folder}
+                  />
                 ))}
                 {viewModel.items.map((item) => (
-                  <ItemRow goToItem={goToItem} item={item} />
+                  <ItemRow key={item.id} goToItem={goToItem} item={item} />
                 ))}
               </Card>
             </ScrollView>

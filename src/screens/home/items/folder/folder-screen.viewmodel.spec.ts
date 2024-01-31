@@ -8,9 +8,9 @@ describe('FolderScreenViewModel', () => {
     const initialState = stateBuilder()
       .withLoadingFoldersItems(['folder-id'])
       .build();
-    const { type } = createFolderScreenViewModel(initialState)({
-      folderId: 'folder-id',
-    });
+    const { type } = createFolderScreenViewModel({ folderId: 'folder-id' })(
+      initialState,
+    );
     expect(type).toEqual('loading');
   });
 
@@ -18,9 +18,9 @@ describe('FolderScreenViewModel', () => {
     const initialState = stateBuilder()
       .withFolderInFolderLoading('folder-id')
       .build();
-    const { type } = createFolderScreenViewModel(initialState)({
-      folderId: 'folder-id',
-    });
+    const { type } = createFolderScreenViewModel({ folderId: 'folder-id' })(
+      initialState,
+    );
     expect(type).toEqual('loading');
   });
 
@@ -28,9 +28,9 @@ describe('FolderScreenViewModel', () => {
     const initialState = stateBuilder()
       .withNotLoadingFoldersItems(['folder-id'])
       .build();
-    const { type } = createFolderScreenViewModel(initialState)({
-      folderId: 'folder-id',
-    });
+    const { type } = createFolderScreenViewModel({ folderId: 'folder-id' })(
+      initialState,
+    );
     expect(type).toEqual('loaded');
   });
 
@@ -50,9 +50,9 @@ describe('FolderScreenViewModel', () => {
           .build(),
       ])
       .build();
-    const viewModel = createFolderScreenViewModel(initialState)({
-      folderId: 'folder-id',
-    });
+    const viewModel = createFolderScreenViewModel({ folderId: 'folder-id' })(
+      initialState,
+    );
     expect(viewModel).toEqual(
       expect.objectContaining({
         items: [
@@ -88,9 +88,9 @@ describe('FolderScreenViewModel', () => {
           .build(),
       ])
       .build();
-    const viewModel = createFolderScreenViewModel(initialState)({
-      folderId: 'folder-id',
-    });
+    const viewModel = createFolderScreenViewModel({ folderId: 'folder-id' })(
+      initialState,
+    );
     expect(viewModel).toEqual(
       expect.objectContaining({
         folders: [
@@ -114,9 +114,9 @@ describe('FolderScreenViewModel', () => {
       const initialState = stateBuilder()
         .withNotLoadingFoldersItems(['folder-id'])
         .build();
-      const viewModel = createFolderScreenViewModel(initialState)({
-        folderId: 'folder-id',
-      });
+      const viewModel = createFolderScreenViewModel({ folderId: 'folder-id' })(
+        initialState,
+      );
       expect(viewModel).toEqual(
         expect.objectContaining({
           stats: {
@@ -150,9 +150,9 @@ describe('FolderScreenViewModel', () => {
             .build(),
         ])
         .build();
-      const viewModel = createFolderScreenViewModel(initialState)({
-        folderId: 'folder-id',
-      });
+      const viewModel = createFolderScreenViewModel({ folderId: 'folder-id' })(
+        initialState,
+      );
       expect(viewModel).toEqual(
         expect.objectContaining({
           stats: {
