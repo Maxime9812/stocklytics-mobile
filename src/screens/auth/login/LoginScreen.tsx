@@ -72,14 +72,13 @@ export default function LoginScreen({
     <CloseKeyboardOnTouch>
       <BaseLayout>
         <View className="p-4 flex space-y-2">
-          <Text className="text-2xl font-bold text-center dark:text-white">
-            Stocklytics
-          </Text>
           <View className="flex items-center">
             <Text className="text-2xl font-bold dark:text-white">
               Welcome back !
             </Text>
-            <Text className="text-xl text-gray-400">Login to your account</Text>
+            <Text className="text-xl text-neutral-400">
+              Login to your account
+            </Text>
           </View>
           <View className="space-y-4">
             <View>

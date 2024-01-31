@@ -4,7 +4,7 @@ import {
   Alert,
   Platform,
   Text,
-  TouchableOpacity,
+  TouchableHighlight,
   View,
 } from 'react-native';
 import { HomeTabScreenProps } from '../../../navigation/HomeNavigation';
@@ -16,9 +16,11 @@ import { authUserSelector } from '../../../core/auth/auth.slice';
 import Avatar from '../../../components/avatar/Avatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import Card from '../../../components/cards/Card';
+import { useTheme } from '../../../hooks/use-theme';
 
 export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
   const appDispatch = useAppDispatch();
+  const { theme } = useTheme();
   const authUser = useSelector(authUserSelector);
 
   const logout = async () => {
@@ -58,19 +60,29 @@ export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
           <View className="items-center space-y-4">
             <Avatar name={authUser.fullName} />
             <View className="items-center">
-              <Text className="text-xl font-bold">{authUser.fullName}</Text>
-              <Text className="text-lg text-gray-400">{authUser.email}</Text>
+              <Text className="text-xl font-bold dark:text-white">
+                {authUser.fullName}
+              </Text>
+              <Text className="text-lg text-neutral-400">{authUser.email}</Text>
             </View>
           </View>
         )}
         <View>
           <Card>
-            <TouchableOpacity onPress={requestLogout}>
+            <TouchableHighlight
+              underlayColor={theme == 'dark' ? '#262626' : '#f3f4f6'}
+              className="flex-row p-2 justify-between rounded-xl"
+              onPress={requestLogout}
+            >
               <View className="flex-row items-center space-x-2">
-                <MaterialIcons name="logout" size={24} color="black" />
-                <Text>Sign out</Text>
+                <MaterialIcons
+                  name="logout"
+                  size={24}
+                  color={theme == 'dark' ? 'white' : 'black'}
+                />
+                <Text className="dark:text-white">Sign out</Text>
               </View>
-            </TouchableOpacity>
+            </TouchableHighlight>
           </Card>
         </View>
       </View>

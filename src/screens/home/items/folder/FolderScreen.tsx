@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import {
   createFolderScreenViewModel,
   FolderScreenViewModelState,
+  FolderScreenViewModelStateLoaded,
 } from './folder-screen.viewmodel';
 import { RootState } from '../../../../core/create-store';
 import { exhaustiveGuard } from '../../../../core/common/utils/exhaustive-guard';
@@ -22,14 +23,6 @@ export default function FolderScreen({
   route: { params = {} },
 }: ItemsStackScreenProps<'Folder'>) {
   const appDispatch = useAppDispatch();
-  const goToItem = (id: string) => {
-    navigation.push('Item', { id });
-  };
-
-  const goToFolder = (id: string) => {
-    navigation.push('Folder', { id });
-  };
-
   const viewModel = useSelector<RootState, FolderScreenViewModelState>(
     createFolderScreenViewModel({ folderId: params.id ?? null }),
   );
@@ -42,37 +35,57 @@ export default function FolderScreen({
   switch (viewModel.type) {
     case 'loaded':
       return (
-        <BaseLayout>
-          <View className="p-4 space-y-2 h-screen">
-            <FolderListHeader
-              foldersCount={viewModel.stats.totalFolders}
-              itemsCount={viewModel.stats.totalItems}
-              totalQuantity={viewModel.stats.totalQuantity}
-            />
-            <ScrollView>
-              <Card>
-                {viewModel.folders.map((folder) => (
-                  <FolderRow
-                    key={folder.id}
-                    goToFolder={goToFolder}
-                    folder={folder}
-                  />
-                ))}
-                {viewModel.items.map((item) => (
-                  <ItemRow key={item.id} goToItem={goToItem} item={item} />
-                ))}
-              </Card>
-            </ScrollView>
-          </View>
-        </BaseLayout>
+        <LoadedFolderScreen viewModel={viewModel} navigation={navigation} />
       );
     case 'loading':
-      return (
-        <BaseLayout>
-          <Text>Loading</Text>
-        </BaseLayout>
-      );
+      return <LoadingFolderScreen />;
     default:
       exhaustiveGuard(viewModel);
   }
 }
+
+const LoadingFolderScreen = () => (
+  <BaseLayout>
+    <Text>Loading</Text>
+  </BaseLayout>
+);
+
+type LoadedFolderScreenProps = {
+  viewModel: FolderScreenViewModelStateLoaded;
+  navigation: ItemsStackScreenProps<'Folder'>['navigation'];
+};
+
+const LoadedFolderScreen = ({
+  viewModel,
+  navigation,
+}: LoadedFolderScreenProps) => {
+  const goToItem = (id: string) => {
+    navigation.push('Item', { id });
+  };
+
+  const goToFolder = (id: string) => {
+    navigation.push('Folder', { id });
+  };
+
+  return (
+    <BaseLayout>
+      <View className="p-4 space-y-2 h-screen">
+        <FolderListHeader {...viewModel.stats} />
+        <ScrollView>
+          <Card>
+            {viewModel.folders.map((folder) => (
+              <FolderRow
+                key={folder.id}
+                goToFolder={goToFolder}
+                folder={folder}
+              />
+            ))}
+            {viewModel.items.map((item) => (
+              <ItemRow key={item.id} goToItem={goToItem} item={item} />
+            ))}
+          </Card>
+        </ScrollView>
+      </View>
+    </BaseLayout>
+  );
+};

@@ -59,14 +59,19 @@ export default function RegisterScreen({
     <BaseLayout>
       <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
-          <Text className="text-2xl font-bold text-center">Stocklytics</Text>
           <View className="flex items-center">
-            <Text className="text-2xl font-bold">Create an account</Text>
-            <Text className="text-xl">Get started for free today</Text>
+            <Text className="text-2xl font-bold dark:text-white">
+              Create an account
+            </Text>
+            <Text className="text-xl text-neutral-400">
+              Get started for free today
+            </Text>
           </View>
           <View className="space-y-4">
             <View>
-              <Text className="mb-2 font-medium">Full Name</Text>
+              <Text className="mb-2 font-medium dark:text-white">
+                Full Name
+              </Text>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -84,7 +89,7 @@ export default function RegisterScreen({
               />
             </View>
             <View>
-              <Text className="mb-2 font-medium">Email</Text>
+              <Text className="mb-2 font-medium dark:text-white">Email</Text>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -102,7 +107,7 @@ export default function RegisterScreen({
               />
             </View>
             <View>
-              <Text className="mb-2 font-medium">Password</Text>
+              <Text className="mb-2 font-medium dark:text-white">Password</Text>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -120,19 +125,19 @@ export default function RegisterScreen({
               />
             </View>
           </View>
-          <Text className="text-center">
+          <Text className="text-center dark:text-white">
             By using the app, you agree to stocklytics's Terms & Conditions and
             Privacy Policy
           </Text>
           <TouchableOpacity
-            className={`bg-red-400 py-4 rounded ${disableSubmit && 'opacity-50'}`}
+            className={`bg-red-400 py-4 rounded-full flex-row justify-center items-center space-x-1 ${disableSubmit && 'opacity-50'}`}
             onPress={handleSubmit(onSubmit)}
             disabled={disableSubmit}
           >
             <Text className="text-white text-center">Create account</Text>
           </TouchableOpacity>
           <View className="flex flex-row justify-center space-x-1">
-            <Text>Already have an account ?</Text>
+            <Text className="dark:text-white">Already have an account ?</Text>
             <TouchableOpacity onPress={goToLogin}>
               <Text className="text-blue-500">Sign in</Text>
             </TouchableOpacity>

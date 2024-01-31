@@ -13,6 +13,7 @@ import NotificationScreen from '../screens/home/notification/NotificationScreen'
 import MenuScreen from '../screens/home/menu/MenuScreen';
 import { MaterialCommunityIcons, Feather, Ionicons } from '@expo/vector-icons';
 import ItemsNavigation, { ItemsNavigator } from './ItemsNavigation';
+import { useTheme } from '../hooks/use-theme';
 
 export type HomeTab = {
   Dashboard: undefined;
@@ -58,14 +59,17 @@ const MenuIcon = (props: IconProps) => {
 };
 
 export default function HomeNavigation() {
+  const { theme } = useTheme();
   return (
     <Tab.Navigator
       initialRouteName="Dashboard"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#f87171',
+        tabBarInactiveTintColor: '#a3a3a3',
         tabBarStyle: {
           borderTopWidth: 0,
+          backgroundColor: theme == 'dark' ? '#171717' : '#ffffff',
         },
       }}
     >
@@ -74,9 +78,6 @@ export default function HomeNavigation() {
         component={DashboardScreen}
         options={{
           tabBarIcon: DashboardIcon,
-          tabBarBadgeStyle: {
-            backgroundColor: '#f87171',
-          },
         }}
       />
       <Tab.Screen

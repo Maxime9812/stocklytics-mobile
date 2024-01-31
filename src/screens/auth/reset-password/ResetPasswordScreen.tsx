@@ -48,10 +48,11 @@ export default function ResetPasswordScreen({
     <BaseLayout>
       <CloseKeyboardOnTouch>
         <View className="p-4 flex h-screen space-y-2">
-          <Text className="text-2xl font-bold text-center">Stocklytics</Text>
-          <Text className="text-xl font-bold">Reset Password</Text>
+          <Text className="text-3xl font-bold dark:text-white">
+            Reset Password
+          </Text>
           <View>
-            <Text className="mb-2 font-medium">Email</Text>
+            <Text className="mb-2 font-medium dark:text-white">Email</Text>
             <Controller
               control={control}
               render={({ field }) => (
@@ -69,7 +70,7 @@ export default function ResetPasswordScreen({
             />
           </View>
           <TouchableOpacity
-            className={`bg-red-400 py-4 rounded ${disableSubmit && 'opacity-50'}`}
+            className={`bg-red-400 py-4 rounded-full ${disableSubmit && 'opacity-50'}`}
             onPress={handleSubmit(onSubmit)}
             disabled={disableSubmit}
           >

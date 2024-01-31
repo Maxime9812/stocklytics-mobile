@@ -13,28 +13,32 @@ export type FolderScreenViewModelParams = {
   folderId: string | null;
 };
 
+export type FolderScreenViewModelStateLoading = {
+  type: 'loading';
+};
+
+export type FolderScreenViewModelStateLoaded = {
+  type: 'loaded';
+  items: {
+    id: string;
+    name: string;
+    quantity: number;
+  }[];
+  folders: {
+    id: string;
+    name: string;
+    quantity: number;
+  }[];
+  stats: {
+    totalItems: number;
+    totalQuantity: number;
+    totalFolders: number;
+  };
+};
+
 export type FolderScreenViewModelState =
-  | {
-      type: 'loading';
-    }
-  | {
-      type: 'loaded';
-      items: {
-        id: string;
-        name: string;
-        quantity: number;
-      }[];
-      folders: {
-        id: string;
-        name: string;
-        quantity: number;
-      }[];
-      stats: {
-        totalItems: number;
-        totalQuantity: number;
-        totalFolders: number;
-      };
-    };
+  | FolderScreenViewModelStateLoading
+  | FolderScreenViewModelStateLoaded;
 
 const selectIsLoading = (folderId: string | null) => (state: RootState) => {
   const itemsIsLoading = selectFolderItemsIsLoading(folderId)(state);
