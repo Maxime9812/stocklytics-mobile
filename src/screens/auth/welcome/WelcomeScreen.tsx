@@ -18,7 +18,7 @@ export default function WelcomeScreen({
           <Image source={WelcomeBackground1} className="flex-1 w-full h-full" />
           <View className="space-y-2">
             <TouchableOpacity onPress={goToRegister}>
-              <View className="bg-red-400 p-4 rounded">
+              <View className="bg-red-400 p-4 rounded-full ">
                 <Text className="text-white text-center font-bold">
                   Get Started
                 </Text>

@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { InferType } from 'yup';
@@ -8,9 +8,10 @@ import { useAppDispatch } from '../../../store-hooks';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 import { isRejected } from '@reduxjs/toolkit';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
-import BaseLayout from '../../../components/layouts/BaseLayout';
 import { createLoginScreenViewModel } from './login-screen.viewmodel';
 import FeatherIcon from '@expo/vector-icons/Feather';
+import BaseTextInput from '../../../components/inputs/BaseTextInput';
+import BaseLayout from '../../../components/layouts/BaseLayout';
 
 const loginFormSchema = yup
   .object({
@@ -68,27 +69,30 @@ export default function LoginScreen({
   }, [focusOnTransitionEnd]);
 
   return (
-    <BaseLayout>
-      <CloseKeyboardOnTouch>
+    <CloseKeyboardOnTouch>
+      <BaseLayout>
         <View className="p-4 flex space-y-2">
-          <Text className="text-2xl font-bold text-center">Stocklytics</Text>
+          <Text className="text-2xl font-bold text-center dark:text-white">
+            Stocklytics
+          </Text>
           <View className="flex items-center">
-            <Text className="text-2xl font-bold">Welcome back !</Text>
-            <Text className="text-xl">Login to your account</Text>
+            <Text className="text-2xl font-bold dark:text-white">
+              Welcome back !
+            </Text>
+            <Text className="text-xl text-gray-400">Login to your account</Text>
           </View>
           <View className="space-y-4">
             <View>
-              <Text className="mb-2 font-medium">Email</Text>
+              <Text className="mb-2 font-medium dark:text-white">Email</Text>
               <Controller
                 control={control}
                 render={({ field }) => (
-                  <TextInput
+                  <BaseTextInput
                     {...field}
                     onChangeText={field.onChange}
                     autoCapitalize="none"
                     placeholder="john.doe@gmail.com"
                     textContentType="emailAddress"
-                    className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
                     returnKeyType="next"
                     onSubmitEditing={() => setFocus('password')}
                   />
@@ -97,17 +101,16 @@ export default function LoginScreen({
               />
             </View>
             <View>
-              <Text className="mb-2 font-medium">Password</Text>
+              <Text className="mb-2 font-medium dark:text-white">Password</Text>
               <Controller
                 control={control}
                 render={({ field }) => (
-                  <TextInput
+                  <BaseTextInput
                     {...field}
                     onChangeText={field.onChange}
                     placeholder="••••••••"
                     textContentType="password"
                     secureTextEntry
-                    className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
                     returnKeyType="done"
                     onSubmitEditing={handleSubmit(onSubmit)}
                   />
@@ -122,13 +125,13 @@ export default function LoginScreen({
                 Forgot password ?
               </Text>
             </TouchableOpacity>
-            <Text className="text-center">
+            <Text className="text-center dark:text-white">
               By using the app, you agree to stocklytics's Terms & Conditions
               and Privacy Policy
             </Text>
           </View>
           <TouchableOpacity
-            className={`bg-red-400 py-4 rounded flex-row justify-center items-center space-x-1 ${disableSubmit && 'opacity-50'}`}
+            className={`bg-red-400 py-4 rounded-full flex-row justify-center items-center space-x-1 ${disableSubmit && 'opacity-50'}`}
             onPress={handleSubmit(onSubmit)}
             disabled={disableSubmit}
           >
@@ -140,13 +143,13 @@ export default function LoginScreen({
             <Text className="text-white">Continue</Text>
           </TouchableOpacity>
           <View className="flex flex-row justify-center space-x-1">
-            <Text>New here ?</Text>
+            <Text className="dark:text-white">New here ?</Text>
             <TouchableOpacity onPress={goToRegister}>
               <Text className="text-blue-500">Create an account</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </CloseKeyboardOnTouch>
-    </BaseLayout>
+      </BaseLayout>
+    </CloseKeyboardOnTouch>
   );
 }

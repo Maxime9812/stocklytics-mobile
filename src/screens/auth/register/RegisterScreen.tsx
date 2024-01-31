@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { InferType } from 'yup';
@@ -10,6 +10,7 @@ import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
 import { useAppDispatch } from '../../../store-hooks';
 import { registerUseCase } from '../../../core/auth/hexagon/usecases/register/register.usecase';
 import { isRejected } from '@reduxjs/toolkit';
+import BaseTextInput from '../../../components/inputs/BaseTextInput';
 
 const registerFormSchema = yup
   .object({
@@ -69,13 +70,12 @@ export default function RegisterScreen({
               <Controller
                 control={control}
                 render={({ field }) => (
-                  <TextInput
+                  <BaseTextInput
                     {...field}
                     onChangeText={field.onChange}
                     autoCapitalize="words"
                     placeholder="John Doe"
                     textContentType="name"
-                    className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
                     returnKeyType="next"
                     onSubmitEditing={() => setFocus('email')}
                   />
@@ -88,13 +88,12 @@ export default function RegisterScreen({
               <Controller
                 control={control}
                 render={({ field }) => (
-                  <TextInput
+                  <BaseTextInput
                     {...field}
                     onChangeText={field.onChange}
                     autoCapitalize="none"
                     placeholder="john.doe@gmail.com"
                     textContentType="emailAddress"
-                    className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
                     returnKeyType="next"
                     onSubmitEditing={() => setFocus('password')}
                   />
@@ -107,13 +106,12 @@ export default function RegisterScreen({
               <Controller
                 control={control}
                 render={({ field }) => (
-                  <TextInput
+                  <BaseTextInput
                     {...field}
                     onChangeText={field.onChange}
                     placeholder="••••••••"
                     textContentType="password"
                     secureTextEntry
-                    className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
                     returnKeyType="done"
                     onSubmitEditing={handleSubmit(onSubmit)}
                   />

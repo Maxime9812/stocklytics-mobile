@@ -65,9 +65,9 @@ const axiosFoldersGateway = new AxiosFoldersGateway(axiosInstance);
 
 const store = createStore(
   {
-    authGateway: axiosAuthGateway,
-    itemsGateway: axiosItemsGateway,
-    foldersGateway: axiosFoldersGateway,
+    authGateway,
+    itemsGateway,
+    foldersGateway,
   },
   stateBuilder().build(),
 );

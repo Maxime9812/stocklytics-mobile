@@ -1,4 +1,4 @@
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import BaseLayout from '../../../../components/layouts/BaseLayout';
 import ItemRow from './components/ItemRow';
@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../../../../store-hooks';
 import { getItemsInFolderUseCase } from '../../../../core/items/hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
 import { getFoldersInFolderUseCase } from '../../../../core/folders/hexagon/usecases/get-folders-in-folder/get-folders-in-folder.usecase';
+import Card from '../../../../components/cards/Card';
 
 export default function FolderScreen({
   navigation,
@@ -30,7 +31,8 @@ export default function FolderScreen({
   };
 
   const viewModel = useSelector<RootState, FolderScreenViewModelState>(
-    (state) => createFolderScreenViewModel(state)({ folderId: params.id }),
+    (state) =>
+      createFolderScreenViewModel(state)({ folderId: params.id ?? null }),
   );
 
   useEffect(() => {
@@ -42,19 +44,23 @@ export default function FolderScreen({
     case 'loaded':
       return (
         <BaseLayout>
-          <FolderListHeader
-            foldersCount={viewModel.stats.totalFolders}
-            itemsCount={viewModel.stats.totalItems}
-            totalQuantity={viewModel.stats.totalQuantity}
-          />
-          <ScrollView>
-            {viewModel.folders.map((folder) => (
-              <FolderRow goToFolder={goToFolder} folder={folder} />
-            ))}
-            {viewModel.items.map((item) => (
-              <ItemRow goToItem={goToItem} item={item} />
-            ))}
-          </ScrollView>
+          <View className="p-4 space-y-2 h-screen">
+            <FolderListHeader
+              foldersCount={viewModel.stats.totalFolders}
+              itemsCount={viewModel.stats.totalItems}
+              totalQuantity={viewModel.stats.totalQuantity}
+            />
+            <ScrollView>
+              <Card>
+                {viewModel.folders.map((folder) => (
+                  <FolderRow goToFolder={goToFolder} folder={folder} />
+                ))}
+                {viewModel.items.map((item) => (
+                  <ItemRow goToItem={goToItem} item={item} />
+                ))}
+              </Card>
+            </ScrollView>
+          </View>
         </BaseLayout>
       );
     case 'loading':

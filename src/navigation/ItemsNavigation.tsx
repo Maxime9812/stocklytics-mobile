@@ -9,6 +9,7 @@ import {
 import { RootStack, RootStackScreenProps } from './NavigationProvider';
 import ItemScreen from '../screens/home/items/item/ItemScreen';
 import FolderScreen from '../screens/home/items/folder/FolderScreen';
+import StackBackArrow from '../components/stack-navigation/StackBackArrow';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
@@ -32,6 +33,7 @@ export default function ItemsNavigation() {
       screenOptions={{
         headerTitle: '',
         headerTransparent: true,
+        headerLeft: ({ canGoBack }) => <StackBackArrow canGoBack={canGoBack} />,
       }}
     >
       <Stack.Screen name="Folder" component={FolderScreen} />

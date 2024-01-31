@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { authUserSelector } from '../../../core/auth/auth.slice';
 import Avatar from '../../../components/avatar/Avatar';
 import { MaterialIcons } from '@expo/vector-icons';
+import Card from '../../../components/cards/Card';
 
 export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
   const appDispatch = useAppDispatch();
@@ -62,14 +63,15 @@ export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
             </View>
           </View>
         )}
-        <View className="bg-gray-100 p-2 rounded">
-          <TouchableOpacity
-            onPress={requestLogout}
-            className="flex-row items-center space-x-2"
-          >
-            <MaterialIcons name="logout" size={24} color="black" />
-            <Text>Sign out</Text>
-          </TouchableOpacity>
+        <View>
+          <Card>
+            <TouchableOpacity onPress={requestLogout}>
+              <View className="flex-row items-center space-x-2">
+                <MaterialIcons name="logout" size={24} color="black" />
+                <Text>Sign out</Text>
+              </View>
+            </TouchableOpacity>
+          </Card>
         </View>
       </View>
     </BaseLayout>

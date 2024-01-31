@@ -64,6 +64,9 @@ export default function HomeNavigation() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#f87171',
+        tabBarStyle: {
+          borderTopWidth: 0,
+        },
       }}
     >
       <Tab.Screen

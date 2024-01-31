@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 import BaseLayout from '../../../components/layouts/BaseLayout';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
+import BaseTextInput from '../../../components/inputs/BaseTextInput';
 
 const resetPasswordFormSchema = yup
   .object({
@@ -54,13 +55,12 @@ export default function ResetPasswordScreen({
             <Controller
               control={control}
               render={({ field }) => (
-                <TextInput
+                <BaseTextInput
                   {...field}
                   onChangeText={field.onChange}
                   autoCapitalize="none"
                   placeholder="john.doe@gmail.com"
                   textContentType="emailAddress"
-                  className="bg-gray-50 border border-gray-300 rounded p-4 focus:border-blue-500"
                   returnKeyType="done"
                   onSubmitEditing={handleSubmit(onSubmit)}
                 />
