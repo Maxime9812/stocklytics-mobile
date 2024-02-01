@@ -1,23 +1,32 @@
 import { TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '../../hooks/use-theme';
+import { styled } from 'nativewind';
+
+type Variant = 'back' | 'close';
 
 type Props = {
   canGoBack: boolean;
+  variant?: Variant;
 };
-export default function StackBackArrow({ canGoBack }: Props) {
+
+const Icon = styled(Feather, 'dark:text-white text-2xl');
+
+const variants: Record<Variant, any> = {
+  back: 'arrow-left',
+  close: 'x',
+};
+
+export default function StackBackButton({
+  canGoBack,
+  variant = 'back',
+}: Props) {
   const { goBack } = useNavigation();
-  const { theme } = useTheme();
   return (
     <>
       {canGoBack && (
         <TouchableOpacity onPress={() => goBack()}>
-          <Feather
-            name="arrow-left"
-            size={24}
-            color={theme == 'dark' ? 'white' : 'black'}
-          />
+          <Icon name={variants[variant]} />
         </TouchableOpacity>
       )}
     </>

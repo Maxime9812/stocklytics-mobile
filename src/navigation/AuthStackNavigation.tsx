@@ -11,7 +11,7 @@ import WelcomeScreen from '../screens/auth/welcome/WelcomeScreen';
 import LoginScreen from '../screens/auth/login/LoginScreen';
 import RegisterScreen from '../screens/auth/register/RegisterScreen';
 import ResetPasswordScreen from '../screens/auth/reset-password/ResetPasswordScreen';
-import StackBackArrow from '../components/stack-navigation/StackBackArrow';
+import StackBackButton from '../components/stack-navigation/StackBackButton';
 
 export type AuthStack = {
   Welcome: undefined;
@@ -37,7 +37,9 @@ export default function AuthStackNavigation() {
       screenOptions={{
         headerTitle: '',
         headerTransparent: true,
-        headerLeft: ({ canGoBack }) => <StackBackArrow canGoBack={canGoBack} />,
+        headerLeft: ({ canGoBack }) => (
+          <StackBackButton canGoBack={canGoBack} />
+        ),
       }}
     >
       <Stack.Screen
