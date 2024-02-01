@@ -15,9 +15,9 @@ export default function NewElementBottomSheetContent(
   const { theme } = useTheme();
   return (
     <View className="p-2 space-y-2">
-      <Card>
+      <Card className="dark:bg-neutral-950">
         <TouchableHighlight
-          underlayColor={theme == 'dark' ? '#262626' : '#f3f4f6'}
+          underlayColor={theme == 'dark' ? 'black' : '#f3f4f6'}
           className="flex-row p-2 justify-between rounded-xl"
           onPress={props.onPressItem}
         >
@@ -31,9 +31,9 @@ export default function NewElementBottomSheetContent(
           </View>
         </TouchableHighlight>
       </Card>
-      <Card>
+      <Card className="dark:bg-neutral-950">
         <TouchableHighlight
-          underlayColor={theme == 'dark' ? '#262626' : '#f3f4f6'}
+          underlayColor={theme == 'dark' ? 'black' : '#f3f4f6'}
           className="flex-row p-2 justify-between rounded-xl"
           onPress={props.onPressFolder}
         >
