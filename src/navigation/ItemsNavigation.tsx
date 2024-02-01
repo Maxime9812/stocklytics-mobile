@@ -11,10 +11,14 @@ import ItemScreen from '../screens/home/items/item/ItemScreen';
 import FolderScreen from '../screens/home/items/folder/FolderScreen';
 import StackBackButton from '../components/stack-navigation/StackBackButton';
 import FolderScreenHeader from '../screens/home/items/folder/FolderScreenHeader';
+import CreateItemScreen from '../screens/home/items/create-item/CreateItemScreen';
+import CreateFolderScreen from '../screens/home/items/create-folder/CreateFolderScreen';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
   Item: { id: string };
+  CreateItem: { folderId?: string };
+  CreateFolder: { folderId?: string };
 };
 
 export type ItemsStackScreenProps<T extends keyof ItemsStack> =
@@ -42,9 +46,22 @@ export default function ItemsNavigation() {
       <Stack.Screen
         name="Folder"
         component={FolderScreen}
-        options={{ headerRight: () => <FolderScreenHeader /> }}
+        options={{
+          headerRight: () => <FolderScreenHeader />,
+        }}
       />
       <Stack.Screen name="Item" component={ItemScreen} />
+      <Stack.Group
+        screenOptions={{
+          presentation: 'modal',
+          headerLeft: ({ canGoBack }) => (
+            <StackBackButton canGoBack={canGoBack} variant={'close'} />
+          ),
+        }}
+      >
+        <Stack.Screen name="CreateItem" component={CreateItemScreen} />
+        <Stack.Screen name="CreateFolder" component={CreateFolderScreen} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
