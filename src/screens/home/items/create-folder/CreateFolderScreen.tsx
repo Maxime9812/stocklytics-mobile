@@ -7,7 +7,9 @@ export default function CreateFolderScreen(
 ) {
   return (
     <BaseLayout>
-      <Text>For folder {props.route.params.folderId}</Text>
+      <Text className="dark:text-white text-2xl">
+        Add folder to Electronics
+      </Text>
     </BaseLayout>
   );
 }

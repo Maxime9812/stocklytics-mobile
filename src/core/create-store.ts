@@ -14,11 +14,14 @@ import { ItemsGateway } from './items/hexagon/gateways/items.gateway';
 import { StubItemsGateway } from './items/infra/gateways/stub-items.gateway';
 import { FoldersGateway } from './folders/hexagon/gateways/folders.gateway';
 import { StubFoldersGateway } from './folders/infra/gateways/stub-folders.gateway';
+import { UUIDProvider } from './common/uuid-provider/UUIDProvider';
+import { DeterministicUUIDProvider } from './common/uuid-provider/deterministic-uuid.provider';
 
 export type Dependencies = {
   authGateway: AuthGateway;
   itemsGateway: ItemsGateway;
   foldersGateway: FoldersGateway;
+  uuidProvider: UUIDProvider;
 };
 
 export const EMPTY_ARGS = 'EMPTY_ARGS' as const;
@@ -49,6 +52,7 @@ export const createTestStore = (
     authGateway = new StubAuthGateway(),
     itemsGateway = new StubItemsGateway(),
     foldersGateway = new StubFoldersGateway(),
+    uuidProvider = new DeterministicUUIDProvider(),
   }: Partial<Dependencies> = {},
   preloadedState: Partial<RootState> = {},
 ) => {
@@ -61,7 +65,7 @@ export const createTestStore = (
   const getAction = () => actions;
 
   const store = createStore(
-    { authGateway, itemsGateway, foldersGateway },
+    { authGateway, itemsGateway, foldersGateway, uuidProvider },
     preloadedState,
     [logActionsMiddleware],
   );

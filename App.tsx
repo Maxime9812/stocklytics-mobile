@@ -9,6 +9,7 @@ import { StubItemsGateway } from './src/core/items/infra/gateways/stub-items.gat
 import { StubFoldersGateway } from './src/core/folders/infra/gateways/stub-folders.gateway';
 import { AxiosItemsGateway } from './src/core/items/infra/gateways/axios-items.gateway';
 import { AxiosFoldersGateway } from './src/core/folders/infra/gateways/axios-folders.gateway';
+import { CryptoUUIDProvider } from './src/core/common/uuid-provider/crypto-uuid.provider';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -24,7 +25,7 @@ stubAuthGateway.givenUserWithCredentials({
 });
 const authGateway = new AsyncStorageAuthGateway(stubAuthGateway);
 const axiosInstance = axios.create({
-  baseURL: 'http://192.168.5.54:3000',
+  baseURL: 'http://192.168.5.61:3000',
   withCredentials: true,
 });
 const axiosAuthGateway = new AxiosAuthGateway(axiosInstance);
@@ -63,11 +64,14 @@ foldersGateway.givenFoldersInFolder([
 
 const axiosFoldersGateway = new AxiosFoldersGateway(axiosInstance);
 
+const uuidProvider = new CryptoUUIDProvider();
+
 const store = createStore(
   {
-    authGateway,
-    itemsGateway,
-    foldersGateway,
+    authGateway: axiosAuthGateway,
+    itemsGateway: axiosItemsGateway,
+    foldersGateway: axiosFoldersGateway,
+    uuidProvider,
   },
   stateBuilder().build(),
 );

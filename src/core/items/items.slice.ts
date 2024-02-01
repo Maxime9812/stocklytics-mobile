@@ -3,6 +3,7 @@ import { itemsAdapter, ItemsEntityState } from './hexagon/models/item.model';
 import { getItemByIdUseCase } from './hexagon/usecases/get-item-by-id/get-item-by-id.usecase';
 import { getItemsInFolderUseCase } from './hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
 import { RootState } from '../create-store';
+import { addItemInFolderUseCase } from './hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
 
 export type ItemsSliceState = ItemsEntityState & {
   isLoadingById: Record<string, boolean>;
@@ -35,6 +36,11 @@ export const itemsSlice = createSlice({
       })
       .addCase(getItemsInFolderUseCase.pending, (state, action) => {
         state.isLoadingFoldersItemsById[action.meta.arg ?? 'root'] = true;
+      })
+      .addCase(addItemInFolderUseCase.fulfilled, (state, action) => {
+        const item = action.payload;
+        itemsAdapter.upsertOne(state, item);
+        state.isLoadingById[item.id] = false;
       });
   },
 });

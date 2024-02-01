@@ -53,7 +53,7 @@ export default function ItemsNavigation() {
       <Stack.Screen name="Item" component={ItemScreen} />
       <Stack.Group
         screenOptions={{
-          presentation: 'modal',
+          presentation: 'transparentModal',
           headerLeft: ({ canGoBack }) => (
             <StackBackButton canGoBack={canGoBack} variant={'close'} />
           ),

@@ -1,4 +1,7 @@
-import { ItemsGateway } from '../../hexagon/gateways/items.gateway';
+import {
+  AddItemInFolderPayload,
+  ItemsGateway,
+} from '../../hexagon/gateways/items.gateway';
 import { ItemModel } from '../../hexagon/models/item.model';
 import { AxiosInstance } from 'axios';
 
@@ -14,5 +17,15 @@ export class AxiosItemsGateway implements ItemsGateway {
       params: { folderId },
     });
     return response.data;
+  }
+
+  async addItemInFolder(payload: AddItemInFolderPayload): Promise<ItemModel> {
+    try {
+      const response = await this.axios.post<ItemModel>('/items', payload);
+      return response.data;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
   }
 }
