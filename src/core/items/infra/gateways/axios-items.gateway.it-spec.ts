@@ -35,4 +35,35 @@ describe('AxiosItemsGateway', () => {
       ]);
     });
   });
+
+  describe('addItemInFolder', () => {
+    test('Item is send and response is returned', async () => {
+      nock(BASE_URL)
+        .post('/items', {
+          id: 'item-id',
+          name: 'Item name',
+          quantity: 10,
+          folderId: 'folder-id',
+        })
+        .reply(200, {
+          id: 'item-id',
+          name: 'Item name',
+          quantity: 10,
+          folderId: 'folder-id',
+        });
+      expect(
+        await axiosItemsGateway.addItemInFolder({
+          id: 'item-id',
+          name: 'Item name',
+          quantity: 10,
+          folderId: 'folder-id',
+        }),
+      ).toEqual({
+        id: 'item-id',
+        name: 'Item name',
+        quantity: 10,
+        folderId: 'folder-id',
+      });
+    });
+  });
 });

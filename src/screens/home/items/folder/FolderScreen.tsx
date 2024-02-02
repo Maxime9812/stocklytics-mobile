@@ -68,10 +68,11 @@ const LoadedFolderScreen = ({
   };
 
   return (
-    <BaseLayout>
-      <View className="p-4 space-y-2 h-screen">
-        <FolderListHeader {...viewModel.stats} />
-        <ScrollView>
+    <BaseLayout className="flex-1">
+      <ScrollView className="">
+        <View className="p-4 space-y-2 flex-1">
+          <FolderListHeader {...viewModel.stats} />
+
           <Card>
             {viewModel.folders.map((folder) => (
               <FolderRow
@@ -84,8 +85,8 @@ const LoadedFolderScreen = ({
               <ItemRow key={item.id} goToItem={goToItem} item={item} />
             ))}
           </Card>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </BaseLayout>
   );
 };

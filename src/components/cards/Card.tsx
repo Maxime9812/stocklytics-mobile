@@ -7,8 +7,8 @@ export default function Card({
 }: PropsWithChildren<View['props']>) {
   return (
     <View
-      className="bg-white ligth:shadow-sm shadow-gray-100 rounded-xl p-1 dark:bg-neutral-900"
       {...props}
+      className="bg-white shadow-sm shadow-neutral-100 dark:shadow-black rounded-xl p-1 dark:bg-neutral-900"
     >
       {children}
     </View>
