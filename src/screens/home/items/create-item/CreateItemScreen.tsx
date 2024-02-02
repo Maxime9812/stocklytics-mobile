@@ -9,8 +9,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import CloseKeyboardOnTouch from '../../../../components/CloseKeyboardOnTouch';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../../../store-hooks';
-import { addItemInFolderUseCase } from '../../../../core/items/hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
 import { isRejected } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
+import { createCreateItemScreenViewModel } from './create-item-screen.viewmodel';
 
 const createItemFormSchema = yup
   .object({
@@ -27,7 +28,10 @@ export default function CreateItemScreen({
     params: { folderId },
   },
 }: ItemsStackScreenProps<'CreateItem'>) {
-  const appDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const viewModel = useSelector(
+    createCreateItemScreenViewModel({ folderId, dispatch }),
+  );
   const { control, handleSubmit, formState, setFocus } =
     useForm<CreateItemFormValues>({
       defaultValues: {
@@ -41,9 +45,7 @@ export default function CreateItemScreen({
   const disableSubmit = !formState.isValid || isLoading;
 
   const onSubmit = async (values: CreateItemFormValues) => {
-    const action = await appDispatch(
-      addItemInFolderUseCase({ ...values, folderId }),
-    );
+    const action = await viewModel.addItem(values);
     if (isRejected(action)) return;
     navigation.goBack();
   };
@@ -64,7 +66,7 @@ export default function CreateItemScreen({
       <BaseLayout>
         <View className="p-2 space-y-2">
           <Text className="dark:text-white text-2xl">
-            Add item to Electronics
+            Add item to {viewModel.folderName}
           </Text>
           <View>
             <Text className="dark:text-white mb-2">Name</Text>

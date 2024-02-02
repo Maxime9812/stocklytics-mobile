@@ -8,13 +8,15 @@ export type AddItemInFolderUseCasePayload = {
 
 export const addItemInFolderUseCase = createAppAsyncThunk(
   'items/addItemInFolder',
-  (
+  async (
     payload: AddItemInFolderUseCasePayload,
-    { extra: { itemsGateway, uuidProvider } },
+    { extra: { itemsGateway, uuidProvider }, rejectWithValue },
   ) => {
-    return itemsGateway.addItemInFolder({
+    const item = await itemsGateway.addItemInFolder({
       id: uuidProvider.generate(),
       ...payload,
     });
+    if (!item) return rejectWithValue('Error adding item');
+    return item;
   },
 );

@@ -37,4 +37,16 @@ describe('Feature: Add item in folder', () => {
 
     fixture.thenItemsIs([itemAdded]);
   });
+
+  test('An error occur', async () => {
+    fixture.givenUUID('item-1');
+
+    await fixture.whenAddItemInFolder({
+      name: 'Iphone 13 pro max',
+      quantity: 4,
+      folderId: 'folder-1',
+    });
+
+    fixture.thenItemsIs([]);
+  });
 });

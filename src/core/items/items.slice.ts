@@ -57,3 +57,6 @@ export const selectItemsInFolder = (folderId: string | null) =>
   createSelector([itemsSelectors.selectAll], (items) =>
     items.filter((item) => item.folderId === folderId),
   );
+
+export const selectItemById = (id: string) => (state: RootState) =>
+  itemsSelectors.selectById(state, id);
