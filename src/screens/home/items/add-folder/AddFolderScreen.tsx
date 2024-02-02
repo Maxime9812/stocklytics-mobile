@@ -74,7 +74,6 @@ export default function AddFolderScreen({
                   {...field}
                   onChangeText={field.onChange}
                   value={field.value.toString()}
-                  keyboardType="numeric"
                   returnKeyType="done"
                   onSubmitEditing={handleSubmit(onSubmit)}
                 />

@@ -7,5 +7,15 @@ export type AddFolderUseCasePayload = {
 
 export const addFolderUseCase = createAppAsyncThunk(
   'folders/addFolder',
-  async (payload: AddFolderUseCasePayload) => {},
+  async (
+    payload: AddFolderUseCasePayload,
+    { extra: { foldersGateway, uuidProvider }, rejectWithValue },
+  ) => {
+    const folder = await foldersGateway.addFolder({
+      ...payload,
+      id: uuidProvider.generate(),
+    });
+    if (!folder) return rejectWithValue('Error adding folder');
+    return folder;
+  },
 );

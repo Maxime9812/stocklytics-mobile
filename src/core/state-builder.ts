@@ -26,10 +26,10 @@ const withNotLoadingFoldersItems = createAction<string[]>(
 );
 
 const withFolders = createAction<FolderModel[]>('withFolders');
-const withFolderInFolderLoading = createAction<string | undefined>(
+const withFolderInFolderLoading = createAction<string | null>(
   'withFolderInFolderLoading',
 );
-const withFolderInFolderNotLoading = createAction<string | undefined>(
+const withFolderInFolderNotLoading = createAction<string | null>(
   'withFolderInFolderNotLoading',
 );
 
@@ -49,7 +49,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(withItemNotLoading, (state, action) => {
       action.payload.forEach((id) => {
-        state.items.isLoadingById[id] = false;
+        delete state.items.isLoadingById[id];
       });
     })
     .addCase(withLoadingFoldersItems, (state, action) => {
@@ -59,7 +59,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(withNotLoadingFoldersItems, (state, action) => {
       action.payload.forEach((id) => {
-        state.items.isLoadingFoldersItemsById[id] = false;
+        delete state.items.isLoadingFoldersItemsById[id];
       });
     })
     .addCase(withFolders, (state, action) => {
@@ -69,7 +69,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.folders.foldersInFolderLoading[action.payload ?? 'root'] = true;
     })
     .addCase(withFolderInFolderNotLoading, (state, action) => {
-      state.folders.foldersInFolderLoading[action.payload ?? 'root'] = false;
+      delete state.folders.foldersInFolderLoading[action.payload ?? 'root'];
     });
 });
 

@@ -21,17 +21,16 @@ export const itemsSlice = createSlice({
     builder
       .addCase(getItemByIdUseCase.fulfilled, (state, action) => {
         const item = action.payload;
-        state.isLoadingById[action.meta.arg] = false;
+        delete state.isLoadingById[action.meta.arg];
         if (!item) return;
         itemsAdapter.upsertOne(state, item);
-        state.isLoadingById[item.id] = false;
       })
       .addCase(getItemByIdUseCase.pending, (state, action) => {
         state.isLoadingById[action.meta.arg] = true;
       })
       .addCase(getItemsInFolderUseCase.fulfilled, (state, action) => {
         const items = action.payload;
-        state.isLoadingFoldersItemsById[action.meta.arg ?? 'root'] = false;
+        delete state.isLoadingFoldersItemsById[action.meta.arg ?? 'root'];
         itemsAdapter.upsertMany(state, items);
       })
       .addCase(getItemsInFolderUseCase.pending, (state, action) => {
@@ -40,7 +39,7 @@ export const itemsSlice = createSlice({
       .addCase(addItemInFolderUseCase.fulfilled, (state, action) => {
         const item = action.payload;
         itemsAdapter.upsertOne(state, item);
-        state.isLoadingById[item.id] = false;
+        delete state.isLoadingById[item.id];
       });
   },
 });
