@@ -11,40 +11,40 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../../../../store-hooks';
 import { isRejected } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
-import { createCreateItemScreenViewModel } from './create-item-screen.viewmodel';
+import { createAddItemScreenViewModel } from './add-item-screen.viewmodel';
 
-const createItemFormSchema = yup
+const addItemFormSchema = yup
   .object({
     name: yup.string().required(),
     quantity: yup.number().min(0).required(),
   })
   .required();
 
-type CreateItemFormValues = InferType<typeof createItemFormSchema>;
+type AddItemFormValues = InferType<typeof addItemFormSchema>;
 
-export default function CreateItemScreen({
+export default function AddItemScreen({
   navigation,
   route: {
     params: { folderId },
   },
-}: ItemsStackScreenProps<'CreateItem'>) {
+}: ItemsStackScreenProps<'AddItem'>) {
   const dispatch = useAppDispatch();
   const viewModel = useSelector(
-    createCreateItemScreenViewModel({ folderId, dispatch }),
+    createAddItemScreenViewModel({ folderId, dispatch }),
   );
   const { control, handleSubmit, formState, setFocus } =
-    useForm<CreateItemFormValues>({
+    useForm<AddItemFormValues>({
       defaultValues: {
         name: '',
         quantity: 1,
       },
-      resolver: yupResolver(createItemFormSchema),
+      resolver: yupResolver(addItemFormSchema),
     });
 
   const isLoading = formState.isSubmitting;
   const disableSubmit = !formState.isValid || isLoading;
 
-  const onSubmit = async (values: CreateItemFormValues) => {
+  const onSubmit = async (values: AddItemFormValues) => {
     const action = await viewModel.addItem(values);
     if (isRejected(action)) return;
     navigation.goBack();

@@ -1,14 +1,14 @@
 import { createTestStore } from '../../../../core/create-store';
-import { createCreateItemScreenViewModel } from './create-item-screen.viewmodel';
+import { createAddItemScreenViewModel } from './add-item-screen.viewmodel';
 import { addItemInFolderUseCase } from '../../../../core/items/hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
 import { stateBuilder } from '../../../../core/state-builder';
 import { folderBuilder } from '../../../../core/folders/__tests__/folder.builder';
 
-describe('CreateItemScreenViewModel', () => {
+describe('AddItemScreenViewModel', () => {
   test('Should call addItemInFolderUseCase when call addItem', async () => {
     const store = createTestStore();
 
-    const { addItem } = createCreateItemScreenViewModel({
+    const { addItem } = createAddItemScreenViewModel({
       folderId: 'folder-id',
       dispatch: store.dispatch,
     })(store.getState());
@@ -27,7 +27,7 @@ describe('CreateItemScreenViewModel', () => {
       .build();
     const store = createTestStore({}, initialValue);
 
-    const { folderName } = createCreateItemScreenViewModel({
+    const { folderName } = createAddItemScreenViewModel({
       folderId: 'folder-id',
       dispatch: store.dispatch,
     })(store.getState());
@@ -37,7 +37,7 @@ describe('CreateItemScreenViewModel', () => {
   it('Should return Root folder name when folderId is undefined', () => {
     const store = createTestStore();
 
-    const { folderName } = createCreateItemScreenViewModel({
+    const { folderName } = createAddItemScreenViewModel({
       folderId: undefined,
       dispatch: store.dispatch,
     })(store.getState());

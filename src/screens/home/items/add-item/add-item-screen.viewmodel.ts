@@ -7,15 +7,15 @@ import {
 } from '../../../../core/items/hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
 import { selectFolderById } from '../../../../core/folders/folders.slice';
 
-type CreateItemScreenViewModelParams = {
+type AddItemScreenViewModelParams = {
   folderId?: string;
   dispatch: AppDispatch;
 };
 
-export const createCreateItemScreenViewModel = ({
+export const createAddItemScreenViewModel = ({
   folderId,
   dispatch,
-}: CreateItemScreenViewModelParams) =>
+}: AddItemScreenViewModelParams) =>
   createSelector(
     [
       (state: RootState) => {

@@ -11,13 +11,13 @@ import ItemScreen from '../screens/home/items/item/ItemScreen';
 import FolderScreen from '../screens/home/items/folder/FolderScreen';
 import StackBackButton from '../components/stack-navigation/StackBackButton';
 import FolderScreenHeader from '../screens/home/items/folder/FolderScreenHeader';
-import CreateItemScreen from '../screens/home/items/create-item/CreateItemScreen';
+import AddItemScreen from '../screens/home/items/add-item/AddItemScreen';
 import AddFolderScreen from '../screens/home/items/add-folder/AddFolderScreen';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
   Item: { id: string };
-  CreateItem: { folderId?: string };
+  AddItem: { folderId?: string };
   AddFolder: { parentId?: string };
 };
 
@@ -59,7 +59,7 @@ export default function ItemsNavigation() {
           ),
         }}
       >
-        <Stack.Screen name="CreateItem" component={CreateItemScreen} />
+        <Stack.Screen name="AddItem" component={AddItemScreen} />
         <Stack.Screen name="AddFolder" component={AddFolderScreen} />
       </Stack.Group>
     </Stack.Navigator>

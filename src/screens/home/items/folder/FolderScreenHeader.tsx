@@ -34,7 +34,7 @@ export default function FolderScreenHeader(props: View['props']) {
 
   const onPressItem = () => {
     bottomSheetRef.current?.close();
-    navigation.push('CreateItem', { folderId: route.params?.id });
+    navigation.push('AddItem', { folderId: route.params?.id });
   };
 
   const onPressFolder = () => {
