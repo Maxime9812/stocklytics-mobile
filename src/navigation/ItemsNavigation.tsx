@@ -12,13 +12,13 @@ import FolderScreen from '../screens/home/items/folder/FolderScreen';
 import StackBackButton from '../components/stack-navigation/StackBackButton';
 import FolderScreenHeader from '../screens/home/items/folder/FolderScreenHeader';
 import CreateItemScreen from '../screens/home/items/create-item/CreateItemScreen';
-import CreateFolderScreen from '../screens/home/items/create-folder/CreateFolderScreen';
+import AddFolderScreen from '../screens/home/items/add-folder/AddFolderScreen';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
   Item: { id: string };
   CreateItem: { folderId?: string };
-  CreateFolder: { folderId?: string };
+  AddFolder: { parentId?: string };
 };
 
 export type ItemsStackScreenProps<T extends keyof ItemsStack> =
@@ -60,7 +60,7 @@ export default function ItemsNavigation() {
         }}
       >
         <Stack.Screen name="CreateItem" component={CreateItemScreen} />
-        <Stack.Screen name="CreateFolder" component={CreateFolderScreen} />
+        <Stack.Screen name="AddFolder" component={AddFolderScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

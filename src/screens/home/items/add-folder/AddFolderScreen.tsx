@@ -1,51 +1,49 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import BaseLayout from '../../../../components/layouts/BaseLayout';
+import CloseKeyboardOnTouch from '../../../../components/CloseKeyboardOnTouch';
 import { Controller, useForm } from 'react-hook-form';
 import BaseTextInput from '../../../../components/inputs/BaseTextInput';
-import * as yup from 'yup';
-import { InferType } from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import CloseKeyboardOnTouch from '../../../../components/CloseKeyboardOnTouch';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../../../store-hooks';
 import { isRejected } from '@reduxjs/toolkit';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useAppDispatch } from '../../../../store-hooks';
 import { useSelector } from 'react-redux';
-import { createCreateItemScreenViewModel } from './create-item-screen.viewmodel';
+import { InferType } from 'yup';
+import * as yup from 'yup';
+import { createAddFolderScreenViewModel } from './add-folder-screen.viewmodel';
 
-const createItemFormSchema = yup
+const addFolderFormSchema = yup
   .object({
     name: yup.string().required(),
-    quantity: yup.number().min(0).required(),
   })
   .required();
 
-type CreateItemFormValues = InferType<typeof createItemFormSchema>;
-
-export default function CreateItemScreen({
+type CreateItemFormValues = InferType<typeof addFolderFormSchema>;
+export default function AddFolderScreen({
   navigation,
   route: {
-    params: { folderId },
+    params: { parentId },
   },
-}: ItemsStackScreenProps<'CreateItem'>) {
+}: ItemsStackScreenProps<'AddFolder'>) {
   const dispatch = useAppDispatch();
   const viewModel = useSelector(
-    createCreateItemScreenViewModel({ folderId, dispatch }),
+    createAddFolderScreenViewModel({ parentId, dispatch }),
   );
+
   const { control, handleSubmit, formState, setFocus } =
     useForm<CreateItemFormValues>({
       defaultValues: {
         name: '',
-        quantity: 1,
       },
-      resolver: yupResolver(createItemFormSchema),
+      resolver: yupResolver(addFolderFormSchema),
     });
 
   const isLoading = formState.isSubmitting;
   const disableSubmit = !formState.isValid || isLoading;
 
   const onSubmit = async (values: CreateItemFormValues) => {
-    const action = await viewModel.addItem(values);
+    const action = await viewModel.addFolder(values);
     if (isRejected(action)) return;
     navigation.goBack();
   };
@@ -66,25 +64,10 @@ export default function CreateItemScreen({
       <BaseLayout>
         <View className="p-2 space-y-2">
           <Text className="dark:text-white text-2xl">
-            Add item to {viewModel.folderName}
+            Add folder to {viewModel.folderName}
           </Text>
           <View>
             <Text className="dark:text-white mb-2">Name</Text>
-            <Controller
-              render={({ field }) => (
-                <BaseTextInput
-                  {...field}
-                  onChangeText={field.onChange}
-                  returnKeyType="next"
-                  onSubmitEditing={() => setFocus('quantity')}
-                />
-              )}
-              name="name"
-              control={control}
-            />
-          </View>
-          <View>
-            <Text className="dark:text-white mb-2">Quantity</Text>
             <Controller
               render={({ field }) => (
                 <BaseTextInput
@@ -96,7 +79,7 @@ export default function CreateItemScreen({
                   onSubmitEditing={handleSubmit(onSubmit)}
                 />
               )}
-              name="quantity"
+              name="name"
               control={control}
             />
           </View>

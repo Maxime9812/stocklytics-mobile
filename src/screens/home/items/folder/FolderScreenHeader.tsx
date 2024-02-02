@@ -39,7 +39,7 @@ export default function FolderScreenHeader(props: View['props']) {
 
   const onPressFolder = () => {
     bottomSheetRef.current?.close();
-    navigation.push('CreateFolder', { folderId: route.params?.id });
+    navigation.push('AddFolder', { parentId: route.params?.id });
   };
 
   return (
