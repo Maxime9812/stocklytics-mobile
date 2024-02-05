@@ -10,14 +10,16 @@ import { RootStack, RootStackScreenProps } from './NavigationProvider';
 import ItemScreen from '../screens/home/items/item/ItemScreen';
 import FolderScreen from '../screens/home/items/folder/FolderScreen';
 import StackBackButton from '../components/stack-navigation/StackBackButton';
-import FolderScreenHeader from '../screens/home/items/folder/FolderScreenHeader';
+import FolderScreenHeader from '../screens/home/items/folder/components/header/FolderScreenHeader';
 import AddItemScreen from '../screens/home/items/add-item/AddItemScreen';
 import AddFolderScreen from '../screens/home/items/add-folder/AddFolderScreen';
+import DeleteItemScreen from '../screens/home/items/delete-item/DeleteItemScreen';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
   Item: { id: string };
   AddItem: { folderId?: string };
+  DeleteItem: { id: string };
   AddFolder: { parentId?: string };
 };
 
@@ -61,6 +63,11 @@ export default function ItemsNavigation() {
       >
         <Stack.Screen name="AddItem" component={AddItemScreen} />
         <Stack.Screen name="AddFolder" component={AddFolderScreen} />
+        <Stack.Screen
+          name="DeleteItem"
+          component={DeleteItemScreen}
+          options={{ presentation: 'modal' }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

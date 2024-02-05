@@ -9,11 +9,11 @@ import { Feather } from '@expo/vector-icons';
 import { Portal } from '@gorhom/portal';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useMemo, useRef, useState } from 'react';
-import ThemedBottomSheet from '../../../../components/bottom-sheet/ThemedBottomSheet';
+import ThemedBottomSheet from '../../../../../../components/bottom-sheet/ThemedBottomSheet';
 import { FullWindowOverlay } from 'react-native-screens';
-import NewElementBottomSheetContent from './components/new-element-bottom-sheet/NewElementBottomSheetContent';
+import NewElementBottomSheetContent from './NewElementBottomSheetContent';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
+import { ItemsStackScreenProps } from '../../../../../../navigation/ItemsNavigation';
 
 const Icon = styled(Feather, 'text-white text-lg');
 
@@ -21,7 +21,7 @@ export default function FolderScreenHeader(props: View['props']) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
   // variables
-  const snapPoints = useMemo(() => ['25%', '25%'], []);
+  const snapPoints = useMemo(() => ['30%', '30%'], []);
 
   const navigation =
     useNavigation<ItemsStackScreenProps<'Folder'>['navigation']>();
@@ -67,8 +67,9 @@ export default function FolderScreenHeader(props: View['props']) {
             >
               <BottomSheetView>
                 <NewElementBottomSheetContent
-                  onPressFolder={onPressFolder}
-                  onPressItem={onPressItem}
+                  folderName="Folder"
+                  onAddFolder={onPressFolder}
+                  onAddItem={onPressItem}
                 />
               </BottomSheetView>
             </ThemedBottomSheet>

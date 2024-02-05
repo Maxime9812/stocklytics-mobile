@@ -67,22 +67,35 @@ const LoadedFolderScreen = ({
     navigation.push('Folder', { id });
   };
 
+  const goToDeleteItem = (id: string) => {
+    navigation.push('DeleteItem', { id });
+  };
+
+  const goToDeleteFolder = (id: string) => {
+    navigation.push('DeleteItem', { id });
+  };
+
   return (
-    <BaseLayout className="flex-1">
-      <ScrollView className="">
+    <BaseLayout>
+      <ScrollView>
         <View className="p-4 space-y-2 flex-1">
           <FolderListHeader {...viewModel.stats} />
-
           <Card>
             {viewModel.folders.map((folder) => (
               <FolderRow
                 key={folder.id}
-                goToFolder={goToFolder}
+                onPress={goToFolder}
                 folder={folder}
+                onDelete={goToDeleteFolder}
               />
             ))}
             {viewModel.items.map((item) => (
-              <ItemRow key={item.id} goToItem={goToItem} item={item} />
+              <ItemRow
+                key={item.id}
+                onPress={goToItem}
+                item={item}
+                onDelete={goToDeleteItem}
+              />
             ))}
           </Card>
         </View>

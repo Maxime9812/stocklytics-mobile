@@ -12,6 +12,7 @@ import { createLoginScreenViewModel } from './login-screen.viewmodel';
 import FeatherIcon from '@expo/vector-icons/Feather';
 import BaseTextInput from '../../../components/inputs/BaseTextInput';
 import BaseLayout from '../../../components/layouts/BaseLayout';
+import { InputLabel } from '../../../components/inputs/InputLabel';
 
 const loginFormSchema = yup
   .object({
@@ -72,17 +73,10 @@ export default function LoginScreen({
     <CloseKeyboardOnTouch>
       <BaseLayout>
         <View className="p-4 flex space-y-2">
-          <View className="flex items-center">
-            <Text className="text-2xl font-bold dark:text-white">
-              Welcome back !
-            </Text>
-            <Text className="text-xl text-neutral-400">
-              Login to your account
-            </Text>
-          </View>
+          <Title />
           <View className="space-y-4">
             <View>
-              <Text className="mb-2 font-medium dark:text-white">Email</Text>
+              <InputLabel>Email</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -100,7 +94,7 @@ export default function LoginScreen({
               />
             </View>
             <View>
-              <Text className="mb-2 font-medium dark:text-white">Password</Text>
+              <InputLabel>Password</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -152,3 +146,12 @@ export default function LoginScreen({
     </CloseKeyboardOnTouch>
   );
 }
+
+const Title = () => {
+  return (
+    <View className="flex items-center">
+      <Text className="text-2xl font-bold dark:text-white">Welcome back !</Text>
+      <Text className="text-xl text-neutral-400">Login to your account</Text>
+    </View>
+  );
+};

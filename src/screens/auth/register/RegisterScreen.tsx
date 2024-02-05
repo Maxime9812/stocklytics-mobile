@@ -11,6 +11,7 @@ import { useAppDispatch } from '../../../store-hooks';
 import { registerUseCase } from '../../../core/auth/hexagon/usecases/register/register.usecase';
 import { isRejected } from '@reduxjs/toolkit';
 import BaseTextInput from '../../../components/inputs/BaseTextInput';
+import { InputLabel } from '../../../components/inputs/InputLabel';
 
 const registerFormSchema = yup
   .object({
@@ -56,22 +57,13 @@ export default function RegisterScreen({
   }, [focusOnTransitionEnd]);
 
   return (
-    <BaseLayout>
-      <CloseKeyboardOnTouch>
+    <CloseKeyboardOnTouch>
+      <BaseLayout>
         <View className="p-4 flex h-screen space-y-2">
-          <View className="flex items-center">
-            <Text className="text-2xl font-bold dark:text-white">
-              Create an account
-            </Text>
-            <Text className="text-xl text-neutral-400">
-              Get started for free today
-            </Text>
-          </View>
+          <Title />
           <View className="space-y-4">
             <View>
-              <Text className="mb-2 font-medium dark:text-white">
-                Full Name
-              </Text>
+              <InputLabel>Full Name</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -89,7 +81,7 @@ export default function RegisterScreen({
               />
             </View>
             <View>
-              <Text className="mb-2 font-medium dark:text-white">Email</Text>
+              <InputLabel>Email</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -107,7 +99,7 @@ export default function RegisterScreen({
               />
             </View>
             <View>
-              <Text className="mb-2 font-medium dark:text-white">Password</Text>
+              <InputLabel>Password</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -143,7 +135,16 @@ export default function RegisterScreen({
             </TouchableOpacity>
           </View>
         </View>
-      </CloseKeyboardOnTouch>
-    </BaseLayout>
+      </BaseLayout>
+    </CloseKeyboardOnTouch>
   );
 }
+
+const Title = () => (
+  <View className="flex items-center">
+    <Text className="text-2xl font-bold dark:text-white">
+      Create an account
+    </Text>
+    <Text className="text-xl text-neutral-400">Get started for free today</Text>
+  </View>
+);

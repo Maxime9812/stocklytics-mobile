@@ -45,8 +45,8 @@ export default function ResetPasswordScreen({
   }, [focusOnTransitionEnd]);
 
   return (
-    <BaseLayout>
-      <CloseKeyboardOnTouch>
+    <CloseKeyboardOnTouch>
+      <BaseLayout>
         <View className="p-4 flex h-screen space-y-2">
           <Text className="text-3xl font-bold dark:text-white">
             Reset Password
@@ -77,7 +77,7 @@ export default function ResetPasswordScreen({
             <Text className="text-white text-center">Send Link</Text>
           </TouchableOpacity>
         </View>
-      </CloseKeyboardOnTouch>
-    </BaseLayout>
+      </BaseLayout>
+    </CloseKeyboardOnTouch>
   );
 }

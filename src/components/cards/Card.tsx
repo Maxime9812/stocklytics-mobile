@@ -8,7 +8,7 @@ export default function Card({
   return (
     <View
       {...props}
-      className="bg-white shadow-sm shadow-neutral-100 dark:shadow-black rounded-xl p-1 dark:bg-neutral-900"
+      className={`bg-white shadow-sm shadow-neutral-100 dark:shadow-neutral-900 rounded-xl p-1 dark:bg-neutral-900 ${props.className}`}
     >
       {children}
     </View>

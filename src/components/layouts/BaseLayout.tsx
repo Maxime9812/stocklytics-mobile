@@ -8,7 +8,7 @@ const BaseLayout = React.forwardRef(({ children, ...props }: Props, ref) => {
     <SafeAreaView
       ref={ref as any}
       {...props}
-      className={`bg-gray-50 dark:bg-black h-screen ${props.className}`}
+      className={`bg-gray-50 dark:bg-black h-screen flex-1 ${props.className}`}
     >
       {children}
     </SafeAreaView>

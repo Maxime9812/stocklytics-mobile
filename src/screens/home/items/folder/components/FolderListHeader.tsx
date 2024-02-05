@@ -12,29 +12,23 @@ export default function FolderListHeader({
   totalQuantity,
 }: FolderListHeaderProps) {
   return (
-    <Card>
-      <View className="flex-row justify-between p-2">
-        <View>
-          <Text className="text-lg dark:text-white">Folders</Text>
-          <Text className="text-lg font-bold dark:text-white">
-            {totalFolders}
-          </Text>
-        </View>
-
-        <View>
-          <Text className="text-lg dark:text-white">Items</Text>
-          <Text className="text-lg font-bold dark:text-white">
-            {totalItems}
-          </Text>
-        </View>
-
-        <View>
-          <Text className="text-lg dark:text-white">Total Qty</Text>
-          <Text className="text-lg font-bold dark:text-white">
-            {totalQuantity}
-          </Text>
-        </View>
-      </View>
+    <Card className="flex-row justify-between p-3">
+      <Item name="Folders" value={`${totalFolders}`} />
+      <Item name="Items" value={`${totalItems}`} />
+      <Item name="Total Qty" value={`${totalQuantity}`} />
     </Card>
   );
 }
+
+type ItemProps = {
+  name: string;
+  value: string;
+};
+const Item = ({ name, value }: ItemProps) => {
+  return (
+    <View>
+      <Text className="text-lg dark:text-white">{name}</Text>
+      <Text className="text-lg font-bold dark:text-white">{value}</Text>
+    </View>
+  );
+};

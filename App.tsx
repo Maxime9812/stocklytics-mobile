@@ -25,7 +25,7 @@ stubAuthGateway.givenUserWithCredentials({
 });
 const authGateway = new AsyncStorageAuthGateway(stubAuthGateway);
 const axiosInstance = axios.create({
-  baseURL: 'http://192.168.5.61:3000',
+  baseURL: 'http://192.168.5.62:3000',
   withCredentials: true,
 });
 const axiosAuthGateway = new AxiosAuthGateway(axiosInstance);
