@@ -42,6 +42,7 @@ export default function Button({
         variant == 'ghost' &&
           'active:bg-neutral-100 dark:active:bg-neutral-800 rounded-xl p-2',
         variant == 'destructive' && 'bg-red-500 active:bg-red-700',
+        variant == 'link' && 'active:opacity-40',
         className,
       )}
     >
@@ -68,6 +69,22 @@ Button.Text = ({ children, ...props }: PropsWithChildren<Text['props']>) => {
       {...props}
       className={clsx(
         'text-center',
+        variant == 'solid' && 'text-white',
+        variant == 'link' && 'text-royal-blue-500',
+        variant == 'ghost' && 'dark:text-white',
+      )}
+    >
+      {children}
+    </Text>
+  );
+};
+
+Button.Icon = ({ children, ...props }: PropsWithChildren<View['props']>) => {
+  const { variant } = useContext(ButtonContext);
+  return (
+    <Text
+      {...props}
+      className={clsx(
         variant == 'solid' && 'text-white',
         variant == 'link' && 'text-royal-blue-500',
         variant == 'ghost' && 'dark:text-white',

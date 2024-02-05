@@ -39,7 +39,10 @@ const ActionIcon = styled(Feather, 'dark:text-white text-lg');
 const ActionButton = ({ onPress, icon, text, ...props }: ActionButtonProps) => {
   const { theme } = useTheme();
   return (
-    <Card {...props} className="dark:bg-neutral-950 dark:shadow-neutral-900">
+    <Card
+      {...props}
+      className="dark:bg-neutral-950 dark:shadow-neutral-900 p-1"
+    >
       <Button variant="ghost" onPress={onPress}>
         <View className="flex-row items-center space-x-2">
           <ActionIcon name={icon as any} />

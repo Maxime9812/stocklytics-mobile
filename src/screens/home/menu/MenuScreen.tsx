@@ -64,7 +64,7 @@ export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
           </View>
         )}
         <View>
-          <Card>
+          <Card className="p-1">
             <Button variant="ghost" onPress={requestLogout}>
               <LogoutIcon name="logout" />
               <Button.Text>Sign out</Button.Text>

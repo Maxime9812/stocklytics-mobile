@@ -80,7 +80,7 @@ const LoadedFolderScreen = ({
       <ScrollView>
         <View className="p-4 space-y-2 flex-1">
           <FolderListHeader {...viewModel.stats} />
-          <Card>
+          <Card className="p-1">
             {viewModel.folders.map((folder) => (
               <FolderRow
                 key={folder.id}
