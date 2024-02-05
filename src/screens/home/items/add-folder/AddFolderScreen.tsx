@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import BaseLayout from '../../../../components/layouts/BaseLayout';
 import CloseKeyboardOnTouch from '../../../../components/CloseKeyboardOnTouch';
@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { InferType } from 'yup';
 import * as yup from 'yup';
 import { createAddFolderScreenViewModel } from './add-folder-screen.viewmodel';
+import Button from '../../../../components/buttons/Button';
 
 const addFolderFormSchema = yup
   .object({
@@ -82,13 +83,9 @@ export default function AddFolderScreen({
               control={control}
             />
           </View>
-          <TouchableOpacity
-            className={`bg-red-400 py-4 rounded-full flex-row justify-center items-center space-x-1 ${disableSubmit && 'opacity-50'}`}
-            onPress={handleSubmit(onSubmit)}
-            disabled={disableSubmit}
-          >
-            <Text className="text-white">Add</Text>
-          </TouchableOpacity>
+          <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
+            <Button.Text>Add</Button.Text>
+          </Button>
         </View>
       </BaseLayout>
     </CloseKeyboardOnTouch>

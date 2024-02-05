@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import BaseLayout from '../../../../components/layouts/BaseLayout';
 import { Controller, useForm } from 'react-hook-form';
@@ -12,6 +12,7 @@ import { useAppDispatch } from '../../../../store-hooks';
 import { isRejected } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { createAddItemScreenViewModel } from './add-item-screen.viewmodel';
+import Button from '../../../../components/buttons/Button';
 
 const addItemFormSchema = yup
   .object({
@@ -100,13 +101,9 @@ export default function AddItemScreen({
               control={control}
             />
           </View>
-          <TouchableOpacity
-            className={`bg-red-400 py-4 rounded-full flex-row justify-center items-center space-x-1 ${disableSubmit && 'opacity-50'}`}
-            onPress={handleSubmit(onSubmit)}
-            disabled={disableSubmit}
-          >
-            <Text className="text-white">Add</Text>
-          </TouchableOpacity>
+          <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
+            <Button.Text>Add</Button.Text>
+          </Button>
         </View>
       </BaseLayout>
     </CloseKeyboardOnTouch>

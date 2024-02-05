@@ -1,9 +1,10 @@
-import { Text, TouchableHighlight, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from '../../../../../hooks/use-theme';
 import { Swipeable } from 'react-native-gesture-handler';
 import { useRef } from 'react';
 import Button from '../../../../../components/buttons/Button';
+import { styled } from 'nativewind';
 
 type ItemRowProps = {
   onPress: (itemId: string) => void;
@@ -65,13 +66,16 @@ type ItemActionsProps = {
   onPress: () => void;
 };
 
+const ActionIcon = styled(Feather, 'text-lg text-white');
+
 const ItemActions = ({ onPress }: ItemActionsProps) => {
   return (
-    <TouchableHighlight
-      className="bg-red-400 justify-center px-5 rounded-r-xl"
+    <Button
+      variant="destructive"
+      className="px-5 rounded-r-xl justify-center"
       onPress={onPress}
     >
-      <Feather name="trash" size={24} color="white" />
-    </TouchableHighlight>
+      <ActionIcon name="trash" />
+    </Button>
   );
 };

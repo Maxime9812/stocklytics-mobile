@@ -2,7 +2,7 @@ import { Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { createContext, PropsWithChildren, useContext } from 'react';
 import { clsx } from 'clsx';
 
-type Variant = 'solid' | 'ghost' | 'link';
+type Variant = 'solid' | 'ghost' | 'link' | 'destructive';
 type Size = 'sm' | 'md';
 
 export type ButtonProps = PropsWithChildren<
@@ -41,6 +41,7 @@ export default function Button({
         variant == 'solid' && size == 'sm' && 'px-2',
         variant == 'ghost' &&
           'active:bg-neutral-100 dark:active:bg-neutral-800 rounded-xl p-2',
+        variant == 'destructive' && 'bg-red-500 active:bg-red-700',
         className,
       )}
     >
