@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,6 +8,7 @@ import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 import BaseLayout from '../../../components/layouts/BaseLayout';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
 import BaseTextInput from '../../../components/inputs/BaseTextInput';
+import Button from '../../../components/buttons/Button';
 
 const resetPasswordFormSchema = yup
   .object({
@@ -69,13 +70,9 @@ export default function ResetPasswordScreen({
               name="email"
             />
           </View>
-          <TouchableOpacity
-            className={`bg-red-400 py-4 rounded-full ${disableSubmit && 'opacity-50'}`}
-            onPress={handleSubmit(onSubmit)}
-            disabled={disableSubmit}
-          >
-            <Text className="text-white text-center">Send Link</Text>
-          </TouchableOpacity>
+          <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
+            <Button.Text>Send Link</Button.Text>
+          </Button>
         </View>
       </BaseLayout>
     </CloseKeyboardOnTouch>

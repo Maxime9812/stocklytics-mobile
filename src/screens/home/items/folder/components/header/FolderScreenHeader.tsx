@@ -1,9 +1,4 @@
-import {
-  TouchableOpacity,
-  Text,
-  View,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 import { styled } from 'nativewind';
 import { Feather } from '@expo/vector-icons';
 import { Portal } from '@gorhom/portal';
@@ -14,6 +9,7 @@ import { FullWindowOverlay } from 'react-native-screens';
 import NewElementBottomSheetContent from './NewElementBottomSheetContent';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ItemsStackScreenProps } from '../../../../../../navigation/ItemsNavigation';
+import Button from '../../../../../../components/buttons/Button';
 
 const Icon = styled(Feather, 'text-white text-lg');
 
@@ -44,13 +40,10 @@ export default function FolderScreenHeader(props: View['props']) {
 
   return (
     <View {...props}>
-      <TouchableOpacity
-        className="px-2 rounded-full bg-red-400 flex-row items-center"
-        onPress={openBottomSheet}
-      >
+      <Button size="sm" onPress={openBottomSheet}>
         <Icon name="plus" />
-        <Text className="text-white font-bold">New</Text>
-      </TouchableOpacity>
+        <Button.Text className="text-white font-bold">New</Button.Text>
+      </Button>
       {isBottomSheetOpen && (
         <Portal>
           <FullWindowOverlay>

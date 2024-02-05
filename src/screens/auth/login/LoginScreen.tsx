@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { InferType } from 'yup';
@@ -13,6 +13,7 @@ import FeatherIcon from '@expo/vector-icons/Feather';
 import BaseTextInput from '../../../components/inputs/BaseTextInput';
 import BaseLayout from '../../../components/layouts/BaseLayout';
 import { InputLabel } from '../../../components/inputs/InputLabel';
+import Button from '../../../components/buttons/Button';
 
 const loginFormSchema = yup
   .object({
@@ -113,33 +114,27 @@ export default function LoginScreen({
             </View>
           </View>
           <View className="space-y-2">
-            <TouchableOpacity onPress={goToResetPassword}>
-              <Text className="text-blue-500 text-center">
-                Forgot password ?
-              </Text>
-            </TouchableOpacity>
+            <Button variant="ghost" onPress={goToResetPassword}>
+              <Button.Text>Forgot password ?</Button.Text>
+            </Button>
             <Text className="text-center dark:text-white">
               By using the app, you agree to stocklytics's Terms & Conditions
               and Privacy Policy
             </Text>
           </View>
-          <TouchableOpacity
-            className={`bg-red-400 py-4 rounded-full flex-row justify-center items-center space-x-1 ${disableSubmit && 'opacity-50'}`}
-            onPress={handleSubmit(onSubmit)}
-            disabled={disableSubmit}
-          >
+          <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
             {isLoading && (
               <Text className="text-white">
                 <FeatherIcon name="loader" size={16} />
               </Text>
             )}
-            <Text className="text-white">Continue</Text>
-          </TouchableOpacity>
+            <Button.Text>Continue</Button.Text>
+          </Button>
           <View className="flex flex-row justify-center space-x-1">
             <Text className="dark:text-white">New here ?</Text>
-            <TouchableOpacity onPress={goToRegister}>
-              <Text className="text-blue-500">Create an account</Text>
-            </TouchableOpacity>
+            <Button variant="ghost" onPress={goToRegister}>
+              <Button.Text>Create an account</Button.Text>
+            </Button>
           </View>
         </View>
       </BaseLayout>

@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { InferType } from 'yup';
@@ -12,6 +12,7 @@ import { registerUseCase } from '../../../core/auth/hexagon/usecases/register/re
 import { isRejected } from '@reduxjs/toolkit';
 import BaseTextInput from '../../../components/inputs/BaseTextInput';
 import { InputLabel } from '../../../components/inputs/InputLabel';
+import Button from '../../../components/buttons/Button';
 
 const registerFormSchema = yup
   .object({
@@ -121,18 +122,14 @@ export default function RegisterScreen({
             By using the app, you agree to stocklytics's Terms & Conditions and
             Privacy Policy
           </Text>
-          <TouchableOpacity
-            className={`bg-red-400 py-4 rounded-full flex-row justify-center items-center space-x-1 ${disableSubmit && 'opacity-50'}`}
-            onPress={handleSubmit(onSubmit)}
-            disabled={disableSubmit}
-          >
-            <Text className="text-white text-center">Create account</Text>
-          </TouchableOpacity>
+          <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
+            <Button.Text>Create account</Button.Text>
+          </Button>
           <View className="flex flex-row justify-center space-x-1">
             <Text className="dark:text-white">Already have an account ?</Text>
-            <TouchableOpacity onPress={goToLogin}>
-              <Text className="text-blue-500">Sign in</Text>
-            </TouchableOpacity>
+            <Button variant="ghost" onPress={goToLogin}>
+              <Button.Text>Sign in</Button.Text>
+            </Button>
           </View>
         </View>
       </BaseLayout>

@@ -65,7 +65,7 @@ export default function HomeNavigation() {
       initialRouteName="Dashboard"
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#f87171',
+        tabBarActiveTintColor: '#6273f2',
         tabBarInactiveTintColor: '#a3a3a3',
         tabBarStyle: {
           borderTopWidth: 0,

@@ -1,8 +1,9 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import WelcomeBackground1 from '../../../../assets/welcome-background-1.png';
 import CloseKeyboardOnTouch from '../../../components/CloseKeyboardOnTouch';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
 import BaseLayout from '../../../components/layouts/BaseLayout';
+import Button from '../../../components/buttons/Button';
 
 export default function WelcomeScreen({
   navigation,
@@ -19,18 +20,14 @@ export default function WelcomeScreen({
           </Text>
           <Image source={WelcomeBackground1} className="flex-1 w-full h-full" />
           <View className="space-y-2">
-            <TouchableOpacity onPress={goToRegister}>
-              <View className="bg-red-400 p-4 rounded-full ">
-                <Text className="text-white text-center font-bold">
-                  Get Started
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <Button onPress={goToRegister}>
+              <Button.Text>Get Started</Button.Text>
+            </Button>
             <View className="flex flex-row justify-center space-x-1">
               <Text className="dark:text-white">Already have an account ?</Text>
-              <TouchableOpacity onPress={goToLogin}>
-                <Text className="text-blue-500">Sign in</Text>
-              </TouchableOpacity>
+              <Button variant="ghost" onPress={goToLogin}>
+                <Button.Text>Sign in</Button.Text>
+              </Button>
             </View>
           </View>
         </View>
