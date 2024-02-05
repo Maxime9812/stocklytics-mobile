@@ -2,7 +2,6 @@ import { Text, View } from 'react-native';
 import Card from '../../../../../../components/cards/Card';
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
-import { useTheme } from '../../../../../../hooks/use-theme';
 import Button from '../../../../../../components/buttons/Button';
 import { styled } from 'nativewind';
 
@@ -34,20 +33,19 @@ type ActionButtonProps = View['props'] & {
   text: string;
 };
 
-const ActionIcon = styled(Feather, 'dark:text-white text-lg');
+const ActionIcon = styled(Feather, 'text-lg');
 
 const ActionButton = ({ onPress, icon, text, ...props }: ActionButtonProps) => {
-  const { theme } = useTheme();
   return (
     <Card
       {...props}
       className="dark:bg-neutral-950 dark:shadow-neutral-900 p-1"
     >
       <Button variant="ghost" onPress={onPress}>
-        <View className="flex-row items-center space-x-2">
+        <Button.Icon>
           <ActionIcon name={icon as any} />
-          <Button.Text>{text}</Button.Text>
-        </View>
+        </Button.Icon>
+        <Button.Text>{text}</Button.Text>
       </Button>
     </Card>
   );

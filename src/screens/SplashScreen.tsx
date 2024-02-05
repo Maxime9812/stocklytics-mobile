@@ -1,4 +1,4 @@
-import { SafeAreaView, Text } from 'react-native';
+import { Text } from 'react-native';
 import { useEffect, useState } from 'react';
 import { RootStackScreenProps } from '../navigation/NavigationProvider';
 import {
@@ -6,6 +6,7 @@ import {
   isAuthSelector,
 } from '../core/auth/auth.slice';
 import { useSelector } from 'react-redux';
+import BaseLayout from '../components/layouts/BaseLayout';
 
 export default function SplashScreen({
   navigation,
@@ -24,16 +25,19 @@ export default function SplashScreen({
   useEffect(() => {
     if (!hasCheckedAuth || !transitionIsDone) return;
     if (isAuth) {
-      return navigation.replace('Home', { screen: 'Items' });
+      return navigation.replace('Home', {
+        screen: 'Items',
+        params: { screen: 'Folder' },
+      });
     }
     return navigation.replace('Auth', { screen: 'Welcome' });
   }, [isAuth, hasCheckedAuth, transitionIsDone]);
 
   return (
-    <SafeAreaView className="bg-red-400 h-screen flex justify-center">
-      <Text className="text-white text-center font-bold text-2xl">
+    <BaseLayout className="justify-center">
+      <Text className="dark:text-white text-center font-bold text-2xl">
         Stocklytics
       </Text>
-    </SafeAreaView>
+    </BaseLayout>
   );
 }
