@@ -5,18 +5,41 @@ import BaseLayout from '../../../../components/layouts/BaseLayout';
 import Card from '../../../../components/cards/Card';
 import { Feather } from '@expo/vector-icons';
 import Button from '../../../../components/buttons/Button';
+import { useSelector } from 'react-redux';
+import {
+  createItemScreenViewModel,
+  ItemScreenViewModelLoaded,
+} from './item-screen-viewmodel';
+import { exhaustiveGuard } from '../../../../core/common/utils/exhaustive-guard';
 
 export default function ItemScreen({
   route: {
     params: { id },
   },
 }: ItemsStackScreenProps<'Item'>) {
+  const viewModel = useSelector(createItemScreenViewModel({ itemId: id }));
+
+  switch (viewModel.type) {
+    case 'loaded':
+      return <LoadedItemScreen {...viewModel} />;
+    case 'loading':
+      return (
+        <BaseLayout>
+          <View>
+            <Text>Error</Text>
+          </View>
+        </BaseLayout>
+      );
+    default:
+      return exhaustiveGuard(viewModel);
+  }
+}
+
+const LoadedItemScreen = ({ item }: ItemScreenViewModelLoaded) => {
   return (
     <BaseLayout>
       <View className="p-2 space-y-2">
-        <Text className="dark:text-white text-2xl font-bold">
-          Iphone 13 pro max
-        </Text>
+        <Text className="dark:text-white text-2xl font-bold">{item.name}</Text>
 
         <Button variant="link" onPress={() => console.log('')}>
           <Button.Icon>
@@ -38,7 +61,7 @@ export default function ItemScreen({
                 <Button.Text>Edit</Button.Text>
               </Button>
             </Card.Header>
-            <Text className="dark:text-white">1</Text>
+            <Text className="dark:text-white">{item.quantity}</Text>
           </Card>
           <Card className="p-3 flex-1">
             <Card.Header>
@@ -46,7 +69,9 @@ export default function ItemScreen({
                 Updated at
               </Text>
             </Card.Header>
-            <Text className="dark:text-white">01/01/2024 13h30</Text>
+            <Text className="dark:text-white">
+              {item.createdAt.toISOString()}
+            </Text>
           </Card>
         </View>
         <Card className="p-3">
@@ -62,7 +87,7 @@ export default function ItemScreen({
             </View>
           </Card.Header>
           <View>
-            <Text className="dark:text-white"></Text>
+            <Text className="dark:text-white">{item.note}</Text>
           </View>
         </Card>
         <Card className="p-3">
@@ -82,4 +107,4 @@ export default function ItemScreen({
       </View>
     </BaseLayout>
   );
-}
+};

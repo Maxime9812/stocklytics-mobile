@@ -5,19 +5,19 @@ export const itemBuilder = (
     id: 'item-id',
     name: 'Iphone 13 pro max',
     quantity: 1,
-    description: 'description',
-    folderId: undefined,
+    note: 'note',
+    folderId: null,
     createdAt: '2024-01-01',
   },
 ) => ({
   withId: (id: string) => itemBuilder({ ...props, id }),
   withName: (name: string) => itemBuilder({ ...props, name }),
   withQuantity: (quantity: number) => itemBuilder({ ...props, quantity }),
-  withDescription: (description: string) =>
-    itemBuilder({ ...props, description }),
+  withNote: (description: string) =>
+    itemBuilder({ ...props, note: description }),
   createdAt: (createdAt: Date) =>
     itemBuilder({ ...props, createdAt: createdAt.toISOString() }),
-  withFolderId: (folderId: string | undefined) =>
+  withFolderId: (folderId: string | null) =>
     itemBuilder({ ...props, folderId }),
   build: () => props,
 });

@@ -35,7 +35,7 @@ itemsGateway.givenItemsInFolder('folder-1', [
   {
     id: 'item-1',
     name: 'Iphone 13 pro max',
-    description: 'Item 1 description',
+    note: 'Item 1 description',
     folderId: 'folder-1',
     quantity: 1,
     createdAt: new Date('2021-01-01T00:00:00.000Z').toISOString(),
