@@ -1,8 +1,10 @@
-import { Text, TouchableHighlight, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Card from '../../../../../../components/cards/Card';
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { useTheme } from '../../../../../../hooks/use-theme';
+import Button from '../../../../../../components/buttons/Button';
+import { styled } from 'nativewind';
 
 export type NewElementBottomSheetContentProps = {
   onAddItem: () => void;
@@ -32,24 +34,18 @@ type ActionButtonProps = View['props'] & {
   text: string;
 };
 
+const ActionIcon = styled(Feather, 'dark:text-white text-lg');
+
 const ActionButton = ({ onPress, icon, text, ...props }: ActionButtonProps) => {
   const { theme } = useTheme();
   return (
     <Card {...props} className="dark:bg-neutral-950 dark:shadow-neutral-900">
-      <TouchableHighlight
-        underlayColor={theme == 'dark' ? 'black' : '#f3f4f6'}
-        className="flex-row p-2 justify-between rounded-xl"
-        onPress={onPress}
-      >
+      <Button variant="ghost" onPress={onPress}>
         <View className="flex-row items-center space-x-2">
-          <Feather
-            name={icon as any}
-            size={24}
-            color={theme == 'dark' ? 'white' : 'black'}
-          />
-          <Text className="dark:text-white">{text}</Text>
+          <ActionIcon name={icon as any} />
+          <Button.Text>{text}</Button.Text>
         </View>
-      </TouchableHighlight>
+      </Button>
     </Card>
   );
 };

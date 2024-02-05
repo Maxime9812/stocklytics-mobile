@@ -14,6 +14,7 @@ import BaseTextInput from '../../../components/inputs/BaseTextInput';
 import BaseLayout from '../../../components/layouts/BaseLayout';
 import { InputLabel } from '../../../components/inputs/InputLabel';
 import Button from '../../../components/buttons/Button';
+import { styled } from 'nativewind';
 
 const loginFormSchema = yup
   .object({
@@ -23,6 +24,8 @@ const loginFormSchema = yup
   .required();
 
 type LoginFormValues = InferType<typeof loginFormSchema>;
+
+const LoadingIcon = styled(FeatherIcon, 'text-white');
 
 export default function LoginScreen({
   navigation,
@@ -114,7 +117,7 @@ export default function LoginScreen({
             </View>
           </View>
           <View className="space-y-2">
-            <Button variant="ghost" onPress={goToResetPassword}>
+            <Button variant="link" onPress={goToResetPassword}>
               <Button.Text>Forgot password ?</Button.Text>
             </Button>
             <Text className="text-center dark:text-white">
@@ -123,16 +126,12 @@ export default function LoginScreen({
             </Text>
           </View>
           <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
-            {isLoading && (
-              <Text className="text-white">
-                <FeatherIcon name="loader" size={16} />
-              </Text>
-            )}
+            {isLoading && <LoadingIcon name="loader" />}
             <Button.Text>Continue</Button.Text>
           </Button>
           <View className="flex flex-row justify-center space-x-1">
             <Text className="dark:text-white">New here ?</Text>
-            <Button variant="ghost" onPress={goToRegister}>
+            <Button variant="link" onPress={goToRegister}>
               <Button.Text>Create an account</Button.Text>
             </Button>
           </View>

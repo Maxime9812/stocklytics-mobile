@@ -2,6 +2,7 @@ import { Text, TouchableHighlight, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from '../../../../../hooks/use-theme';
 import { Swipeable } from 'react-native-gesture-handler';
+import Button from '../../../../../components/buttons/Button';
 
 type ItemRowProps = {
   onPress: (folderId: string) => void;
@@ -22,9 +23,9 @@ export default function FolderRow({
     <Swipeable
       renderRightActions={() => <FolderActions id={id} onDelete={onDelete} />}
     >
-      <TouchableHighlight
-        underlayColor={theme == 'dark' ? '#262626' : '#f3f4f6'}
-        className="flex-row p-2 justify-between rounded-xl"
+      <Button
+        variant="ghost"
+        className="justify-between"
         onPress={() => onPress(id)}
       >
         <View className="flex-row space-x-2">
@@ -40,7 +41,7 @@ export default function FolderRow({
             <Text className="text-neutral-500">{quantity} unit</Text>
           </View>
         </View>
-      </TouchableHighlight>
+      </Button>
     </Swipeable>
   );
 }

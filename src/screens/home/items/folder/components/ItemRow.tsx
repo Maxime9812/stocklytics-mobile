@@ -3,6 +3,7 @@ import { Feather } from '@expo/vector-icons';
 import { useTheme } from '../../../../../hooks/use-theme';
 import { Swipeable } from 'react-native-gesture-handler';
 import { useRef } from 'react';
+import Button from '../../../../../components/buttons/Button';
 
 type ItemRowProps = {
   onPress: (itemId: string) => void;
@@ -37,9 +38,9 @@ export default function ItemRow({
         return <ItemActions onPress={onDeleteHandler} />;
       }}
     >
-      <TouchableHighlight
-        underlayColor={theme == 'dark' ? '#262626' : '#f3f4f6'}
-        className="flex-row p-2 justify-between rounded-xl"
+      <Button
+        variant="ghost"
+        className="justify-between"
         onPress={() => onPress(id)}
       >
         <View className="flex-row space-x-2">
@@ -55,7 +56,7 @@ export default function ItemRow({
             <Text className="text-neutral-500">{quantity} unit</Text>
           </View>
         </View>
-      </TouchableHighlight>
+      </Button>
     </Swipeable>
   );
 }

@@ -1,8 +1,8 @@
-import { Text, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { createContext, PropsWithChildren, useContext } from 'react';
 import { clsx } from 'clsx';
 
-type Variant = 'solid' | 'ghost';
+type Variant = 'solid' | 'ghost' | 'link';
 type Size = 'sm' | 'md';
 
 export type ButtonProps = PropsWithChildren<
@@ -32,20 +32,29 @@ export default function Button({
   return (
     <TouchableOpacity
       {...props}
-      activeOpacity={0.6}
+      activeOpacity={1}
       className={clsx(
         props.disabled && 'opacity-50',
-        'flex-row justify-center items-center space-x-1',
-        variant == 'solid' && 'bg-royal-blue-500 rounded-full',
-        size == 'md' && 'p-4',
-        size == 'sm' && 'px-2',
+        variant == 'solid' &&
+          'bg-royal-blue-500 rounded-full active:bg-royal-blue-700 flex-row justify-center',
+        variant == 'solid' && size == 'md' && 'p-4',
+        variant == 'solid' && size == 'sm' && 'px-2',
+        variant == 'ghost' &&
+          'active:bg-neutral-100 dark:active:bg-neutral-800 rounded-xl p-2',
         className,
       )}
     >
       <ButtonContext.Provider
         value={{ variant, disabled: props.disabled ?? false }}
       >
-        {children}
+        <View
+          className={clsx(
+            'flex-row items-center space-x-2',
+            size == 'sm' && 'space-x-1',
+          )}
+        >
+          {children}
+        </View>
       </ButtonContext.Provider>
     </TouchableOpacity>
   );
@@ -59,7 +68,8 @@ Button.Text = ({ children, ...props }: PropsWithChildren<Text['props']>) => {
       className={clsx(
         'text-center',
         variant == 'solid' && 'text-white',
-        variant == 'ghost' && 'text-royal-blue-500',
+        variant == 'link' && 'text-royal-blue-500',
+        variant == 'ghost' && 'dark:text-white',
       )}
     >
       {children}

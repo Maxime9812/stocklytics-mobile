@@ -127,7 +127,7 @@ export default function RegisterScreen({
           </Button>
           <View className="flex flex-row justify-center space-x-1">
             <Text className="dark:text-white">Already have an account ?</Text>
-            <Button variant="ghost" onPress={goToLogin}>
+            <Button variant="link" onPress={goToLogin}>
               <Button.Text>Sign in</Button.Text>
             </Button>
           </View>

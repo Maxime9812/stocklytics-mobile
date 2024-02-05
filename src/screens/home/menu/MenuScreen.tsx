@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  ActionSheetIOS,
-  Alert,
-  Platform,
-  Text,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import { ActionSheetIOS, Alert, Platform, Text, View } from 'react-native';
 import { HomeTabScreenProps } from '../../../navigation/HomeNavigation';
 import { useAppDispatch } from '../../../store-hooks';
 import { logoutUseCase } from '../../../core/auth/hexagon/usecases/logout/logout.usecase';
@@ -17,7 +10,10 @@ import Avatar from '../../../components/avatar/Avatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import Card from '../../../components/cards/Card';
 import { useTheme } from '../../../hooks/use-theme';
+import { styled } from 'nativewind';
+import Button from '../../../components/buttons/Button';
 
+const LogoutIcon = styled(MaterialIcons, 'dark:text-white text-lg');
 export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
   const appDispatch = useAppDispatch();
   const { theme } = useTheme();
@@ -69,20 +65,10 @@ export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
         )}
         <View>
           <Card>
-            <TouchableHighlight
-              underlayColor={theme == 'dark' ? '#262626' : '#f3f4f6'}
-              className="flex-row p-2 justify-between rounded-xl"
-              onPress={requestLogout}
-            >
-              <View className="flex-row items-center space-x-2">
-                <MaterialIcons
-                  name="logout"
-                  size={24}
-                  color={theme == 'dark' ? 'white' : 'black'}
-                />
-                <Text className="dark:text-white">Sign out</Text>
-              </View>
-            </TouchableHighlight>
+            <Button variant="ghost" onPress={requestLogout}>
+              <LogoutIcon name="logout" />
+              <Button.Text>Sign out</Button.Text>
+            </Button>
           </Card>
         </View>
       </View>
