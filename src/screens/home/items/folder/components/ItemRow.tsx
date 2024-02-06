@@ -4,6 +4,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { useRef } from 'react';
 import Button from '../../../../../components/buttons/Button';
 import { styled } from 'nativewind';
+import Badge from '../../../../../components/badge/Badge';
 
 type ItemRowProps = {
   onPress: (itemId: string) => void;
@@ -48,17 +49,14 @@ export default function ItemRow({
               <Feather name="file" size={36} />
             </Text>
           </View>
-          <View className="space-y-2">
+          <View className="flex-col justify-between">
             <Text className="text-lg font-bold dark:text-white">{name}</Text>
             <Text className="text-neutral-500">{quantity} unit</Text>
-            <View className="flex-row">
+            <View className="flex-row space-x-2">
               {tags.map((tag) => (
-                <View
-                  key={tag.id}
-                  className="bg-neutral-200 dark:bg-neutral-700 py-1 px-3 rounded-full"
-                >
-                  <Text className="dark:text-white text-xs">{tag.name}</Text>
-                </View>
+                <Badge key={tag.id} size="sm">
+                  {tag.name}
+                </Badge>
               ))}
             </View>
           </View>

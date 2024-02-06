@@ -11,6 +11,7 @@ import {
   ItemScreenViewModelLoaded,
 } from './item-screen-viewmodel';
 import { exhaustiveGuard } from '../../../../core/common/utils/exhaustive-guard';
+import Badge from '../../../../components/badge/Badge';
 
 export default function ItemScreen({
   navigation,
@@ -153,8 +154,10 @@ const LoadedItemScreen = ({
                 </Button>
               </View>
             </Card.Header>
-            <View>
-              <Text className="dark:text-white"></Text>
+            <View className="flex-row space-x-2">
+              {item.tags.map((tag) => (
+                <Badge key={tag.id}>{tag.name}</Badge>
+              ))}
             </View>
           </Card>
 

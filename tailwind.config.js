@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
-        xs: ['0.5rem', '1rem'],
+        xs: '10px',
       },
       colors: {
         'royal-blue': {

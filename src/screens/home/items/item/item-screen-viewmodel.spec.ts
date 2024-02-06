@@ -99,4 +99,49 @@ describe('ItemScreenViewModel', () => {
       );
     });
   });
+
+  describe('Item has tags', () => {
+    it('Should return empty array when item has no tags', () => {
+      const state = stateBuilder()
+        .withItems([itemBuilder().withId('item-id').build()])
+        .build();
+
+      const viewModel = createItemScreenViewModel({
+        itemId: 'item-id',
+      })(state);
+
+      expect(viewModel).toEqual(
+        expect.objectContaining({
+          item: expect.objectContaining({
+            tags: [],
+          }),
+        }),
+      );
+    });
+    it('Should return tags when item has tags', () => {
+      const state = stateBuilder()
+        .withItems([
+          itemBuilder().withId('item-id').withTags(['tag-id']).build(),
+        ])
+        .withTags([{ id: 'tag-id', name: 'tag-name' }])
+        .build();
+
+      const viewModel = createItemScreenViewModel({
+        itemId: 'item-id',
+      })(state);
+
+      expect(viewModel).toEqual(
+        expect.objectContaining({
+          item: expect.objectContaining({
+            tags: [
+              {
+                id: 'tag-id',
+                name: 'tag-name',
+              },
+            ],
+          }),
+        }),
+      );
+    });
+  });
 });

@@ -43,6 +43,10 @@ itemsGateway.givenItemsInFolder('folder-1', [
         id: 'tag-1',
         name: 'Tag 1',
       },
+      {
+        id: 'tag-2',
+        name: 'Tag 2',
+      },
     ],
     createdAt: new Date('2021-01-01T00:00:00.000Z').toISOString(),
   },
