@@ -71,8 +71,8 @@ const ActionIcon = styled(Feather, 'text-lg text-white');
 const ItemActions = ({ onPress }: ItemActionsProps) => {
   return (
     <Button
-      variant="destructive"
-      className="px-5 rounded-r-xl justify-center"
+      type="destructive"
+      className="px-5 rounded-l-none rounded-r-xl justify-center"
       onPress={onPress}
     >
       <ActionIcon name="trash" />

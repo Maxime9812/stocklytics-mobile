@@ -50,14 +50,53 @@ describe('ItemScreenViewModel', () => {
 
     expect(viewModel).toEqual(
       expect.objectContaining({
-        item: {
+        item: expect.objectContaining({
           id: 'item-id',
           name: 'item-name',
           quantity: 10,
           note: 'This is a note',
           createdAt: new Date('2024-01-01'),
-        },
+        }),
       }),
     );
+  });
+
+  describe('Item has note', () => {
+    it('Should return false when note is empty', () => {
+      const state = stateBuilder()
+        .withItems([itemBuilder().withId('item-id').withNote('').build()])
+        .build();
+
+      const viewModel = createItemScreenViewModel({
+        itemId: 'item-id',
+      })(state);
+
+      expect(viewModel).toEqual(
+        expect.objectContaining({
+          item: expect.objectContaining({
+            hasNote: false,
+          }),
+        }),
+      );
+    });
+    it('Should return true when note is NOT empty', () => {
+      const state = stateBuilder()
+        .withItems([
+          itemBuilder().withId('item-id').withNote('This is a note').build(),
+        ])
+        .build();
+
+      const viewModel = createItemScreenViewModel({
+        itemId: 'item-id',
+      })(state);
+
+      expect(viewModel).toEqual(
+        expect.objectContaining({
+          item: expect.objectContaining({
+            hasNote: true,
+          }),
+        }),
+      );
+    });
   });
 });

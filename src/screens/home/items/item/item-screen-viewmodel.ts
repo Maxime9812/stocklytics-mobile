@@ -18,6 +18,7 @@ export type ItemScreenViewModelLoaded = {
     note: string;
     quantity: number;
     createdAt: Date;
+    hasNote: boolean;
   };
 };
 
@@ -44,6 +45,7 @@ export const createItemScreenViewModel = ({
         note: item.note,
         quantity: item.quantity,
         createdAt: new Date(item.createdAt),
+        hasNote: !!item.note,
       },
     };
   });

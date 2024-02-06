@@ -9,14 +9,12 @@ import { authUserSelector } from '../../../core/auth/auth.slice';
 import Avatar from '../../../components/avatar/Avatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import Card from '../../../components/cards/Card';
-import { useTheme } from '../../../hooks/use-theme';
-import { styled } from 'nativewind';
 import Button from '../../../components/buttons/Button';
+import { styled } from 'nativewind';
 
-const LogoutIcon = styled(MaterialIcons, 'dark:text-white text-lg');
+const LogoutIcon = styled(MaterialIcons, 'text-lg');
 export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
   const appDispatch = useAppDispatch();
-  const { theme } = useTheme();
   const authUser = useSelector(authUserSelector);
 
   const logout = async () => {
@@ -66,7 +64,9 @@ export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
         <View>
           <Card className="p-1">
             <Button variant="ghost" onPress={requestLogout}>
-              <LogoutIcon name="logout" />
+              <Button.Icon>
+                <LogoutIcon name="logout" />
+              </Button.Icon>
               <Button.Text>Sign out</Button.Text>
             </Button>
           </Card>

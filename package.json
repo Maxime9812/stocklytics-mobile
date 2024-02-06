@@ -24,6 +24,7 @@
     "clsx": "^2.1.0",
     "expo": "~49.0.15",
     "expo-blur": "~12.4.1",
+    "expo-camera": "~13.4.4",
     "expo-crypto": "~12.4.1",
     "expo-status-bar": "~1.6.0",
     "nativewind": "^2.0.11",
