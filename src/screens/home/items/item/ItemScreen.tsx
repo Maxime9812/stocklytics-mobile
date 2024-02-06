@@ -114,9 +114,7 @@ const LoadedItemScreen = ({
                   Updated at
                 </Text>
               </Card.Header>
-              <Text className="dark:text-white">
-                {item.createdAt.toISOString()}
-              </Text>
+              <Text className="dark:text-white">{item.createdAt}</Text>
             </Card>
           </View>
           <Card className="p-3">

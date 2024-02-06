@@ -5,6 +5,7 @@ import { selectTags } from '../../../../core/tags/tags.slice';
 
 export type CreateItemScreenViewModelParams = {
   itemId: string;
+  locale?: string;
 };
 
 export type ItemScreenViewModelLoading = {
@@ -22,7 +23,7 @@ export type ItemScreenViewModelLoaded = {
       name: string;
     }[];
     quantity: number;
-    createdAt: Date;
+    createdAt: string;
     hasNote: boolean;
   };
 };
@@ -32,6 +33,7 @@ export type ItemScreenViewModelState =
   | ItemScreenViewModelLoaded;
 export const createItemScreenViewModel = ({
   itemId,
+  locale,
 }: CreateItemScreenViewModelParams): ((
   state: RootState,
 ) => ItemScreenViewModelState) =>
@@ -41,6 +43,14 @@ export const createItemScreenViewModel = ({
         type: 'loading',
       };
     }
+
+    const dateFormatter = new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
 
     return {
       type: 'loaded',
@@ -53,7 +63,7 @@ export const createItemScreenViewModel = ({
           name: tag.name,
         })),
         quantity: item.quantity,
-        createdAt: new Date(item.createdAt),
+        createdAt: dateFormatter.format(new Date(item.createdAt)),
         hasNote: !!item.note,
       },
     };

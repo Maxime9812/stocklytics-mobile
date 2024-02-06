@@ -41,11 +41,11 @@ itemsGateway.givenItemsInFolder('folder-1', [
     tags: [
       {
         id: 'tag-1',
-        name: 'Tag 1',
+        name: 'Apple',
       },
       {
         id: 'tag-2',
-        name: 'Tag 2',
+        name: 'Smartphone',
       },
     ],
     createdAt: new Date('2021-01-01T00:00:00.000Z').toISOString(),

@@ -39,7 +39,6 @@ describe('ItemScreenViewModel', () => {
           .withName('item-name')
           .withQuantity(10)
           .withNote('This is a note')
-          .createdAt(new Date('2024-01-01'))
           .build(),
       ])
       .build();
@@ -55,7 +54,6 @@ describe('ItemScreenViewModel', () => {
           name: 'item-name',
           quantity: 10,
           note: 'This is a note',
-          createdAt: new Date('2024-01-01'),
         }),
       }),
     );
@@ -139,6 +137,32 @@ describe('ItemScreenViewModel', () => {
                 name: 'tag-name',
               },
             ],
+          }),
+        }),
+      );
+    });
+  });
+
+  describe('Item created at', () => {
+    it('Should return date', () => {
+      const state = stateBuilder()
+        .withItems([
+          itemBuilder()
+            .withId('item-id')
+            .createdAt(new Date('2024-01-01T00:00:00.000Z'))
+            .build(),
+        ])
+        .build();
+
+      const viewModel = createItemScreenViewModel({
+        itemId: 'item-id',
+        locale: 'fr-FR',
+      })(state);
+
+      expect(viewModel).toEqual(
+        expect.objectContaining({
+          item: expect.objectContaining({
+            createdAt: '01/01/2024 01:00',
           }),
         }),
       );
