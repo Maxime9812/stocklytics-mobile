@@ -20,6 +20,9 @@ export default function FolderRow({
 }: ItemRowProps) {
   return (
     <Swipeable
+      friction={2}
+      leftThreshold={30}
+      rightThreshold={40}
       renderRightActions={() => <FolderActions id={id} onDelete={onDelete} />}
     >
       <Button

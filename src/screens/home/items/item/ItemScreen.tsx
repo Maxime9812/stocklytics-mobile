@@ -55,6 +55,10 @@ const LoadedItemScreen = ({
     navigation.push('DeleteItem', { id: item.id });
   };
 
+  const goToDeleteItem = () => {
+    navigation.push('DeleteItem', { id: item.id });
+  };
+
   return (
     <BaseLayout>
       <ScrollView>
@@ -111,7 +115,7 @@ const LoadedItemScreen = ({
             <Card className="p-3 flex-1">
               <Card.Header>
                 <Text className="text-neutral-500 dark:text-neutral-400">
-                  Updated at
+                  Created at
                 </Text>
               </Card.Header>
               <Text className="dark:text-white">{item.createdAt}</Text>
@@ -175,7 +179,12 @@ const LoadedItemScreen = ({
           </Card>
 
           <Card className="p-1">
-            <Button variant="ghost" type="destructive" className="p-3">
+            <Button
+              variant="ghost"
+              type="destructive"
+              className="p-3"
+              onPress={goToDeleteItem}
+            >
               <Button.Text>Delete</Button.Text>
             </Button>
           </Card>
