@@ -1,8 +1,8 @@
-import { Text, TouchableHighlight, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useTheme } from '../../../../../hooks/use-theme';
 import { Swipeable } from 'react-native-gesture-handler';
 import Button from '../../../../../components/buttons/Button';
+import { styled } from 'nativewind';
 
 type ItemRowProps = {
   onPress: (folderId: string) => void;
@@ -18,7 +18,6 @@ export default function FolderRow({
   onDelete,
   folder: { id, quantity, name },
 }: ItemRowProps) {
-  const { theme } = useTheme();
   return (
     <Swipeable
       renderRightActions={() => <FolderActions id={id} onDelete={onDelete} />}
@@ -30,11 +29,9 @@ export default function FolderRow({
       >
         <View className="flex-row space-x-2">
           <View className="rounded-xl bg-neutral-300 dark:bg-neutral-700 w-20 h-20 justify-center items-center">
-            <Feather
-              name="folder"
-              size={48}
-              color={theme == 'dark' ? '#f3f4f6' : 'white'}
-            />
+            <Text className="text-neutral-50">
+              <Feather name="folder" size={36} />
+            </Text>
           </View>
           <View className="space-y-2">
             <Text className="text-lg font-bold dark:text-white">{name}</Text>
@@ -51,13 +48,18 @@ type FolderActionsProps = {
   onDelete: (itemId: string) => void;
 };
 
+const ActionIcon = styled(Feather, 'text-lg text-white');
+
 const FolderActions = ({ id, onDelete }: FolderActionsProps) => {
   return (
-    <TouchableHighlight
-      className="bg-red-400 justify-center px-5 rounded-r-xl"
+    <Button
+      type="destructive"
+      className="px-5 rounded-l-none rounded-r-xl justify-center"
       onPress={() => onDelete(id)}
     >
-      <Feather name="trash" size={24} color="white" />
-    </TouchableHighlight>
+      <Button.Icon>
+        <ActionIcon name="trash" />
+      </Button.Icon>
+    </Button>
   );
 };

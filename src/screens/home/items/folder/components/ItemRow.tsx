@@ -46,11 +46,9 @@ export default function ItemRow({
       >
         <View className="flex-row space-x-2">
           <View className="rounded-xl bg-neutral-300 dark:bg-neutral-700 w-20 h-20 justify-center items-center">
-            <Feather
-              name="file"
-              size={48}
-              color={theme == 'dark' ? '#f3f4f6' : 'white'}
-            />
+            <Text className="text-neutral-50">
+              <Feather name="file" size={36} />
+            </Text>
           </View>
           <View className="space-y-2">
             <Text className="text-lg font-bold dark:text-white">{name}</Text>

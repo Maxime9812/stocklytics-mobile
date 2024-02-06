@@ -78,7 +78,7 @@ const LoadedFolderScreen = ({
   return (
     <BaseLayout>
       <ScrollView>
-        <View className="p-4 space-y-2 flex-1">
+        <View className="p-3 space-y-3 flex-1">
           <FolderListHeader {...viewModel.stats} />
           <Card className="p-1">
             {viewModel.folders.map((folder) => (
@@ -89,6 +89,7 @@ const LoadedFolderScreen = ({
                 onDelete={goToDeleteFolder}
               />
             ))}
+
             {viewModel.items.map((item) => (
               <ItemRow
                 key={item.id}

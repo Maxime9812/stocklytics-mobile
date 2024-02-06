@@ -26,9 +26,9 @@ type ItemProps = {
 };
 const Item = ({ name, value }: ItemProps) => {
   return (
-    <View>
-      <Text className="text-lg dark:text-white">{name}</Text>
-      <Text className="text-lg font-bold dark:text-white">{value}</Text>
+    <View className="space-y-2">
+      <Text className="text-neutral-500 dark:text-neutral-400">{name}</Text>
+      <Text className="font-bold dark:text-white">{value}</Text>
     </View>
   );
 };
