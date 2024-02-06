@@ -57,7 +57,7 @@ const LoadedItemScreen = ({
   return (
     <BaseLayout>
       <ScrollView>
-        <View className="h-60 bg-neutral-200 dark:bg-neutral-700 justify-center items-center">
+        <View className="h-72 bg-neutral-200 dark:bg-neutral-700 justify-center items-center">
           <View className="space-y-2 p-10">
             <Text className="text-center dark:text-white text-lg">
               Enhance visibility with great images
