@@ -7,6 +7,7 @@ export const itemBuilder = (
     quantity: 1,
     note: 'note',
     folderId: null,
+    tags: [],
     createdAt: '2024-01-01',
   },
 ) => ({
@@ -19,5 +20,6 @@ export const itemBuilder = (
     itemBuilder({ ...props, createdAt: createdAt.toISOString() }),
   withFolderId: (folderId: string | null) =>
     itemBuilder({ ...props, folderId }),
+  withTags: (tags: string[]) => itemBuilder({ ...props, tags }),
   build: () => props,
 });

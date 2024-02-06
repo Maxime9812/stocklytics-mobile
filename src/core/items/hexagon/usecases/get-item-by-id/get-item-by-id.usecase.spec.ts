@@ -13,10 +13,10 @@ describe('Feature: Get Item By Id', () => {
 
   test('Item exists', async () => {
     const item = itemBuilder().withId('item-id').build();
-    fixture.givenItems([item]);
+    fixture.givenItems([{ ...item, tags: [] }]);
     const action = fixture.whenGetItemById('item-id');
     fixture.thenItemIsLoading('item-id');
     await action;
-    fixture.thenItemsIs([item]);
+    fixture.thenItemsIs([{ ...item, tags: [] }]);
   });
 });

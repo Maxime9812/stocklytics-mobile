@@ -23,7 +23,10 @@ export const itemsSlice = createSlice({
         const item = action.payload;
         delete state.isLoadingById[action.meta.arg];
         if (!item) return;
-        itemsAdapter.upsertOne(state, item);
+        itemsAdapter.upsertOne(state, {
+          ...item,
+          tags: item.tags.map((t) => t.id),
+        });
       })
       .addCase(getItemByIdUseCase.pending, (state, action) => {
         state.isLoadingById[action.meta.arg] = true;
@@ -31,14 +34,20 @@ export const itemsSlice = createSlice({
       .addCase(getItemsInFolderUseCase.fulfilled, (state, action) => {
         const items = action.payload;
         delete state.isLoadingFoldersItemsById[action.meta.arg ?? 'root'];
-        itemsAdapter.upsertMany(state, items);
+        itemsAdapter.upsertMany(
+          state,
+          items.map((item) => ({ ...item, tags: item.tags.map((t) => t.id) })),
+        );
       })
       .addCase(getItemsInFolderUseCase.pending, (state, action) => {
         state.isLoadingFoldersItemsById[action.meta.arg ?? 'root'] = true;
       })
       .addCase(addItemInFolderUseCase.fulfilled, (state, action) => {
         const item = action.payload;
-        itemsAdapter.upsertOne(state, item);
+        itemsAdapter.upsertOne(state, {
+          ...item,
+          tags: item.tags.map((t) => t.id),
+        });
         delete state.isLoadingById[item.id];
       });
   },

@@ -22,6 +22,7 @@ describe('AxiosItemsGateway', () => {
             id: 'item-id',
             name: 'Item name',
             quantity: 10,
+            tags: [],
             folderId: 'folder-id',
           },
         ]);
@@ -30,6 +31,7 @@ describe('AxiosItemsGateway', () => {
           id: 'item-id',
           name: 'Item name',
           quantity: 10,
+          tags: [],
           folderId: 'folder-id',
         },
       ]);
@@ -49,6 +51,7 @@ describe('AxiosItemsGateway', () => {
           id: 'item-id',
           name: 'Item name',
           quantity: 10,
+          tags: [],
           folderId: 'folder-id',
         });
       expect(
@@ -62,6 +65,7 @@ describe('AxiosItemsGateway', () => {
         id: 'item-id',
         name: 'Item name',
         quantity: 10,
+        tags: [],
         folderId: 'folder-id',
       });
     });

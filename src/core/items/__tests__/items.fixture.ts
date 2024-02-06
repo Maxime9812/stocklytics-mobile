@@ -9,7 +9,13 @@ import {
   AddItemInFolderUseCasePayload,
 } from '../hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
 import { DeterministicUUIDProvider } from '../../common/uuid-provider/deterministic-uuid.provider';
-import { AddItemInFolderPayload } from '../hexagon/gateways/items.gateway';
+import {
+  AddItemInFolderPayload,
+  Item,
+} from '../hexagon/gateways/items.gateway';
+import { Tag } from '../../tags/hexagon/models/tag.model';
+
+type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
 export const createItemsFixture = () => {
   const itemsGateway = new StubItemsGateway();
@@ -20,15 +26,15 @@ export const createItemsFixture = () => {
     givenUUID(uuid: string) {
       uuidProvider.givenUUID(uuid);
     },
-    givenItemsInFolder: (folderId: string | undefined, items: ItemModel[]) => {
+    givenItemsInFolder: (folderId: string | undefined, items: Item[]) => {
       itemsGateway.givenItemsInFolder(folderId, items);
     },
-    givenItems: (item: ItemModel[]) => {
+    givenItems: (item: Item[]) => {
       itemsGateway.givenItems(item);
     },
     givenAddedItemInFolder: (
       payload: AddItemInFolderPayload,
-      itemAdded: ItemModel,
+      itemAdded: Item,
     ) => {
       itemsGateway.givenAddedItemInFolder(payload, itemAdded);
     },
@@ -56,18 +62,33 @@ export const createItemsFixture = () => {
           .build(),
       );
     },
-    thenItemsIs: (items: ItemModel[]) => {
+    thenItemsIs: (items: ExpectedItem[]) => {
       expect(store.getState()).toEqual(
         stateBuilder()
-          .withItems(items)
+          .withItems(
+            items.map((item) => ({
+              ...item,
+              tags: item.tags.map((t) => t.id),
+            })),
+          )
+          .withTags(items.flatMap((i) => i.tags))
           .withNotLoadingItem(items.map((i) => i.id))
           .build(),
       );
     },
-    thenFoldersItemsIs: (folderId: string | undefined, items: ItemModel[]) => {
+    thenFoldersItemsIs: (
+      folderId: string | undefined,
+      items: ExpectedItem[],
+    ) => {
       expect(store.getState()).toEqual(
         stateBuilder()
-          .withItems(items)
+          .withItems(
+            items.map((item) => ({
+              ...item,
+              tags: item.tags.map((t) => t.id),
+            })),
+          )
+          .withTags(items.flatMap((i) => i.tags))
           .withNotLoadingFoldersItems([folderId ?? 'root'])
           .build(),
       );

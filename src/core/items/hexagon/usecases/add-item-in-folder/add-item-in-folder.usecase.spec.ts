@@ -26,7 +26,7 @@ describe('Feature: Add item in folder', () => {
         quantity: 4,
         folderId: 'folder-1',
       },
-      itemAdded,
+      { ...itemAdded, tags: [] },
     );
 
     await fixture.whenAddItemInFolder({
@@ -35,7 +35,7 @@ describe('Feature: Add item in folder', () => {
       folderId: 'folder-1',
     });
 
-    fixture.thenItemsIs([itemAdded]);
+    fixture.thenItemsIs([{ ...itemAdded, tags: [] }]);
   });
 
   test('An error occur', async () => {

@@ -5,6 +5,7 @@ export const folderBuilder = (
     id: 'folder-id',
     name: 'folder-name',
     createdAt: new Date('2024-01-01').toISOString(),
+    parentId: null,
     itemQuantity: 0,
   },
 ) => {

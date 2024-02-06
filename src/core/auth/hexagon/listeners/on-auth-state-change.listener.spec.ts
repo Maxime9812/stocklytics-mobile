@@ -1,4 +1,5 @@
 import { AuthFixture, createAuthFixture } from '../__tests__/auth.fixture';
+import { authUserBuilder } from '../__tests__/auth-user.builder';
 
 describe('On auth state change listener', () => {
   let fixture: AuthFixture;
@@ -8,13 +9,8 @@ describe('On auth state change listener', () => {
   });
 
   test('User is authenticated', () => {
-    fixture.whenAuthStateChanged({
-      id: 'user-id',
-      email: 'john.doe@gmail.com',
-    });
-    fixture.thenUserIsLoggedInAs({
-      id: 'user-id',
-      email: 'john.doe@gmail.com',
-    });
+    const authUser = authUserBuilder().withId('user-id').build();
+    fixture.whenAuthStateChanged(authUser);
+    fixture.thenUserIsLoggedInAs(authUser);
   });
 });

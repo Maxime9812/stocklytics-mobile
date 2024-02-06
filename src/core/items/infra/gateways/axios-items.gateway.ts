@@ -1,27 +1,27 @@
 import {
   AddItemInFolderPayload,
+  Item,
   ItemsGateway,
 } from '../../hexagon/gateways/items.gateway';
-import { ItemModel } from '../../hexagon/models/item.model';
 import { AxiosInstance } from 'axios';
 
 export class AxiosItemsGateway implements ItemsGateway {
   constructor(private readonly axios: AxiosInstance) {}
 
-  async getById(id: string): Promise<ItemModel | undefined> {
+  async getById(id: string): Promise<Item | undefined> {
     return Promise.resolve(undefined);
   }
 
-  async getFromFolder(folderId: string | undefined): Promise<ItemModel[]> {
-    const response = await this.axios.get<ItemModel[]>('/items', {
+  async getFromFolder(folderId: string | undefined): Promise<Item[]> {
+    const response = await this.axios.get<Item[]>('/items', {
       params: { folderId },
     });
     return response.data;
   }
 
-  async addItemInFolder(payload: AddItemInFolderPayload): Promise<ItemModel> {
+  async addItemInFolder(payload: AddItemInFolderPayload): Promise<Item> {
     try {
-      const response = await this.axios.post<ItemModel>('/items', payload);
+      const response = await this.axios.post<Item>('/items', payload);
       return response.data;
     } catch (e) {
       console.log(e);

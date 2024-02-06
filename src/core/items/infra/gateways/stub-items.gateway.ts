@@ -1,24 +1,24 @@
 import {
   AddItemInFolderPayload,
+  Item,
   ItemsGateway,
 } from '../../hexagon/gateways/items.gateway';
-import { ItemModel } from '../../hexagon/models/item.model';
 
 export class StubItemsGateway implements ItemsGateway {
-  private itemsInFolder: Map<string, ItemModel[]> = new Map();
-  private itemsById: Map<string, ItemModel> = new Map();
-  private addedItems: Map<string, ItemModel> = new Map();
+  private itemsInFolder: Map<string, Item[]> = new Map();
+  private itemsById: Map<string, Item> = new Map();
+  private addedItems: Map<string, Item> = new Map();
 
   constructor(private readonly delay = 0) {}
 
-  async addItemInFolder(payload: AddItemInFolderPayload): Promise<ItemModel> {
+  async addItemInFolder(payload: AddItemInFolderPayload): Promise<Item> {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.addedItems.get(this.getAddedItemInFolderKey(payload))!);
       }, this.delay);
     });
   }
-  async getFromFolder(folderId: string | undefined): Promise<ItemModel[]> {
+  async getFromFolder(folderId: string | undefined): Promise<Item[]> {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.itemsInFolder.get(folderId ?? 'root') ?? []);
@@ -26,7 +26,7 @@ export class StubItemsGateway implements ItemsGateway {
     });
   }
 
-  async getById(id: string): Promise<ItemModel | undefined> {
+  async getById(id: string): Promise<Item | undefined> {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.itemsById.get(id));
@@ -34,18 +34,15 @@ export class StubItemsGateway implements ItemsGateway {
     });
   }
 
-  givenItemsInFolder(folderId: string | undefined, items: ItemModel[]) {
+  givenItemsInFolder(folderId: string | undefined, items: Item[]) {
     this.itemsInFolder.set(folderId ?? 'root', items);
   }
 
-  givenItems(items: ItemModel[]) {
+  givenItems(items: Item[]) {
     items.forEach((item) => this.itemsById.set(item.id, item));
   }
 
-  givenAddedItemInFolder(
-    payload: AddItemInFolderPayload,
-    itemAdded: ItemModel,
-  ) {
+  givenAddedItemInFolder(payload: AddItemInFolderPayload, itemAdded: Item) {
     this.addedItems.set(this.getAddedItemInFolderKey(payload), itemAdded);
   }
 

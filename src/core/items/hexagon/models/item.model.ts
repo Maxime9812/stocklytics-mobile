@@ -5,6 +5,7 @@ export type ItemModel = {
   name: string;
   quantity: number;
   note: string;
+  tags: string[];
   folderId: string | null;
   createdAt: string;
 };
