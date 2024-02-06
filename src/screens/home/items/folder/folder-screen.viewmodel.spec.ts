@@ -2,6 +2,7 @@ import { createFolderScreenViewModel } from './folder-screen.viewmodel';
 import { stateBuilder } from '../../../../core/state-builder';
 import { itemBuilder } from '../../../../core/items/__tests__/item.builder';
 import { folderBuilder } from '../../../../core/folders/__tests__/folder.builder';
+import { tagBuilder } from '../../../../core/tags/__tests__/tag.builder';
 
 describe('FolderScreenViewModel', () => {
   it('should be in loading state when folders items is loading', () => {
@@ -59,11 +60,55 @@ describe('FolderScreenViewModel', () => {
           {
             id: 'item-id-1',
             name: 'Iphone 13 pro max',
+            tags: [],
             quantity: 1,
           },
           {
             id: 'item-id-2',
             name: 'Iphone 14 pro max',
+            tags: [],
+            quantity: 1,
+          },
+        ],
+      }),
+    );
+  });
+
+  it('should return items tags', () => {
+    const initialState = stateBuilder()
+      .withNotLoadingFoldersItems(['folder-id'])
+      .withItems([
+        itemBuilder()
+          .withId('item-id-1')
+          .withName('Iphone 13 pro max')
+          .withTags(['tag-id-1', 'tag-id-2'])
+          .withFolderId('folder-id')
+          .build(),
+      ])
+      .withTags([
+        tagBuilder().withId('tag-id-1').withName('Tag 1').build(),
+        tagBuilder().withId('tag-id-2').withName('Tag 2').build(),
+      ])
+      .build();
+    const viewModel = createFolderScreenViewModel({ folderId: 'folder-id' })(
+      initialState,
+    );
+    expect(viewModel).toEqual(
+      expect.objectContaining({
+        items: [
+          {
+            id: 'item-id-1',
+            name: 'Iphone 13 pro max',
+            tags: [
+              {
+                id: 'tag-id-1',
+                name: 'Tag 1',
+              },
+              {
+                id: 'tag-id-2',
+                name: 'Tag 2',
+              },
+            ],
             quantity: 1,
           },
         ],

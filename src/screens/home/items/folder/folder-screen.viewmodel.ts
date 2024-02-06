@@ -8,6 +8,7 @@ import {
   selectFoldersInFolder,
 } from '../../../../core/folders/folders.slice';
 import { createSelector } from '@reduxjs/toolkit';
+import { selectTags } from '../../../../core/tags/tags.slice';
 
 export type FolderScreenViewModelParams = {
   folderId: string | null;
@@ -22,6 +23,10 @@ export type FolderScreenViewModelStateLoaded = {
   items: {
     id: string;
     name: string;
+    tags: {
+      id: string;
+      name: string;
+    }[];
     quantity: number;
   }[];
   folders: {
@@ -56,8 +61,9 @@ export const createFolderScreenViewModel = ({
       selectIsLoading(folderId),
       selectItemsInFolder(folderId),
       selectFoldersInFolder(folderId),
+      selectTags,
     ],
-    (isLoading, items, folders) => {
+    (isLoading, items, folders, selectTags) => {
       const itemsQuantity = items.reduce((acc, item) => acc + item.quantity, 0);
       const foldersItemsQuantity = folders.reduce(
         (acc, folder) => acc + folder.itemQuantity,
@@ -76,6 +82,7 @@ export const createFolderScreenViewModel = ({
         items: items.map((item) => ({
           id: item.id,
           name: item.name,
+          tags: selectTags(item.tags),
           quantity: item.quantity,
         })),
         folders: folders.map((folder) => ({

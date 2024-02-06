@@ -3,6 +3,9 @@ module.exports = {
   content: ['./App.tsx', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      fontSize: {
+        xs: ['0.5rem', '1rem'],
+      },
       colors: {
         'royal-blue': {
           50: '#eef4ff',

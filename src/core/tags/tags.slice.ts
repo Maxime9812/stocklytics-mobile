@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { tagsAdapter, TagsEntityState } from './hexagon/models/tag.model';
 import { getItemsInFolderUseCase } from '../items/hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
+import { RootState } from '../create-store';
 
 export type TagSliceState = TagsEntityState;
 
@@ -19,3 +20,12 @@ export const tagsSlice = createSlice({
     });
   },
 });
+
+export const tagsSelectors = tagsAdapter.getSelectors<RootState>(
+  (state) => state.tags,
+);
+
+export const selectTags = createSelector(
+  [tagsSelectors.selectAll],
+  (tags) => (ids: string[]) => tags.filter((tag) => ids.includes(tag.id)),
+);

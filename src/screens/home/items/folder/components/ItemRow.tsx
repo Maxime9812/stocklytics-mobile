@@ -1,6 +1,5 @@
 import { Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useTheme } from '../../../../../hooks/use-theme';
 import { Swipeable } from 'react-native-gesture-handler';
 import { useRef } from 'react';
 import Button from '../../../../../components/buttons/Button';
@@ -13,16 +12,15 @@ type ItemRowProps = {
     id: string;
     name: string;
     quantity: number;
+    tags: { id: string; name: string }[];
   };
 };
 export default function ItemRow({
   onPress,
   onDelete,
-  item: { id, name, quantity },
+  item: { id, name, quantity, tags },
 }: ItemRowProps) {
   const swipeableRef = useRef<Swipeable>(null);
-
-  const { theme } = useTheme();
 
   const onDeleteHandler = () => {
     swipeableRef.current?.close();
@@ -53,6 +51,16 @@ export default function ItemRow({
           <View className="space-y-2">
             <Text className="text-lg font-bold dark:text-white">{name}</Text>
             <Text className="text-neutral-500">{quantity} unit</Text>
+            <View className="flex-row">
+              {tags.map((tag) => (
+                <View
+                  key={tag.id}
+                  className="bg-neutral-200 dark:bg-neutral-700 py-1 px-3 rounded-full"
+                >
+                  <Text className="dark:text-white text-xs">{tag.name}</Text>
+                </View>
+              ))}
+            </View>
           </View>
         </View>
       </Button>
