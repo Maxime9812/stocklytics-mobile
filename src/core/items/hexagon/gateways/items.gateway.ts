@@ -18,8 +18,14 @@ export type Item = {
   }[];
 };
 
+export type EditNotePayload = {
+  id: string;
+  note: string;
+};
+
 export interface ItemsGateway {
   getFromFolder(folderId: string | undefined): Promise<Item[]>;
   getById(id: string): Promise<Item | undefined>;
   addItemInFolder(payload: AddItemInFolderPayload): Promise<Item>;
+  editNote(payload: EditNotePayload): Promise<void>;
 }

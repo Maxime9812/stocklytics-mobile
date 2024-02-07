@@ -44,7 +44,7 @@ const LoadedItemScreen = ({
   navigation,
 }: LoadedItemScreenProps) => {
   const goToEditNote = () => {
-    navigation.push('DeleteItem', { id: item.id });
+    navigation.push('EditItemNote', { itemId: item.id, note: item.note });
   };
 
   const goToEditQuantity = () => {

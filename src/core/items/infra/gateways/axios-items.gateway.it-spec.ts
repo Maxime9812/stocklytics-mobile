@@ -70,4 +70,17 @@ describe('AxiosItemsGateway', () => {
       });
     });
   });
+
+  describe('editNote', () => {
+    test('Should edit', async () => {
+      const scope = nock(BASE_URL)
+        .post('/items/item-id/edit/note', { note: 'This is a note' })
+        .reply(200);
+      await axiosItemsGateway.editNote({
+        id: 'item-id',
+        note: 'This is a note',
+      });
+      expect(scope.isDone()).toBe(true);
+    });
+  });
 });

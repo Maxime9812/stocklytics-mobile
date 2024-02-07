@@ -4,6 +4,7 @@ import { getItemByIdUseCase } from './hexagon/usecases/get-item-by-id/get-item-b
 import { getItemsInFolderUseCase } from './hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
 import { RootState } from '../create-store';
 import { addItemInFolderUseCase } from './hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
+import { editItemNoteUseCase } from './hexagon/usecases/edit-item-note/edit-item-note.usecase';
 
 export type ItemsSliceState = ItemsEntityState & {
   isLoadingById: Record<string, boolean>;
@@ -49,6 +50,13 @@ export const itemsSlice = createSlice({
           tags: item.tags.map((t) => t.id),
         });
         delete state.isLoadingById[item.id];
+      })
+      .addCase(editItemNoteUseCase.fulfilled, (state, action) => {
+        const { itemId, note } = action.payload;
+        itemsAdapter.updateOne(state, {
+          id: itemId,
+          changes: { note },
+        });
       });
   },
 });

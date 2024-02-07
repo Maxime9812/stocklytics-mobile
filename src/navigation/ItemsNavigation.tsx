@@ -14,6 +14,7 @@ import FolderScreenHeader from '../screens/home/items/folder/components/header/F
 import AddItemScreen from '../screens/home/items/add-item/AddItemScreen';
 import AddFolderScreen from '../screens/home/items/add-folder/AddFolderScreen';
 import DeleteItemScreen from '../screens/home/items/delete-item/DeleteItemScreen';
+import EditItemNoteScreen from '../screens/home/items/edit-item-note/EditItemNoteScreen';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
@@ -21,6 +22,7 @@ export type ItemsStack = {
   AddItem: { folderId?: string };
   DeleteItem: { id: string };
   AddFolder: { parentId?: string };
+  EditItemNote: { itemId: string; note: string };
 };
 
 export type ItemsStackScreenProps<T extends keyof ItemsStack> =
@@ -66,6 +68,11 @@ export default function ItemsNavigation() {
         <Stack.Screen
           name="DeleteItem"
           component={DeleteItemScreen}
+          options={{ presentation: 'modal' }}
+        />
+        <Stack.Screen
+          name="EditItemNote"
+          component={EditItemNoteScreen}
           options={{ presentation: 'modal' }}
         />
       </Stack.Group>

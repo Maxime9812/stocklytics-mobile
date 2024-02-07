@@ -1,5 +1,6 @@
 import {
   AddItemInFolderPayload,
+  EditNotePayload,
   Item,
   ItemsGateway,
 } from '../../hexagon/gateways/items.gateway';
@@ -7,6 +8,12 @@ import { AxiosInstance } from 'axios';
 
 export class AxiosItemsGateway implements ItemsGateway {
   constructor(private readonly axios: AxiosInstance) {}
+
+  async editNote(payload: EditNotePayload): Promise<void> {
+    await this.axios.post(`/items/${payload.id}/edit/note`, {
+      note: payload.note,
+    });
+  }
 
   async getById(id: string): Promise<Item | undefined> {
     return Promise.resolve(undefined);

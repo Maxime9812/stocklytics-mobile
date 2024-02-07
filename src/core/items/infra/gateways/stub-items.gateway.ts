@@ -1,5 +1,6 @@
 import {
   AddItemInFolderPayload,
+  EditNotePayload,
   Item,
   ItemsGateway,
 } from '../../hexagon/gateways/items.gateway';
@@ -8,6 +9,7 @@ export class StubItemsGateway implements ItemsGateway {
   private itemsInFolder: Map<string, Item[]> = new Map();
   private itemsById: Map<string, Item> = new Map();
   private addedItems: Map<string, Item> = new Map();
+  lastNoteEdit: EditNotePayload | undefined;
 
   constructor(private readonly delay = 0) {}
 
@@ -30,6 +32,15 @@ export class StubItemsGateway implements ItemsGateway {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.itemsById.get(id));
+      }, this.delay);
+    });
+  }
+
+  async editNote(payload: EditNotePayload): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.lastNoteEdit = payload;
+        resolve();
       }, this.delay);
     });
   }

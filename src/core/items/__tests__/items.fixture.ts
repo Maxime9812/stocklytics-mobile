@@ -11,9 +11,14 @@ import {
 import { DeterministicUUIDProvider } from '../../common/uuid-provider/deterministic-uuid.provider';
 import {
   AddItemInFolderPayload,
+  EditNotePayload,
   Item,
 } from '../hexagon/gateways/items.gateway';
 import { Tag } from '../../tags/hexagon/models/tag.model';
+import {
+  editItemNoteUseCase,
+  EditItemNoteUseCasePayload,
+} from '../hexagon/usecases/edit-item-note/edit-item-note.usecase';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
@@ -21,6 +26,7 @@ export const createItemsFixture = () => {
   const itemsGateway = new StubItemsGateway();
   const uuidProvider = new DeterministicUUIDProvider();
   let store: TestStore;
+  let initialState = stateBuilder();
 
   return {
     givenUUID(uuid: string) {
@@ -28,6 +34,9 @@ export const createItemsFixture = () => {
     },
     givenItemsInFolder: (folderId: string | undefined, items: Item[]) => {
       itemsGateway.givenItemsInFolder(folderId, items);
+    },
+    givenExistingItems: (items: ItemModel[]) => {
+      initialState = initialState.withItems(items);
     },
     givenItems: (item: Item[]) => {
       itemsGateway.givenItems(item);
@@ -50,6 +59,10 @@ export const createItemsFixture = () => {
       store = createTestStore({ itemsGateway, uuidProvider });
       return store.dispatch(addItemInFolderUseCase(payload));
     },
+    whenEditNote: (payload: EditItemNoteUseCasePayload) => {
+      store = createTestStore({ itemsGateway }, initialState.build());
+      return store.dispatch(editItemNoteUseCase(payload));
+    },
     thenItemIsLoading: (id: string) => {
       expect(store.getState()).toEqual(
         stateBuilder().withLoadingItem([id]).build(),
@@ -61,6 +74,9 @@ export const createItemsFixture = () => {
           .withLoadingFoldersItems([folderId ?? 'root'])
           .build(),
       );
+    },
+    thenNoteShouldBeenEdited: (payload: EditNotePayload) => {
+      expect(itemsGateway.lastNoteEdit).toEqual(payload);
     },
     thenItemsIs: (items: ExpectedItem[]) => {
       expect(store.getState()).toEqual(
