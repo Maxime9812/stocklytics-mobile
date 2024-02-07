@@ -121,26 +121,6 @@ const LoadedItemScreen = ({
               <Text className="dark:text-white">{item.createdAt}</Text>
             </Card>
           </View>
-          <Card className="p-3">
-            <Card.Header className="justify-between">
-              <Text className="text-neutral-500 dark:text-neutral-400">
-                Note
-              </Text>
-              <View>
-                <Button variant="link" onPress={goToEditNote}>
-                  <Button.Icon>
-                    <Feather name={item.hasNote ? 'edit' : 'plus'} />
-                  </Button.Icon>
-                  <Button.Text>
-                    {item.hasNote ? 'Edit note' : 'Add a note'}
-                  </Button.Text>
-                </Button>
-              </View>
-            </Card.Header>
-            <View>
-              <Text className="dark:text-white">{item.note}</Text>
-            </View>
-          </Card>
 
           <Card className="p-3">
             <Card.Header className="justify-between">
@@ -176,6 +156,27 @@ const LoadedItemScreen = ({
               </Button>
             </Card.Header>
             <View className="h-14"></View>
+          </Card>
+
+          <Card className="p-3">
+            <Card.Header className="justify-between">
+              <Text className="text-neutral-500 dark:text-neutral-400">
+                Note
+              </Text>
+              <View>
+                <Button variant="link" onPress={goToEditNote}>
+                  <Button.Icon>
+                    <Feather name={item.hasNote ? 'edit' : 'plus'} />
+                  </Button.Icon>
+                  <Button.Text>
+                    {item.hasNote ? 'Edit note' : 'Add a note'}
+                  </Button.Text>
+                </Button>
+              </View>
+            </Card.Header>
+            <View>
+              <Text className="dark:text-white">{item.note}</Text>
+            </View>
           </Card>
 
           <Card className="p-1">

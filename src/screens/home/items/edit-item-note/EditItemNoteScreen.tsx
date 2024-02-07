@@ -68,6 +68,7 @@ export default function EditItemNoteScreen({
                       multiline
                       onChangeText={field.onChange}
                       placeholder="Add a note"
+                      style={{ maxHeight: 160 }}
                     />
                   )}
                   name="note"
