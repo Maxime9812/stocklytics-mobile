@@ -80,7 +80,16 @@ export default function ItemsNavigation() {
         <Stack.Screen
           name="LinkBarcode"
           component={LinkBarcodeScreen}
-          options={{ presentation: 'fullScreenModal' }}
+          options={{
+            presentation: 'transparentModal',
+            headerLeft: ({ canGoBack }) => (
+              <StackBackButton
+                canGoBack={canGoBack}
+                variant={'close'}
+                className="p-4 rounded-full bg-neutral-300 dark:bg-neutral-800 opacity-70"
+              />
+            ),
+          }}
         />
       </Stack.Group>
     </Stack.Navigator>

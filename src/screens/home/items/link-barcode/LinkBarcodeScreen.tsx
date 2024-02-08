@@ -1,13 +1,16 @@
-import { Text } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
-import { Camera } from 'expo-camera';
+import { BarCodeScanningResult, Camera, FlashMode } from 'expo-camera';
 import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
-import { BarCodeScanningResult } from 'expo-camera';
+import Button from '../../../../components/buttons/Button';
+import { Feather } from '@expo/vector-icons';
+
 export default function LinkBarcodeScreen({
   navigation,
 }: ItemsStackScreenProps<'LinkBarcode'>) {
   const [hasPermission, setHasPermission] = useState<any>(null);
   const [scanned, setScanned] = useState(false);
+  const [torch, setTorch] = useState(FlashMode.off);
 
   useEffect(() => {
     const getCameraPermissions = async () => {
@@ -18,11 +21,7 @@ export default function LinkBarcodeScreen({
     getCameraPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({
-    type,
-    data,
-    bounds,
-  }: BarCodeScanningResult) => {
+  const handleBarCodeScanned = ({ type, data }: BarCodeScanningResult) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
@@ -34,11 +33,37 @@ export default function LinkBarcodeScreen({
     return <Text>No access to camera</Text>;
   }
   return (
-    <Camera
-      onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-      autoFocus={10}
-      useCamera2Api
-      style={{ flex: 1 }}
-    />
+    <View className="flex-1 bg-transparent">
+      <Camera
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        autoFocus={10}
+        useCamera2Api
+        style={{ flex: 1 }}
+        flashMode={torch}
+      >
+        <SafeAreaView>
+          <View className="flex-row justify-end p-3">
+            <Button
+              variant="ghost"
+              onPress={() =>
+                setTorch((torch) => {
+                  return torch === FlashMode.off
+                    ? FlashMode.torch
+                    : FlashMode.off;
+                })
+              }
+              className="p-4 rounded-full bg-neutral-300 dark:bg-neutral-800 opacity-70"
+            >
+              <Button.Icon>
+                <Feather
+                  name={torch == FlashMode.torch ? 'zap' : 'zap-off'}
+                  size={26}
+                />
+              </Button.Icon>
+            </Button>
+          </View>
+        </SafeAreaView>
+      </Camera>
+    </View>
   );
 }
