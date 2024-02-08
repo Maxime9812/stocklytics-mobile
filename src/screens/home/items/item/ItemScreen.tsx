@@ -47,12 +47,16 @@ const LoadedItemScreen = ({
     navigation.push('EditItemNote', { itemId: item.id, note: item.note });
   };
 
+  const goToEditTags = () => {
+    navigation.push('DeleteItem', { id: item.id });
+  };
+
   const goToEditQuantity = () => {
     navigation.push('DeleteItem', { id: item.id });
   };
 
   const goToScanBarcode = () => {
-    navigation.push('DeleteItem', { id: item.id });
+    navigation.push('LinkBarcode', { itemId: item.id });
   };
 
   const goToDeleteItem = () => {
@@ -128,7 +132,7 @@ const LoadedItemScreen = ({
                 Tags
               </Text>
               <View>
-                <Button variant="link" onPress={goToEditNote}>
+                <Button variant="link" onPress={goToEditTags}>
                   <Button.Icon>
                     <Feather name="edit" />
                   </Button.Icon>
