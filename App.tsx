@@ -4,12 +4,10 @@ import { StubAuthGateway } from './src/core/auth/infra/gateways/auth/stub-auth.g
 import { stateBuilder } from './src/core/state-builder';
 import { AsyncStorageAuthGateway } from './src/core/auth/infra/gateways/auth/async-storage-auth.gateway';
 import axios from 'axios';
-import { AxiosAuthGateway } from './src/core/auth/infra/gateways/auth/axios-auth.gateway';
 import { StubItemsGateway } from './src/core/items/infra/gateways/items-gateway/stub-items.gateway';
 import { StubFoldersGateway } from './src/core/folders/infra/gateways/stub-folders.gateway';
-import { AxiosItemsGateway } from './src/core/items/infra/gateways/items-gateway/axios-items.gateway';
-import { AxiosFoldersGateway } from './src/core/folders/infra/gateways/axios-folders.gateway';
 import { CryptoUUIDProvider } from './src/core/common/uuid-provider/crypto-uuid.provider';
+import { StubBarcodeTypeProvider } from './src/core/items/infra/gateways/barcode-type/stub-barcode-type.provider';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -28,7 +26,6 @@ const axiosInstance = axios.create({
   baseURL: 'http://192.168.5.62:3000',
   withCredentials: true,
 });
-const axiosAuthGateway = new AxiosAuthGateway(axiosInstance);
 
 const itemsGateway = new StubItemsGateway(200);
 itemsGateway.givenItemsInFolder('folder-1', [
@@ -48,11 +45,13 @@ itemsGateway.givenItemsInFolder('folder-1', [
         name: 'Smartphone',
       },
     ],
+    barcode: {
+      type: 'ean13',
+      value: '5410041001204',
+    },
     createdAt: new Date('2021-01-01T00:00:00.000Z').toISOString(),
   },
 ]);
-
-const axiosItemsGateway = new AxiosItemsGateway(axiosInstance);
 
 const foldersGateway = new StubFoldersGateway(200);
 foldersGateway.givenFoldersInFolder([
@@ -72,8 +71,6 @@ foldersGateway.givenFoldersInFolder([
   },
 ]);
 
-const axiosFoldersGateway = new AxiosFoldersGateway(axiosInstance);
-
 const uuidProvider = new CryptoUUIDProvider();
 
 const store = createStore(
@@ -82,6 +79,7 @@ const store = createStore(
     itemsGateway,
     foldersGateway,
     uuidProvider,
+    barcodeTypeProvider: new StubBarcodeTypeProvider(),
   },
   stateBuilder().build(),
 );

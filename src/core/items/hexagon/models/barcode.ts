@@ -1,4 +1,4 @@
-export type BarcodeType = 'EAN_13' | 'QR';
+export type BarcodeType = 'ean13' | 'qrcode';
 
 export type Barcode = {
   type: BarcodeType;

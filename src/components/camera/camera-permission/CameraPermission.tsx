@@ -23,6 +23,8 @@ export default function CameraPermission({ children }: PropsWithChildren) {
     getCameraPermissions();
   }, []);
 
+  console.log(viewModel.type);
+
   switch (viewModel.type) {
     case 'request-access':
       return <BaseLayout></BaseLayout>;

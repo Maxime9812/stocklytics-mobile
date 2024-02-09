@@ -1,4 +1,5 @@
 import { ItemModel } from '../hexagon/models/item.model';
+import { Barcode } from '../hexagon/models/barcode';
 
 export const itemBuilder = (
   props: ItemModel = {
@@ -21,5 +22,6 @@ export const itemBuilder = (
   withFolderId: (folderId: string | null) =>
     itemBuilder({ ...props, folderId }),
   withTags: (tags: string[]) => itemBuilder({ ...props, tags }),
+  withBarcode: (barcode: Barcode) => itemBuilder({ ...props, barcode }),
   build: () => props,
 });

@@ -12,6 +12,7 @@ import {
 } from './item-screen-viewmodel';
 import { exhaustiveGuard } from '../../../../core/common/utils/exhaustive-guard';
 import Badge from '../../../../components/badge/Badge';
+import Barcode from '../../../../components/barcode/Barcode';
 
 export default function ItemScreen({
   navigation,
@@ -159,7 +160,9 @@ const LoadedItemScreen = ({
                 <Button.Text>Link barcode</Button.Text>
               </Button>
             </Card.Header>
-            <View className="h-14"></View>
+            <View className="min-h-14">
+              {item.barcode && <Barcode barcode={item.barcode} />}
+            </View>
           </Card>
 
           <Card className="p-3">

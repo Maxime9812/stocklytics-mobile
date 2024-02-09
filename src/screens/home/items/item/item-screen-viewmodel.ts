@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { selectItemById } from '../../../../core/items/items.slice';
 import { RootState } from '../../../../core/create-store';
 import { selectTags } from '../../../../core/tags/tags.slice';
+import { Barcode } from '../../../../core/items/hexagon/models/barcode';
 
 export type CreateItemScreenViewModelParams = {
   itemId: string;
@@ -25,6 +26,7 @@ export type ItemScreenViewModelLoaded = {
     quantity: number;
     createdAt: string;
     hasNote: boolean;
+    barcode?: Barcode;
   };
 };
 
@@ -65,6 +67,7 @@ export const createItemScreenViewModel = ({
         quantity: item.quantity,
         createdAt: dateFormatter.format(new Date(item.createdAt)),
         hasNote: !!item.note,
+        barcode: item.barcode,
       },
     };
   });

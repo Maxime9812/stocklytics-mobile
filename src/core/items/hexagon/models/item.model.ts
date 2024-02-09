@@ -1,4 +1,5 @@
 import { createEntityAdapter, EntityState } from '@reduxjs/toolkit';
+import { Barcode } from './barcode';
 
 export type ItemModel = {
   id: string;
@@ -7,6 +8,7 @@ export type ItemModel = {
   note: string;
   tags: string[];
   folderId: string | null;
+  barcode?: Barcode;
   createdAt: string;
 };
 
