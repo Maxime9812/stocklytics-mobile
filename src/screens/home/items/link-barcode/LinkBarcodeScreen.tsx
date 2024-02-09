@@ -6,7 +6,11 @@ import { Feather } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { createLinkBarcodeScreenViewModel } from './link-barcode-screen.viewmodel';
 import { useAppDispatch } from '../../../../store-hooks';
-import { useCameraDevice, Camera } from 'react-native-vision-camera';
+import {
+  useCameraDevice,
+  Camera,
+  useCodeScanner,
+} from 'react-native-vision-camera';
 
 export default function LinkBarcodeScreen({
   navigation,
@@ -22,6 +26,30 @@ export default function LinkBarcodeScreen({
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     navigation.goBack();
   };
+
+  const codeScanner = useCodeScanner({
+    codeTypes: [
+      'code-128',
+      'code-39',
+      'code-93',
+      'codabar',
+      'ean-13',
+      'ean-8',
+      'itf',
+      'upc-e',
+      'qr',
+      'pdf-417',
+      'aztec',
+      'data-matrix',
+    ],
+    onCodeScanned: async (codes) => {
+      const { type, value = '' } = codes[0];
+      await viewModel.scanBarcode({
+        type,
+        value,
+      });
+    },
+  });
 
   const viewModel = createLinkBarcodeScreenViewModel({
     itemId,
@@ -43,7 +71,17 @@ export default function LinkBarcodeScreen({
 
   if (device == null) return <View></View>;
 
-  return <Camera style={{ flex: 1 }} device={device} isActive={true} />;
+  return (
+    <Camera
+      style={{ flex: 1 }}
+      device={device}
+      isActive={true}
+      torch={torchEnabled ? 'on' : 'off'}
+      codeScanner={codeScanner}
+    >
+      <ContextMenu setTorch={setTorchEnabled} torch={torchEnabled} />
+    </Camera>
+  );
 }
 
 type ContextMenuProps = {
