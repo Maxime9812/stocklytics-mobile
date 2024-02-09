@@ -11,17 +11,20 @@ import { StubAuthGateway } from './auth/infra/gateways/auth/stub-auth.gateway';
 import { onAuthStateChangeListener } from './auth/hexagon/listeners/on-auth-state-change.listener';
 import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 import { ItemsGateway } from './items/hexagon/gateways/items.gateway';
-import { StubItemsGateway } from './items/infra/gateways/stub-items.gateway';
+import { StubItemsGateway } from './items/infra/gateways/items-gateway/stub-items.gateway';
 import { FoldersGateway } from './folders/hexagon/gateways/folders.gateway';
 import { StubFoldersGateway } from './folders/infra/gateways/stub-folders.gateway';
 import { UUIDProvider } from './common/uuid-provider/UUIDProvider';
 import { DeterministicUUIDProvider } from './common/uuid-provider/deterministic-uuid.provider';
+import { BarcodeTypeProvider } from './items/hexagon/gateways/barcode-type.provider';
+import { StubBarcodeTypeProvider } from './items/infra/gateways/barcode-type/stub-barcode-type.provider';
 
 export type Dependencies = {
   authGateway: AuthGateway;
   itemsGateway: ItemsGateway;
   foldersGateway: FoldersGateway;
   uuidProvider: UUIDProvider;
+  barcodeTypeProvider: BarcodeTypeProvider;
 };
 
 export const EMPTY_ARGS = 'EMPTY_ARGS' as const;
@@ -53,6 +56,7 @@ export const createTestStore = (
     itemsGateway = new StubItemsGateway(),
     foldersGateway = new StubFoldersGateway(),
     uuidProvider = new DeterministicUUIDProvider(),
+    barcodeTypeProvider = new StubBarcodeTypeProvider(),
   }: Partial<Dependencies> = {},
   preloadedState: Partial<RootState> = {},
 ) => {
@@ -65,7 +69,13 @@ export const createTestStore = (
   const getAction = () => actions;
 
   const store = createStore(
-    { authGateway, itemsGateway, foldersGateway, uuidProvider },
+    {
+      authGateway,
+      itemsGateway,
+      foldersGateway,
+      uuidProvider,
+      barcodeTypeProvider,
+    },
     preloadedState,
     [logActionsMiddleware],
   );

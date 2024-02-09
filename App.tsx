@@ -5,9 +5,9 @@ import { stateBuilder } from './src/core/state-builder';
 import { AsyncStorageAuthGateway } from './src/core/auth/infra/gateways/auth/async-storage-auth.gateway';
 import axios from 'axios';
 import { AxiosAuthGateway } from './src/core/auth/infra/gateways/auth/axios-auth.gateway';
-import { StubItemsGateway } from './src/core/items/infra/gateways/stub-items.gateway';
+import { StubItemsGateway } from './src/core/items/infra/gateways/items-gateway/stub-items.gateway';
 import { StubFoldersGateway } from './src/core/folders/infra/gateways/stub-folders.gateway';
-import { AxiosItemsGateway } from './src/core/items/infra/gateways/axios-items.gateway';
+import { AxiosItemsGateway } from './src/core/items/infra/gateways/items-gateway/axios-items.gateway';
 import { AxiosFoldersGateway } from './src/core/folders/infra/gateways/axios-folders.gateway';
 import { CryptoUUIDProvider } from './src/core/common/uuid-provider/crypto-uuid.provider';
 

@@ -3,7 +3,7 @@ import {
   EditNotePayload,
   Item,
   ItemsGateway,
-} from '../../hexagon/gateways/items.gateway';
+} from '../../../hexagon/gateways/items.gateway';
 
 export class StubItemsGateway implements ItemsGateway {
   private itemsInFolder: Map<string, Item[]> = new Map();

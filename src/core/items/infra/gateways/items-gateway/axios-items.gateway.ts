@@ -3,7 +3,7 @@ import {
   EditNotePayload,
   Item,
   ItemsGateway,
-} from '../../hexagon/gateways/items.gateway';
+} from '../../../hexagon/gateways/items.gateway';
 import { AxiosInstance } from 'axios';
 
 export class AxiosItemsGateway implements ItemsGateway {

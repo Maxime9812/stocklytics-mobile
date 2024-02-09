@@ -2,7 +2,7 @@ import { ItemModel } from '../hexagon/models/item.model';
 import { createTestStore, TestStore } from '../../create-store';
 import { getItemByIdUseCase } from '../hexagon/usecases/get-item-by-id/get-item-by-id.usecase';
 import { stateBuilder } from '../../state-builder';
-import { StubItemsGateway } from '../infra/gateways/stub-items.gateway';
+import { StubItemsGateway } from '../infra/gateways/items-gateway/stub-items.gateway';
 import { getItemsInFolderUseCase } from '../hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
 import {
   addItemInFolderUseCase,
