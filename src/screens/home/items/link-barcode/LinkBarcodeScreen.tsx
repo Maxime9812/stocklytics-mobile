@@ -29,20 +29,7 @@ export default function LinkBarcodeScreen({
   };
 
   const codeScanner = useCodeScanner({
-    codeTypes: [
-      'code-128',
-      'code-39',
-      'code-93',
-      'codabar',
-      'ean-13',
-      'ean-8',
-      'itf',
-      'upc-e',
-      'qr',
-      'pdf-417',
-      'aztec',
-      'data-matrix',
-    ],
+    codeTypes: ['code-128', 'ean-13', 'ean-8', 'qr'],
     onCodeScanned: async (codes) => {
       const { type, value = '' } = codes[0];
       await viewModel.scanBarcode({

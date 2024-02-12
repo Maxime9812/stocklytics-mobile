@@ -79,10 +79,10 @@ Button.Text = ({ children, ...props }: PropsWithChildren<Text['props']>) => {
       {...props}
       className={clsx(
         'text-center',
-        variant == 'solid' && 'text-white',
         variant == 'link' && 'text-royal-blue-500',
         variant == 'ghost' && 'dark:text-white',
         type == 'destructive' && 'text-red-500',
+        variant == 'solid' && 'text-white',
       )}
     >
       {children}
@@ -96,10 +96,10 @@ Button.Icon = ({ children, ...props }: PropsWithChildren<View['props']>) => {
     <Text
       {...props}
       className={clsx(
-        variant == 'solid' && 'text-white',
         variant == 'link' && 'text-royal-blue-500',
         variant == 'ghost' && 'dark:text-white',
         type == 'destructive' && 'text-red-500',
+        variant == 'solid' && 'text-white',
       )}
     >
       {children}

@@ -28,7 +28,7 @@ export default function EditItemTagsScreen({
 
   return (
     <CloseKeyboardOnTouch>
-      <BaseLayout>
+      <BaseLayout variant="secondary">
         <KeyboardAvoidingView
           className="flex-1"
           behavior="padding"
