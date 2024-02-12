@@ -112,4 +112,12 @@ describe('AxiosItemsGateway', () => {
       expect(scope.isDone()).toBe(true);
     });
   });
+
+  describe('unlinkBarcode', () => {
+    it('Should send request', async () => {
+      const scope = nock(BASE_URL).delete('/items/item-id/barcode').reply(200);
+      await axiosItemsGateway.unlinkBarcode('item-id');
+      expect(scope.isDone()).toBe(true);
+    });
+  });
 });

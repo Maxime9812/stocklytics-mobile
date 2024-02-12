@@ -13,6 +13,7 @@ export class StubItemsGateway implements ItemsGateway {
   lastNoteEdit: EditNotePayload | undefined;
   lastBarcodeLink: LinkBarcodeToItemPayload | undefined;
   lastDeletedItemId: string | undefined;
+  lastUnlinkedItemId: string | undefined;
 
   constructor(private readonly delay = 0) {}
 
@@ -52,6 +53,15 @@ export class StubItemsGateway implements ItemsGateway {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.lastBarcodeLink = payload;
+        resolve();
+      }, this.delay);
+    });
+  }
+
+  async unlinkBarcode(itemId: string): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.lastUnlinkedItemId = itemId;
         resolve();
       }, this.delay);
     });

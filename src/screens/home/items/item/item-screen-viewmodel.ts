@@ -1,12 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { selectItemById } from '../../../../core/items/items.slice';
-import { RootState } from '../../../../core/create-store';
+import { AppDispatch, RootState } from '../../../../core/create-store';
 import { selectTags } from '../../../../core/tags/tags.slice';
 import { Barcode } from '../../../../core/items/hexagon/models/barcode';
+import { unlinkItemBarcodeUseCase } from '../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 
 export type CreateItemScreenViewModelParams = {
   itemId: string;
   locale?: string;
+  dispatch: AppDispatch;
 };
 
 export type ItemScreenViewModelLoading = {
@@ -27,6 +29,7 @@ export type ItemScreenViewModelLoaded = {
     createdAt: string;
     hasNote: boolean;
     barcode?: Barcode;
+    unlinkBarcode: () => Promise<void>;
   };
 };
 
@@ -36,6 +39,7 @@ export type ItemScreenViewModelState =
 export const createItemScreenViewModel = ({
   itemId,
   locale,
+  dispatch,
 }: CreateItemScreenViewModelParams): ((
   state: RootState,
 ) => ItemScreenViewModelState) =>
@@ -45,6 +49,10 @@ export const createItemScreenViewModel = ({
         type: 'loading',
       };
     }
+
+    const unlinkBarcode = async () => {
+      await dispatch(unlinkItemBarcodeUseCase(itemId));
+    };
 
     const dateFormatter = new Intl.DateTimeFormat(locale, {
       year: 'numeric',
@@ -68,6 +76,7 @@ export const createItemScreenViewModel = ({
         createdAt: dateFormatter.format(new Date(item.createdAt)),
         hasNote: !!item.note,
         barcode: item.barcode,
+        unlinkBarcode,
       },
     };
   });

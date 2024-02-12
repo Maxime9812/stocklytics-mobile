@@ -7,6 +7,7 @@ import { addItemInFolderUseCase } from './hexagon/usecases/add-item-in-folder/ad
 import { editItemNoteUseCase } from './hexagon/usecases/edit-item-note/edit-item-note.usecase';
 import { linkBarcodeToItemUseCase } from './hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
 import { deleteItemUseCase } from './hexagon/usecases/delete-item/delete-item.usecase';
+import { unlinkItemBarcodeUseCase } from './hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 
 export type ItemsSliceState = ItemsEntityState & {
   isLoadingById: Record<string, boolean>;
@@ -69,6 +70,12 @@ export const itemsSlice = createSlice({
       })
       .addCase(deleteItemUseCase.fulfilled, (state, action) => {
         itemsAdapter.removeOne(state, action.meta.arg.itemId);
+      })
+      .addCase(unlinkItemBarcodeUseCase.fulfilled, (state, action) => {
+        itemsAdapter.updateOne(state, {
+          id: action.meta.arg,
+          changes: { barcode: undefined },
+        });
       });
   },
 });

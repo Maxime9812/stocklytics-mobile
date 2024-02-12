@@ -13,6 +13,7 @@ import {
 import { exhaustiveGuard } from '../../../../core/common/utils/exhaustive-guard';
 import Badge from '../../../../components/badge/Badge';
 import Barcode from '../../../../components/barcode/Barcode';
+import { useAppDispatch } from '../../../../store-hooks';
 
 export default function ItemScreen({
   navigation,
@@ -20,7 +21,10 @@ export default function ItemScreen({
     params: { id },
   },
 }: ItemsStackScreenProps<'Item'>) {
-  const viewModel = useSelector(createItemScreenViewModel({ itemId: id }));
+  const dispatch = useAppDispatch();
+  const viewModel = useSelector(
+    createItemScreenViewModel({ itemId: id, dispatch }),
+  );
 
   switch (viewModel.type) {
     case 'loaded':
@@ -160,8 +164,19 @@ const LoadedItemScreen = ({
                 <Button.Text>Link barcode</Button.Text>
               </Button>
             </Card.Header>
-            <View className="items-center">
-              {item.barcode && <Barcode barcode={item.barcode} />}
+            <View className="items-center space-y-2">
+              {item.barcode && (
+                <>
+                  <Barcode barcode={item.barcode} />
+                  <Button
+                    type="destructive"
+                    variant="link"
+                    onPress={item.unlinkBarcode}
+                  >
+                    <Button.Text>Unlink</Button.Text>
+                  </Button>
+                </>
+              )}
             </View>
           </Card>
 

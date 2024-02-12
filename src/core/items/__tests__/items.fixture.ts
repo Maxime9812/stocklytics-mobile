@@ -29,6 +29,7 @@ import {
   deleteItemUseCase,
   DeleteItemUseCasePayload,
 } from '../hexagon/usecases/delete-item/delete-item.usecase';
+import { unlinkItemBarcodeUseCase } from '../hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
@@ -90,6 +91,13 @@ export const createItemsFixture = () => {
     whenDeleteItem: (payload: DeleteItemUseCasePayload) => {
       store = createTestStore({ itemsGateway }, initialState.build());
       return store.dispatch(deleteItemUseCase(payload));
+    },
+    whenUnlinkBarcode: (itemId: string) => {
+      store = createTestStore({ itemsGateway }, initialState.build());
+      return store.dispatch(unlinkItemBarcodeUseCase(itemId));
+    },
+    thenUnlinkBarcodeIsRequestedFor: (itemId: string) => {
+      expect(itemsGateway.lastUnlinkedItemId).toEqual(itemId);
     },
     thenItemDeletionIsRequested: (id: string) => {
       expect(itemsGateway.lastDeletedItemId).toEqual(id);

@@ -1,11 +1,17 @@
-import { createItemScreenViewModel } from './item-screen-viewmodel';
+import {
+  createItemScreenViewModel,
+  ItemScreenViewModelLoaded,
+} from './item-screen-viewmodel';
 import { stateBuilder } from '../../../../core/state-builder';
 import { itemBuilder } from '../../../../core/items/__tests__/item.builder';
+import { createTestStore } from '../../../../core/create-store';
+import { unlinkItemBarcodeUseCase } from '../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 
 describe('ItemScreenViewModel', () => {
   it('Should be in error state when item is not found', () => {
     const viewModel = createItemScreenViewModel({
       itemId: 'item-id',
+      dispatch: jest.fn(),
     })(stateBuilder().build());
 
     expect(viewModel).toEqual(
@@ -22,6 +28,7 @@ describe('ItemScreenViewModel', () => {
 
     const viewModel = createItemScreenViewModel({
       itemId: 'item-id',
+      dispatch: jest.fn(),
     })(state);
 
     expect(viewModel).toEqual(
@@ -49,6 +56,7 @@ describe('ItemScreenViewModel', () => {
 
     const viewModel = createItemScreenViewModel({
       itemId: 'item-id',
+      dispatch: jest.fn(),
     })(state);
 
     expect(viewModel).toEqual(
@@ -67,6 +75,24 @@ describe('ItemScreenViewModel', () => {
     );
   });
 
+  it('Should call unlinkItemBarcodeUseCase when unlinkBarcode is called', async () => {
+    const state = stateBuilder()
+      .withItems([itemBuilder().withId('item-id').build()])
+      .build();
+    const store = createTestStore({}, state);
+
+    const viewModel = createItemScreenViewModel({
+      itemId: 'item-id',
+      dispatch: store.dispatch,
+    })(store.getState());
+
+    await (viewModel as ItemScreenViewModelLoaded).item.unlinkBarcode();
+
+    expect(store.getDispatchedUseCaseArgs(unlinkItemBarcodeUseCase)).toEqual(
+      'item-id',
+    );
+  });
+
   describe('Item has note', () => {
     it('Should return false when note is empty', () => {
       const state = stateBuilder()
@@ -75,6 +101,7 @@ describe('ItemScreenViewModel', () => {
 
       const viewModel = createItemScreenViewModel({
         itemId: 'item-id',
+        dispatch: jest.fn(),
       })(state);
 
       expect(viewModel).toEqual(
@@ -94,6 +121,7 @@ describe('ItemScreenViewModel', () => {
 
       const viewModel = createItemScreenViewModel({
         itemId: 'item-id',
+        dispatch: jest.fn(),
       })(state);
 
       expect(viewModel).toEqual(
@@ -114,6 +142,7 @@ describe('ItemScreenViewModel', () => {
 
       const viewModel = createItemScreenViewModel({
         itemId: 'item-id',
+        dispatch: jest.fn(),
       })(state);
 
       expect(viewModel).toEqual(
@@ -134,6 +163,7 @@ describe('ItemScreenViewModel', () => {
 
       const viewModel = createItemScreenViewModel({
         itemId: 'item-id',
+        dispatch: jest.fn(),
       })(state);
 
       expect(viewModel).toEqual(
@@ -165,6 +195,7 @@ describe('ItemScreenViewModel', () => {
       const viewModel = createItemScreenViewModel({
         itemId: 'item-id',
         locale: 'fr-FR',
+        dispatch: jest.fn(),
       })(state);
 
       expect(viewModel).toEqual(
