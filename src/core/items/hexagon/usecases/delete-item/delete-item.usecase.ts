@@ -5,5 +5,7 @@ export type DeleteItemUseCasePayload = {
 };
 export const deleteItemUseCase = createAppAsyncThunk(
   'items/delete',
-  ({}: DeleteItemUseCasePayload) => {},
+  async ({ itemId }: DeleteItemUseCasePayload, { extra: { itemsGateway } }) => {
+    await itemsGateway.delete(itemId);
+  },
 );

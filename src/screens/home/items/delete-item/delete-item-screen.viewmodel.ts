@@ -14,7 +14,7 @@ export const createDeleteItemScreenViewModel = ({
 }: DeleteItemScreenViewModelParams) =>
   createSelector([selectItemById(itemId)], (item) => {
     const deleteItem = async () => {
-      await dispatch(deleteItemUseCase({ itemId }));
+      return dispatch(deleteItemUseCase({ itemId }));
     };
 
     return {

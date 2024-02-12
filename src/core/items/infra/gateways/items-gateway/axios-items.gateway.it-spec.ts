@@ -104,4 +104,12 @@ describe('AxiosItemsGateway', () => {
       expect(scope.isDone()).toBe(true);
     });
   });
+
+  describe('delete', () => {
+    it('Should send request', async () => {
+      const scope = nock(BASE_URL).delete('/items/item-id').reply(200);
+      await axiosItemsGateway.delete('item-id');
+      expect(scope.isDone()).toBe(true);
+    });
+  });
 });

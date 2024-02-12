@@ -25,6 +25,10 @@ import {
 } from '../hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
 import { StubBarcodeTypeProvider } from '../infra/gateways/barcode-type/stub-barcode-type.provider';
 import { BarcodeType } from '../hexagon/models/barcode';
+import {
+  deleteItemUseCase,
+  DeleteItemUseCasePayload,
+} from '../hexagon/usecases/delete-item/delete-item.usecase';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
@@ -82,6 +86,13 @@ export const createItemsFixture = () => {
         initialState.build(),
       );
       return store.dispatch(linkBarcodeToItemUseCase(payload));
+    },
+    whenDeleteItem: (payload: DeleteItemUseCasePayload) => {
+      store = createTestStore({ itemsGateway }, initialState.build());
+      return store.dispatch(deleteItemUseCase(payload));
+    },
+    thenItemDeletionIsRequested: (id: string) => {
+      expect(itemsGateway.lastDeletedItemId).toEqual(id);
     },
     thenItemIsLoading: (id: string) => {
       expect(store.getState()).toEqual(

@@ -5,8 +5,10 @@ import Button from '../../../../components/buttons/Button';
 import { useSelector } from 'react-redux';
 import { createDeleteItemScreenViewModel } from './delete-item-screen.viewmodel';
 import { useAppDispatch } from '../../../../store-hooks';
+import { isRejected } from '@reduxjs/toolkit';
 
 export default function DeleteItemScreen({
+  navigation,
   route: {
     params: { id },
   },
@@ -16,6 +18,14 @@ export default function DeleteItemScreen({
   const { deleteItem, item } = useSelector(
     createDeleteItemScreenViewModel({ itemId: id, dispatch }),
   );
+
+  const handleDelete = async () => {
+    const action = await deleteItem();
+
+    if (isRejected(action)) return;
+
+    navigation.goBack();
+  };
 
   return (
     <BaseLayout variant="secondary">
@@ -32,7 +42,7 @@ export default function DeleteItemScreen({
             </View>
           </View>
         </View>
-        <Button type="destructive" onPress={deleteItem}>
+        <Button type="destructive" onPress={handleDelete}>
           <Button.Text>Delete</Button.Text>
         </Button>
       </View>

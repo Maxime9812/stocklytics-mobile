@@ -12,6 +12,7 @@ export class StubItemsGateway implements ItemsGateway {
   private addedItems: Map<string, Item> = new Map();
   lastNoteEdit: EditNotePayload | undefined;
   lastBarcodeLink: LinkBarcodeToItemPayload | undefined;
+  lastDeletedItemId: string | undefined;
 
   constructor(private readonly delay = 0) {}
 
@@ -70,5 +71,14 @@ export class StubItemsGateway implements ItemsGateway {
 
   private getAddedItemInFolderKey(payload: AddItemInFolderPayload) {
     return JSON.stringify(payload);
+  }
+
+  async delete(id: string): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.lastDeletedItemId = id;
+        resolve();
+      }, this.delay);
+    });
   }
 }

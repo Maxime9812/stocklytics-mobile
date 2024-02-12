@@ -59,7 +59,7 @@ describe('ItemScreenViewModel', () => {
           quantity: 10,
           note: 'This is a note',
           barcode: {
-            type: 'QR',
+            type: 'qrcode',
             value: 'barcode-value',
           },
         }),

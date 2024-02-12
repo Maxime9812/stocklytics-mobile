@@ -43,4 +43,8 @@ export class AxiosItemsGateway implements ItemsGateway {
   }: LinkBarcodeToItemPayload): Promise<void> {
     await this.axios.post(`/items/${itemId}/barcode`, { barcode });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.axios.delete(`/items/${id}`);
+  }
 }

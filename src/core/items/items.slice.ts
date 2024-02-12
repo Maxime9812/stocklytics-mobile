@@ -6,6 +6,7 @@ import { RootState } from '../create-store';
 import { addItemInFolderUseCase } from './hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
 import { editItemNoteUseCase } from './hexagon/usecases/edit-item-note/edit-item-note.usecase';
 import { linkBarcodeToItemUseCase } from './hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
+import { deleteItemUseCase } from './hexagon/usecases/delete-item/delete-item.usecase';
 
 export type ItemsSliceState = ItemsEntityState & {
   isLoadingById: Record<string, boolean>;
@@ -65,6 +66,9 @@ export const itemsSlice = createSlice({
           id: itemId,
           changes: { barcode },
         });
+      })
+      .addCase(deleteItemUseCase.fulfilled, (state, action) => {
+        itemsAdapter.removeOne(state, action.meta.arg.itemId);
       });
   },
 });

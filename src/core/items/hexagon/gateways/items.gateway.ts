@@ -37,4 +37,5 @@ export interface ItemsGateway {
   addItemInFolder(payload: AddItemInFolderPayload): Promise<Item>;
   editNote(payload: EditNotePayload): Promise<void>;
   linkBarcode(payload: LinkBarcodeToItemPayload): Promise<void>;
+  delete(id: string): Promise<void>;
 }
