@@ -26,9 +26,15 @@ export type EditNotePayload = {
   note: string;
 };
 
+export type LinkBarcodeToItemPayload = {
+  itemId: string;
+  barcode: Barcode;
+};
+
 export interface ItemsGateway {
   getFromFolder(folderId: string | undefined): Promise<Item[]>;
   getById(id: string): Promise<Item | undefined>;
   addItemInFolder(payload: AddItemInFolderPayload): Promise<Item>;
   editNote(payload: EditNotePayload): Promise<void>;
+  linkBarcode(payload: LinkBarcodeToItemPayload): Promise<void>;
 }

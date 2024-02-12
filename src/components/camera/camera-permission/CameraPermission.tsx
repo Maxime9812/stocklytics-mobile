@@ -1,29 +1,24 @@
 import { createCameraPermissionViewModel } from './camera-permission.viewmodel';
-import { PropsWithChildren, useEffect, useState } from 'react';
-import { Camera } from 'expo-camera';
+import { PropsWithChildren, useEffect } from 'react';
 import BaseLayout from '../../layouts/BaseLayout';
 import { Linking, Text, View } from 'react-native';
 import Button from '../../buttons/Button';
 import { exhaustiveGuard } from '../../../core/common/utils/exhaustive-guard';
+import { useCameraPermission } from 'react-native-vision-camera';
 
 export default function CameraPermission({ children }: PropsWithChildren) {
-  const [hasPermission, setHasPermission] = useState<boolean | undefined>(
-    undefined,
-  );
+  const { hasPermission, requestPermission } = useCameraPermission();
   const viewModel = createCameraPermissionViewModel({
     hasPermission,
   });
 
   useEffect(() => {
     const getCameraPermissions = async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
+      await requestPermission();
     };
 
     getCameraPermissions();
   }, []);
-
-  console.log(viewModel.type);
 
   switch (viewModel.type) {
     case 'request-access':

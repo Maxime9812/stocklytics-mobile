@@ -7,7 +7,7 @@ import axios from 'axios';
 import { StubItemsGateway } from './src/core/items/infra/gateways/items-gateway/stub-items.gateway';
 import { StubFoldersGateway } from './src/core/folders/infra/gateways/stub-folders.gateway';
 import { CryptoUUIDProvider } from './src/core/common/uuid-provider/crypto-uuid.provider';
-import { StubBarcodeTypeProvider } from './src/core/items/infra/gateways/barcode-type/stub-barcode-type.provider';
+import { CameraVisionBarcodeTypeProvider } from './src/core/items/infra/gateways/barcode-type/camera-vision-barcode-type.provider';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -45,10 +45,6 @@ itemsGateway.givenItemsInFolder('folder-1', [
         name: 'Smartphone',
       },
     ],
-    barcode: {
-      type: 'ean13',
-      value: '5410041001204',
-    },
     createdAt: new Date('2021-01-01T00:00:00.000Z').toISOString(),
   },
 ]);
@@ -73,13 +69,15 @@ foldersGateway.givenFoldersInFolder([
 
 const uuidProvider = new CryptoUUIDProvider();
 
+const barcodeTypeProvider = new CameraVisionBarcodeTypeProvider();
+
 const store = createStore(
   {
     authGateway,
     itemsGateway,
     foldersGateway,
     uuidProvider,
-    barcodeTypeProvider: new StubBarcodeTypeProvider(),
+    barcodeTypeProvider,
   },
   stateBuilder().build(),
 );

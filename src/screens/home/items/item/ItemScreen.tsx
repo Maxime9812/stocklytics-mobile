@@ -160,7 +160,7 @@ const LoadedItemScreen = ({
                 <Button.Text>Link barcode</Button.Text>
               </Button>
             </Card.Header>
-            <View className="min-h-14">
+            <View className="items-center">
               {item.barcode && <Barcode barcode={item.barcode} />}
             </View>
           </Card>

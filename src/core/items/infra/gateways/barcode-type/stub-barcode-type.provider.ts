@@ -2,12 +2,12 @@ import { BarcodeTypeProvider } from '../../../hexagon/gateways/barcode-type.prov
 import { BarcodeType } from '../../../hexagon/models/barcode';
 
 export class StubBarcodeTypeProvider implements BarcodeTypeProvider {
-  private barcodeType: Map<string, BarcodeType> = new Map();
-  getBarcodeType(barcode: string): BarcodeType {
+  private barcodeType: Map<string, BarcodeType | 'unsupported'> = new Map();
+  getBarcodeType(barcode: string): BarcodeType | 'unsupported' {
     return this.barcodeType.get(barcode)!;
   }
 
-  givenBarcodeType(barcode: string, type: BarcodeType) {
+  givenBarcodeType(barcode: string, type: BarcodeType | 'unsupported') {
     this.barcodeType.set(barcode, type);
   }
 }

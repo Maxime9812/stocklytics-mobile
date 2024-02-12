@@ -1,6 +1,6 @@
 import { createAppAsyncThunk } from '../../../../create-app-async-thunk';
 
-type LinkBarcodeToItemUseCasePayload = {
+export type LinkBarcodeToItemUseCasePayload = {
   itemId: string;
   barcode: {
     type: string;
@@ -10,5 +10,25 @@ type LinkBarcodeToItemUseCasePayload = {
 
 export const linkBarcodeToItemUseCase = createAppAsyncThunk(
   'items/linkBarcode',
-  async ({}: LinkBarcodeToItemUseCasePayload) => {},
+  async (
+    { itemId, barcode }: LinkBarcodeToItemUseCasePayload,
+    { extra: { itemsGateway, barcodeTypeProvider }, rejectWithValue },
+  ) => {
+    const barcodeType = barcodeTypeProvider.getBarcodeType(barcode.type);
+
+    if (barcodeType === 'unsupported') {
+      return rejectWithValue('Unsupported barcode type');
+    }
+
+    const payload = {
+      itemId,
+      barcode: {
+        type: barcodeType,
+        value: barcode.value,
+      },
+    };
+    await itemsGateway.linkBarcode(payload);
+
+    return payload;
+  },
 );

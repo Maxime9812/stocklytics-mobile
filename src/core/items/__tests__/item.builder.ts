@@ -23,5 +23,6 @@ export const itemBuilder = (
     itemBuilder({ ...props, folderId }),
   withTags: (tags: string[]) => itemBuilder({ ...props, tags }),
   withBarcode: (barcode: Barcode) => itemBuilder({ ...props, barcode }),
+  withoutBarcode: () => itemBuilder({ ...props, barcode: undefined }),
   build: () => props,
 });

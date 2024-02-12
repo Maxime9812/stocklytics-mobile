@@ -19,16 +19,29 @@ import {
   editItemNoteUseCase,
   EditItemNoteUseCasePayload,
 } from '../hexagon/usecases/edit-item-note/edit-item-note.usecase';
+import {
+  linkBarcodeToItemUseCase,
+  LinkBarcodeToItemUseCasePayload,
+} from '../hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
+import { StubBarcodeTypeProvider } from '../infra/gateways/barcode-type/stub-barcode-type.provider';
+import { BarcodeType } from '../hexagon/models/barcode';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
 export const createItemsFixture = () => {
   const itemsGateway = new StubItemsGateway();
+  const barcodeTypeProvider = new StubBarcodeTypeProvider();
   const uuidProvider = new DeterministicUUIDProvider();
   let store: TestStore;
   let initialState = stateBuilder();
 
   return {
+    givenBarcodeTypeSupported: (type: string, barcodeType: BarcodeType) => {
+      barcodeTypeProvider.givenBarcodeType(type, barcodeType);
+    },
+    givenBarcodeTypeUnsupported: (type: string) => {
+      barcodeTypeProvider.givenBarcodeType(type, 'unsupported');
+    },
     givenUUID(uuid: string) {
       uuidProvider.givenUUID(uuid);
     },
@@ -63,6 +76,13 @@ export const createItemsFixture = () => {
       store = createTestStore({ itemsGateway }, initialState.build());
       return store.dispatch(editItemNoteUseCase(payload));
     },
+    whenLinkBarcode: (payload: LinkBarcodeToItemUseCasePayload) => {
+      store = createTestStore(
+        { itemsGateway, barcodeTypeProvider },
+        initialState.build(),
+      );
+      return store.dispatch(linkBarcodeToItemUseCase(payload));
+    },
     thenItemIsLoading: (id: string) => {
       expect(store.getState()).toEqual(
         stateBuilder().withLoadingItem([id]).build(),
@@ -74,6 +94,9 @@ export const createItemsFixture = () => {
           .withLoadingFoldersItems([folderId ?? 'root'])
           .build(),
       );
+    },
+    thenLinkBarcodeIsSend: (payload: LinkBarcodeToItemUseCasePayload) => {
+      expect(itemsGateway.lastBarcodeLink).toEqual(payload);
     },
     thenNoteShouldBeenEdited: (payload: EditNotePayload) => {
       expect(itemsGateway.lastNoteEdit).toEqual(payload);

@@ -1,5 +1,5 @@
 import { BarcodeType } from '../models/barcode';
 
 export interface BarcodeTypeProvider {
-  getBarcodeType(barcode: string): BarcodeType;
+  getBarcodeType(barcode: string): BarcodeType | 'unsupported';
 }

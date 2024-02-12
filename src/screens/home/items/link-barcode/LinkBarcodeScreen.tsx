@@ -11,6 +11,7 @@ import {
   Camera,
   useCodeScanner,
 } from 'react-native-vision-camera';
+import CameraPermission from '../../../../components/camera/camera-permission/CameraPermission';
 
 export default function LinkBarcodeScreen({
   navigation,
@@ -59,28 +60,24 @@ export default function LinkBarcodeScreen({
     onScannedSuccessfully,
   });
 
-  const handleBarCodeScanned = async ({ type, data }: any) => {
-    console.log('Scanned', data, type);
-    await viewModel.scanBarcode({
-      type,
-      value: data,
-    });
-  };
-
   const device = useCameraDevice('back');
 
   if (device == null) return <View></View>;
 
   return (
-    <Camera
-      style={{ flex: 1 }}
-      device={device}
-      isActive={true}
-      torch={torchEnabled ? 'on' : 'off'}
-      codeScanner={codeScanner}
-    >
-      <ContextMenu setTorch={setTorchEnabled} torch={torchEnabled} />
-    </Camera>
+    <CameraPermission>
+      <View className="bg-white dark:bg-black flex-1">
+        <Camera
+          style={{ flex: 1 }}
+          device={device}
+          isActive={true}
+          torch={torchEnabled ? 'on' : 'off'}
+          codeScanner={codeScanner}
+        >
+          <ContextMenu setTorch={setTorchEnabled} torch={torchEnabled} />
+        </Camera>
+      </View>
+    </CameraPermission>
   );
 }
 

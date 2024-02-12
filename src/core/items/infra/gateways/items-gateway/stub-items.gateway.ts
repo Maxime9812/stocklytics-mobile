@@ -3,6 +3,7 @@ import {
   EditNotePayload,
   Item,
   ItemsGateway,
+  LinkBarcodeToItemPayload,
 } from '../../../hexagon/gateways/items.gateway';
 
 export class StubItemsGateway implements ItemsGateway {
@@ -10,6 +11,7 @@ export class StubItemsGateway implements ItemsGateway {
   private itemsById: Map<string, Item> = new Map();
   private addedItems: Map<string, Item> = new Map();
   lastNoteEdit: EditNotePayload | undefined;
+  lastBarcodeLink: LinkBarcodeToItemPayload | undefined;
 
   constructor(private readonly delay = 0) {}
 
@@ -40,6 +42,15 @@ export class StubItemsGateway implements ItemsGateway {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.lastNoteEdit = payload;
+        resolve();
+      }, this.delay);
+    });
+  }
+
+  async linkBarcode(payload: LinkBarcodeToItemPayload): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.lastBarcodeLink = payload;
         resolve();
       }, this.delay);
     });

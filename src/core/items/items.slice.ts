@@ -5,6 +5,7 @@ import { getItemsInFolderUseCase } from './hexagon/usecases/get-items-in-folder/
 import { RootState } from '../create-store';
 import { addItemInFolderUseCase } from './hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
 import { editItemNoteUseCase } from './hexagon/usecases/edit-item-note/edit-item-note.usecase';
+import { linkBarcodeToItemUseCase } from './hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
 
 export type ItemsSliceState = ItemsEntityState & {
   isLoadingById: Record<string, boolean>;
@@ -56,6 +57,13 @@ export const itemsSlice = createSlice({
         itemsAdapter.updateOne(state, {
           id: itemId,
           changes: { note },
+        });
+      })
+      .addCase(linkBarcodeToItemUseCase.fulfilled, (state, action) => {
+        const { itemId, barcode } = action.payload;
+        itemsAdapter.updateOne(state, {
+          id: itemId,
+          changes: { barcode },
         });
       });
   },
