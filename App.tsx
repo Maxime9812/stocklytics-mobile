@@ -8,6 +8,9 @@ import { StubItemsGateway } from './src/core/items/infra/gateways/items-gateway/
 import { StubFoldersGateway } from './src/core/folders/infra/gateways/stub-folders.gateway';
 import { CryptoUUIDProvider } from './src/core/common/uuid-provider/crypto-uuid.provider';
 import { CameraVisionBarcodeTypeProvider } from './src/core/items/infra/gateways/barcode-type/camera-vision-barcode-type.provider';
+import { AxiosAuthGateway } from './src/core/auth/infra/gateways/auth/axios-auth.gateway';
+import { AxiosItemsGateway } from './src/core/items/infra/gateways/items-gateway/axios-items.gateway';
+import { AxiosFoldersGateway } from './src/core/folders/infra/gateways/axios-folders.gateway';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -26,6 +29,8 @@ const axiosInstance = axios.create({
   baseURL: 'http://192.168.5.62:3000',
   withCredentials: true,
 });
+
+const axiosAuthGateway = new AxiosAuthGateway(axiosInstance);
 
 const itemsGateway = new StubItemsGateway(200);
 itemsGateway.givenItemsInFolder('folder-1', [
@@ -49,6 +54,8 @@ itemsGateway.givenItemsInFolder('folder-1', [
   },
 ]);
 
+const axiosItemGateways = new AxiosItemsGateway(axiosInstance);
+
 const foldersGateway = new StubFoldersGateway(200);
 foldersGateway.givenFoldersInFolder([
   {
@@ -67,15 +74,17 @@ foldersGateway.givenFoldersInFolder([
   },
 ]);
 
+const axiosFolderGateway = new AxiosFoldersGateway(axiosInstance);
+
 const uuidProvider = new CryptoUUIDProvider();
 
 const barcodeTypeProvider = new CameraVisionBarcodeTypeProvider();
 
 const store = createStore(
   {
-    authGateway,
-    itemsGateway,
-    foldersGateway,
+    authGateway: axiosAuthGateway,
+    itemsGateway: axiosItemGateways,
+    foldersGateway: axiosFolderGateway,
     uuidProvider,
     barcodeTypeProvider,
   },

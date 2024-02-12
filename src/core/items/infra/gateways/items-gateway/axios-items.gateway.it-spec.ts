@@ -74,11 +74,32 @@ describe('AxiosItemsGateway', () => {
   describe('editNote', () => {
     test('Should edit', async () => {
       const scope = nock(BASE_URL)
-        .post('/items/item-id/edit/note', { note: 'This is a note' })
+        .post('/items/item-id/note', { note: 'This is a note' })
         .reply(200);
       await axiosItemsGateway.editNote({
         id: 'item-id',
         note: 'This is a note',
+      });
+      expect(scope.isDone()).toBe(true);
+    });
+  });
+
+  describe('linkBarcode', () => {
+    it('Should send request', async () => {
+      const scope = nock(BASE_URL)
+        .post('/items/item-id/barcode', {
+          barcode: {
+            type: 'ean13',
+            value: '1234567890',
+          },
+        })
+        .reply(200);
+      await axiosItemsGateway.linkBarcode({
+        itemId: 'item-id',
+        barcode: {
+          type: 'ean13',
+          value: '1234567890',
+        },
       });
       expect(scope.isDone()).toBe(true);
     });

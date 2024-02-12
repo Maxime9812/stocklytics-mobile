@@ -16,6 +16,7 @@ import AddFolderScreen from '../screens/home/items/add-folder/AddFolderScreen';
 import DeleteItemScreen from '../screens/home/items/delete-item/DeleteItemScreen';
 import EditItemNoteScreen from '../screens/home/items/edit-item-note/EditItemNoteScreen';
 import LinkBarcodeScreen from '../screens/home/items/link-barcode/LinkBarcodeScreen';
+import EditItemTagsScreen from '../screens/home/items/edit-item-tags/EditItemTagsScreen';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
@@ -25,6 +26,7 @@ export type ItemsStack = {
   AddFolder: { parentId?: string };
   EditItemNote: { itemId: string; note: string };
   LinkBarcode: { itemId: string };
+  EditItemTags: { itemId: string };
 };
 
 export type ItemsStackScreenProps<T extends keyof ItemsStack> =
@@ -75,6 +77,11 @@ export default function ItemsNavigation() {
         <Stack.Screen
           name="EditItemNote"
           component={EditItemNoteScreen}
+          options={{ presentation: 'modal' }}
+        />
+        <Stack.Screen
+          name="EditItemTags"
+          component={EditItemTagsScreen}
           options={{ presentation: 'modal' }}
         />
         <Stack.Screen

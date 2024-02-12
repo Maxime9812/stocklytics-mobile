@@ -6,13 +6,12 @@ import {
   LinkBarcodeToItemPayload,
 } from '../../../hexagon/gateways/items.gateway';
 import { AxiosInstance } from 'axios';
-import * as console from 'console';
 
 export class AxiosItemsGateway implements ItemsGateway {
   constructor(private readonly axios: AxiosInstance) {}
 
   async editNote(payload: EditNotePayload): Promise<void> {
-    await this.axios.post(`/items/${payload.id}/edit/note`, {
+    await this.axios.post(`/items/${payload.id}/note`, {
       note: payload.note,
     });
   }
@@ -38,7 +37,10 @@ export class AxiosItemsGateway implements ItemsGateway {
     }
   }
 
-  linkBarcode(payload: LinkBarcodeToItemPayload): Promise<void> {
-    return Promise.resolve(undefined);
+  async linkBarcode({
+    itemId,
+    barcode,
+  }: LinkBarcodeToItemPayload): Promise<void> {
+    await this.axios.post(`/items/${itemId}/barcode`, { barcode });
   }
 }

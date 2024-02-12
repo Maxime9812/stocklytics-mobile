@@ -49,7 +49,7 @@ const LoadedItemScreen = ({
   };
 
   const goToEditTags = () => {
-    navigation.push('DeleteItem', { id: item.id });
+    navigation.push('EditItemTags', { itemId: item.id });
   };
 
   const goToEditQuantity = () => {
