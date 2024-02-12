@@ -9,7 +9,7 @@ type Props = {
 export default function Barcode({ barcode }: Props) {
   const { img } = useBwip({
     bcid: barcode.type,
-    text: '4070071967072',
+    text: barcode.value,
     scale: 2,
     height: 12,
     includetext: true,

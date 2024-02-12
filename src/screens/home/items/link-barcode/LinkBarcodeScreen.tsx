@@ -80,7 +80,6 @@ export default function LinkBarcodeScreen({
     </CameraPermission>
   );
 }
-
 type ContextMenuProps = {
   setTorch: (isEnabled: boolean) => void;
   torch: boolean;

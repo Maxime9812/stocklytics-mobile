@@ -14,12 +14,13 @@ export const createLinkBarcodeScreenViewModel = ({
   dispatch,
   hasScanned,
   setHasScanned,
+  itemId,
 }: LinkBarcodeScreenViewModelParams) => {
   const scanBarcode = async (barcode: { type: string; value: string }) => {
     if (hasScanned) return;
     onScannedSuccessfully(barcode);
     setHasScanned(true);
-    return dispatch(linkBarcodeToItemUseCase({ itemId: 'item-id', barcode }));
+    return dispatch(linkBarcodeToItemUseCase({ itemId, barcode }));
   };
 
   return {
