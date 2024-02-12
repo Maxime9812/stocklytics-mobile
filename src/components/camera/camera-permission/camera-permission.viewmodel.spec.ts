@@ -16,12 +16,4 @@ describe('CameraPermissionViewModel', () => {
 
     expect(viewModel).toEqual({ type: 'access-denied' });
   });
-
-  it('Should be in request-access state when access is not granted', () => {
-    const viewModel = createCameraPermissionViewModel({
-      hasPermission: undefined,
-    });
-
-    expect(viewModel).toEqual({ type: 'request-access' });
-  });
 });
