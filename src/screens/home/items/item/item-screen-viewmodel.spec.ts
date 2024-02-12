@@ -40,7 +40,7 @@ describe('ItemScreenViewModel', () => {
           .withQuantity(10)
           .withNote('This is a note')
           .withBarcode({
-            type: 'QR',
+            type: 'qrcode',
             value: 'barcode-value',
           })
           .build(),

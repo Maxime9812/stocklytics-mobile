@@ -21,8 +21,6 @@ export default function CameraPermission({ children }: PropsWithChildren) {
   }, []);
 
   switch (viewModel.type) {
-    case 'request-access':
-      return <BaseLayout></BaseLayout>;
     case 'access-denied':
       return <AccessDenied />;
     case 'ready':

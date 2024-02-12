@@ -3,8 +3,10 @@ import {
   EditNotePayload,
   Item,
   ItemsGateway,
+  LinkBarcodeToItemPayload,
 } from '../../../hexagon/gateways/items.gateway';
 import { AxiosInstance } from 'axios';
+import * as console from 'console';
 
 export class AxiosItemsGateway implements ItemsGateway {
   constructor(private readonly axios: AxiosInstance) {}
@@ -34,5 +36,9 @@ export class AxiosItemsGateway implements ItemsGateway {
       console.log(e);
       throw e;
     }
+  }
+
+  linkBarcode(payload: LinkBarcodeToItemPayload): Promise<void> {
+    return Promise.resolve(undefined);
   }
 }

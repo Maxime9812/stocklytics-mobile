@@ -17,7 +17,7 @@ import { UUIDProvider } from './common/uuid-provider/UUIDProvider';
 import { DeterministicUUIDProvider } from './common/uuid-provider/deterministic-uuid.provider';
 import { BarcodeTypeProvider } from './items/hexagon/gateways/barcode-type.provider';
 import { StubBarcodeTypeProvider } from './items/infra/gateways/barcode-type/stub-barcode-type.provider';
-import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
+import { AsyncThunk } from '@reduxjs/toolkit';
 
 export type Dependencies = {
   authGateway: AuthGateway;
@@ -79,7 +79,7 @@ export const createTestStore = (
     preloadedState,
     [logActionsMiddleware],
   );
-  const getDispatchedUseCaseArgs = (useCase: AnyAsyncThunk) => {
+  const getDispatchedUseCaseArgs = (useCase: AsyncThunk<any, any, any>) => {
     const pendingUseCaseAction = getAction().find(
       (a) => a.type == useCase.pending.toString(),
     );
