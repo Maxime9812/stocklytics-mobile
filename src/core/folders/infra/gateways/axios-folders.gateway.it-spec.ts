@@ -46,4 +46,12 @@ describe('AxiosFoldersGateway', () => {
       expect(await axiosFoldersGateway.addFolder(payload)).toEqual(folderAdded);
     });
   });
+
+  describe('delete', () => {
+    it('Should send delete request', async () => {
+      const scope = nock(BASE_URL).delete('/folders/folder-id').reply(204);
+      await axiosFoldersGateway.delete('folder-id');
+      expect(scope.isDone()).toEqual(true);
+    });
+  });
 });

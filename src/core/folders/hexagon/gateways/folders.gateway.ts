@@ -9,4 +9,5 @@ export type AddFolderPayload = {
 export interface FoldersGateway {
   getInFolder(folderId: string | null): Promise<FolderModel[]>;
   addFolder(payload: AddFolderPayload): Promise<FolderModel>;
+  delete(folderId: string): Promise<void>;
 }

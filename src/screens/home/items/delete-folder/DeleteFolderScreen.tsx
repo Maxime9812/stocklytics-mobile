@@ -1,32 +1,29 @@
+import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import BaseLayout from '../../../../components/layouts/BaseLayout';
 import { Text, View } from 'react-native';
-import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import Button from '../../../../components/buttons/Button';
-import { useSelector } from 'react-redux';
-import { createDeleteItemScreenViewModel } from './delete-item-screen.viewmodel';
 import { useAppDispatch } from '../../../../store-hooks';
+import { useSelector } from 'react-redux';
+import { createDeleteFolderScreenViewModel } from './delete-folder-screen.viewmodel';
 import { isRejected } from '@reduxjs/toolkit';
 
-export default function DeleteItemScreen({
+export default function DeleteFolderScreen({
   navigation,
   route: {
     params: { id },
   },
-}: ItemsStackScreenProps<'DeleteItem'>) {
+}: ItemsStackScreenProps<'DeleteFolder'>) {
   const dispatch = useAppDispatch();
-
-  const { deleteItem, item } = useSelector(
-    createDeleteItemScreenViewModel({ itemId: id, dispatch }),
+  const { folder, deleteFolder } = useSelector(
+    createDeleteFolderScreenViewModel({ folderId: id, dispatch }),
   );
-
   const handleDelete = async () => {
-    const action = await deleteItem();
+    const action = await deleteFolder();
 
     if (isRejected(action)) return;
 
     navigation.goBack();
   };
-
   return (
     <BaseLayout variant="secondary">
       <View className="p-4 justify-between space-y-2 flex-1">
@@ -34,8 +31,9 @@ export default function DeleteItemScreen({
           <View className="space-y-2">
             <Text className="text-2xl dark:text-white font-bold">Delete</Text>
             <Text className="text-neutral-500 dark:text-neutral-400">
-              Are you sure you want to delete item{' '}
-              <Text className="dark:text-white font-bold">{item.name}</Text> ?
+              Are you sure you want to delete{' '}
+              <Text className="font-bold dark:text-white">{folder.name}</Text>{' '}
+              and all elements is this folder ?
             </Text>
           </View>
         </View>

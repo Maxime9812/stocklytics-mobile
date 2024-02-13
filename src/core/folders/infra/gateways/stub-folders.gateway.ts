@@ -7,6 +7,7 @@ import { FolderModel } from '../../hexagon/models/folder.model';
 export class StubFoldersGateway implements FoldersGateway {
   private _foldersInFolder: Map<string, FolderModel[]> = new Map();
   private _folderAdded: Map<string, FolderModel> = new Map();
+  lastDeletedFolder: string | undefined;
 
   constructor(private readonly delay = 0) {}
 
@@ -28,6 +29,15 @@ export class StubFoldersGateway implements FoldersGateway {
           ),
         this.delay,
       ),
+    );
+  }
+
+  async delete(folderId: string): Promise<void> {
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        this.lastDeletedFolder = folderId;
+        resolve();
+      }, this.delay),
     );
   }
 

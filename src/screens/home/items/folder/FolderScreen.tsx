@@ -72,7 +72,7 @@ const LoadedFolderScreen = ({
   };
 
   const goToDeleteFolder = (id: string) => {
-    navigation.push('DeleteItem', { id });
+    navigation.push('DeleteFolder', { id });
   };
 
   return (

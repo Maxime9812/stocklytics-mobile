@@ -3,6 +3,7 @@ import { Feather } from '@expo/vector-icons';
 import { Swipeable } from 'react-native-gesture-handler';
 import Button from '../../../../../components/buttons/Button';
 import { styled } from 'nativewind';
+import { useRef } from 'react';
 
 type ItemRowProps = {
   onPress: (folderId: string) => void;
@@ -18,12 +19,22 @@ export default function FolderRow({
   onDelete,
   folder: { id, quantity, name },
 }: ItemRowProps) {
+  const swipeableRef = useRef<Swipeable>(null);
+
+  const onDeleteHandler = () => {
+    swipeableRef.current?.close();
+    onDelete(id);
+  };
+
   return (
     <Swipeable
+      ref={swipeableRef}
       friction={2}
       leftThreshold={30}
       rightThreshold={40}
-      renderRightActions={() => <FolderActions id={id} onDelete={onDelete} />}
+      renderRightActions={() => (
+        <FolderActions id={id} onDelete={onDeleteHandler} />
+      )}
     >
       <Button
         variant="ghost"

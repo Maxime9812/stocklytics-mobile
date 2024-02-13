@@ -19,4 +19,8 @@ export class AxiosFoldersGateway implements FoldersGateway {
     const response = await this.axios.post('/folders', payload);
     return response.data;
   }
+
+  async delete(folderId: string): Promise<void> {
+    await this.axios.delete(`/folders/${folderId}`);
+  }
 }
