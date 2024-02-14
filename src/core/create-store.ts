@@ -15,8 +15,6 @@ import { FoldersGateway } from './folders/hexagon/gateways/folders.gateway';
 import { StubFoldersGateway } from './folders/infra/gateways/stub-folders.gateway';
 import { UUIDProvider } from './common/uuid-provider/UUIDProvider';
 import { DeterministicUUIDProvider } from './common/uuid-provider/deterministic-uuid.provider';
-import { BarcodeTypeProvider } from './items/hexagon/gateways/barcode-type.provider';
-import { StubBarcodeTypeProvider } from './items/infra/gateways/barcode-type/stub-barcode-type.provider';
 import { AsyncThunk } from '@reduxjs/toolkit';
 import { ScannerGateways } from './scanner/hexagon/gateways/scanner.gateways';
 import { StubScannerGateway } from './scanner/infra/gateways/stub-scanner.gateway';
@@ -26,7 +24,6 @@ export type Dependencies = {
   itemsGateway: ItemsGateway;
   foldersGateway: FoldersGateway;
   uuidProvider: UUIDProvider;
-  barcodeTypeProvider: BarcodeTypeProvider;
   scannerGateway: ScannerGateways;
 };
 
@@ -59,7 +56,6 @@ export const createTestStore = (
     itemsGateway = new StubItemsGateway(),
     foldersGateway = new StubFoldersGateway(),
     uuidProvider = new DeterministicUUIDProvider(),
-    barcodeTypeProvider = new StubBarcodeTypeProvider(),
     scannerGateway = new StubScannerGateway(),
   }: Partial<Dependencies> = {},
   preloadedState: Partial<RootState> = {},
@@ -78,7 +74,6 @@ export const createTestStore = (
       itemsGateway,
       foldersGateway,
       uuidProvider,
-      barcodeTypeProvider,
       scannerGateway,
     },
     preloadedState,

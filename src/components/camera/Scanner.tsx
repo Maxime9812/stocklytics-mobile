@@ -2,17 +2,36 @@ import CameraPermission from './camera-permission/CameraPermission';
 import { SafeAreaView, View } from 'react-native';
 import {
   Camera,
+  Code,
   useCameraDevice,
   useCodeScanner,
 } from 'react-native-vision-camera';
 import Button from '../buttons/Button';
 import { Feather } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
-import { CodeScanner } from 'react-native-vision-camera/src/CodeScanner';
+import {
+  Barcode,
+  BarcodeType,
+} from '../../core/scanner/hexagon/models/barcode';
 
 type ScannerProps = {
   isActive?: boolean;
-  onCodeScanned: CodeScanner['onCodeScanned'];
+  onCodeScanned: (barcode: Barcode) => void;
+};
+
+const cameraVisionTypeToBarcodeType = (
+  type: string,
+): BarcodeType | undefined => {
+  switch (type) {
+    case 'ean-8':
+      return 'ean8';
+    case 'qr':
+      return 'qrcode';
+    case 'code-128':
+      return 'code128';
+    case 'ean-13':
+      return 'ean13';
+  }
 };
 
 export default function Scanner({
@@ -24,7 +43,14 @@ export default function Scanner({
 
   const codeScanner = useCodeScanner({
     codeTypes: ['code-128', 'ean-13', 'ean-8'],
-    onCodeScanned: onCodeScanned,
+    onCodeScanned: (code: Code[]) => {
+      const type = cameraVisionTypeToBarcodeType(code[0].type);
+      if (!type) return;
+      onCodeScanned({
+        type,
+        value: code[0].value || '',
+      });
+    },
   });
 
   useEffect(() => {

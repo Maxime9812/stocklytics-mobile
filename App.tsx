@@ -7,10 +7,10 @@ import axios from 'axios';
 import { StubItemsGateway } from './src/core/items/infra/gateways/items-gateway/stub-items.gateway';
 import { StubFoldersGateway } from './src/core/folders/infra/gateways/stub-folders.gateway';
 import { CryptoUUIDProvider } from './src/core/common/uuid-provider/crypto-uuid.provider';
-import { CameraVisionBarcodeTypeProvider } from './src/core/items/infra/gateways/barcode-type/camera-vision-barcode-type.provider';
 import { AxiosAuthGateway } from './src/core/auth/infra/gateways/auth/axios-auth.gateway';
 import { AxiosItemsGateway } from './src/core/items/infra/gateways/items-gateway/axios-items.gateway';
 import { AxiosFoldersGateway } from './src/core/folders/infra/gateways/axios-folders.gateway';
+import { StubScannerGateway } from './src/core/scanner/infra/gateways/stub-scanner.gateway';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -78,15 +78,13 @@ const axiosFolderGateway = new AxiosFoldersGateway(axiosInstance);
 
 const uuidProvider = new CryptoUUIDProvider();
 
-const barcodeTypeProvider = new CameraVisionBarcodeTypeProvider();
-
 const store = createStore(
   {
     authGateway: axiosAuthGateway,
     itemsGateway: axiosItemGateways,
     foldersGateway: axiosFolderGateway,
     uuidProvider,
-    barcodeTypeProvider,
+    scannerGateway: new StubScannerGateway(),
   },
   stateBuilder().build(),
 );

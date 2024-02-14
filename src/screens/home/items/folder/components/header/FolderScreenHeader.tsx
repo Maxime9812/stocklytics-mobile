@@ -55,6 +55,7 @@ export default function FolderScreenHeader(props: View['props']) {
             <ThemedBottomSheet
               snapPoints={snapPoints}
               enablePanDownToClose
+              enableDynamicSizing
               ref={bottomSheetRef}
               onClose={() => setIsBottomSheetOpen(false)}
             >

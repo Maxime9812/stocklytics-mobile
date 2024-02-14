@@ -3,7 +3,6 @@ import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import * as Haptics from 'expo-haptics';
 import { createLinkBarcodeScreenViewModel } from './link-barcode-screen.viewmodel';
 import { useAppDispatch } from '../../../../store-hooks';
-import { Code } from 'react-native-vision-camera';
 import Scanner from '../../../../components/camera/Scanner';
 
 export default function LinkBarcodeScreen({
@@ -20,14 +19,6 @@ export default function LinkBarcodeScreen({
     navigation.goBack();
   };
 
-  const onCodeScanned = async (codes: Code[]) => {
-    const { type, value = '' } = codes[0];
-    await viewModel.scanBarcode({
-      type,
-      value,
-    });
-  };
-
   const viewModel = createLinkBarcodeScreenViewModel({
     itemId,
     hasScanned,
@@ -36,5 +27,5 @@ export default function LinkBarcodeScreen({
     onScannedSuccessfully,
   });
 
-  return <Scanner onCodeScanned={onCodeScanned} />;
+  return <Scanner onCodeScanned={viewModel.scanBarcode} />;
 }

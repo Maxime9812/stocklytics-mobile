@@ -1,5 +1,6 @@
 import { AppDispatch } from '../../../../core/create-store';
 import { linkBarcodeToItemUseCase } from '../../../../core/items/hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
+import { Barcode } from '../../../../core/scanner/hexagon/models/barcode';
 
 export type LinkBarcodeScreenViewModelParams = {
   itemId: string;
@@ -16,7 +17,7 @@ export const createLinkBarcodeScreenViewModel = ({
   setHasScanned,
   itemId,
 }: LinkBarcodeScreenViewModelParams) => {
-  const scanBarcode = async (barcode: { type: string; value: string }) => {
+  const scanBarcode = async (barcode: Barcode) => {
     if (hasScanned) return;
     onScannedSuccessfully(barcode);
     setHasScanned(true);
