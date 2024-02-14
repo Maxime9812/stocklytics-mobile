@@ -7,7 +7,7 @@ import {
 } from 'react-native-vision-camera';
 import Button from '../buttons/Button';
 import { Feather } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CodeScanner } from 'react-native-vision-camera/src/CodeScanner';
 
 type ScannerProps = {
@@ -23,9 +23,13 @@ export default function Scanner({
   const device = useCameraDevice('back');
 
   const codeScanner = useCodeScanner({
-    codeTypes: ['code-128', 'ean-13', 'ean-8', 'qr'],
+    codeTypes: ['code-128', 'ean-13', 'ean-8'],
     onCodeScanned: onCodeScanned,
   });
+
+  useEffect(() => {
+    setTorchEnabled(false);
+  }, [isActive]);
 
   if (device == null) return <View></View>;
 
