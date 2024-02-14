@@ -24,7 +24,11 @@ describe('Feature: Scan barcode', () => {
 
     await fixture.givenReceivingScan(barcode, scan);
 
-    await fixture.whenScanBarcode(barcode);
+    const action = fixture.whenScanBarcode(barcode);
+
+    fixture.thenScannerShouldBeLoading();
+
+    await action;
 
     fixture.thenScanShouldBe(scan);
   });
@@ -34,6 +38,6 @@ describe('Feature: Scan barcode', () => {
       type: 'ean13',
       value: 'barcode-value',
     });
-    fixture.thenScanShouldBeEmpty();
+    fixture.thenScanShouldBeUndefined();
   });
 });

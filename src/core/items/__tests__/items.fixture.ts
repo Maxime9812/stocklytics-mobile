@@ -23,8 +23,6 @@ import {
   linkBarcodeToItemUseCase,
   LinkBarcodeToItemUseCasePayload,
 } from '../hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
-import { StubBarcodeTypeProvider } from '../infra/gateways/barcode-type/stub-barcode-type.provider';
-import { BarcodeType } from '../../scanner/hexagon/models/barcode';
 import {
   deleteItemUseCase,
   DeleteItemUseCasePayload,
@@ -35,18 +33,11 @@ type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
 export const createItemsFixture = () => {
   const itemsGateway = new StubItemsGateway();
-  const barcodeTypeProvider = new StubBarcodeTypeProvider();
   const uuidProvider = new DeterministicUUIDProvider();
   let store: TestStore;
   let initialState = stateBuilder();
 
   return {
-    givenBarcodeTypeSupported: (type: string, barcodeType: BarcodeType) => {
-      barcodeTypeProvider.givenBarcodeType(type, barcodeType);
-    },
-    givenBarcodeTypeUnsupported: (type: string) => {
-      barcodeTypeProvider.givenBarcodeType(type, 'unsupported');
-    },
     givenUUID(uuid: string) {
       uuidProvider.givenUUID(uuid);
     },
@@ -82,10 +73,7 @@ export const createItemsFixture = () => {
       return store.dispatch(editItemNoteUseCase(payload));
     },
     whenLinkBarcode: (payload: LinkBarcodeToItemUseCasePayload) => {
-      store = createTestStore(
-        { itemsGateway, barcodeTypeProvider },
-        initialState.build(),
-      );
+      store = createTestStore({ itemsGateway }, initialState.build());
       return store.dispatch(linkBarcodeToItemUseCase(payload));
     },
     whenDeleteItem: (payload: DeleteItemUseCasePayload) => {

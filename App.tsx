@@ -10,7 +10,7 @@ import { CryptoUUIDProvider } from './src/core/common/uuid-provider/crypto-uuid.
 import { AxiosAuthGateway } from './src/core/auth/infra/gateways/auth/axios-auth.gateway';
 import { AxiosItemsGateway } from './src/core/items/infra/gateways/items-gateway/axios-items.gateway';
 import { AxiosFoldersGateway } from './src/core/folders/infra/gateways/axios-folders.gateway';
-import { StubScannerGateway } from './src/core/scanner/infra/gateways/stub-scanner.gateway';
+import { AxiosScannerGateway } from './src/core/scanner/infra/gateways/axios-scanner.gateway';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -77,6 +77,7 @@ foldersGateway.givenFoldersInFolder([
 const axiosFolderGateway = new AxiosFoldersGateway(axiosInstance);
 
 const uuidProvider = new CryptoUUIDProvider();
+const scannerGateway = new AxiosScannerGateway(axiosInstance);
 
 const store = createStore(
   {
@@ -84,7 +85,7 @@ const store = createStore(
     itemsGateway: axiosItemGateways,
     foldersGateway: axiosFolderGateway,
     uuidProvider,
-    scannerGateway: new StubScannerGateway(),
+    scannerGateway,
   },
   stateBuilder().build(),
 );

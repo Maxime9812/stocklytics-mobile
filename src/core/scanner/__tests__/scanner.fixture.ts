@@ -20,11 +20,18 @@ export const createScannerFixture = () => {
       store = createTestStore({ scannerGateway }, stateBuilder().build());
       return store.dispatch(scanBarcodeUseCase(payload));
     },
+    thenScannerShouldBeLoading: () => {
+      expect(store.getState()).toEqual(
+        stateBuilder().withScannerLoading().build(),
+      );
+    },
     thenScanShouldBe: (scan: Scan) => {
       expect(store.getState()).toEqual(stateBuilder().withScan(scan).build());
     },
-    thenScanShouldBeEmpty: () => {
-      expect(store.getState()).toEqual(stateBuilder().build());
+    thenScanShouldBeUndefined: () => {
+      expect(store.getState()).toEqual(
+        stateBuilder().withScan(undefined).build(),
+      );
     },
   };
 };

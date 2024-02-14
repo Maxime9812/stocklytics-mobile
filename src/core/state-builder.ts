@@ -35,7 +35,9 @@ const withFolderInFolderNotLoading = createAction<string | null>(
   'withFolderInFolderNotLoading',
 );
 
-const withScan = createAction<Scan>('withScan');
+const withScan = createAction<Scan | undefined | null>('withScan');
+const withScannerLoading = createAction('withScannerLoading');
+const withScannerNotLoading = createAction('withScannerNotLoading');
 
 const withTags = createAction<Tag[]>('withTags');
 
@@ -82,6 +84,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(withScan, (state, action) => {
       state.scanner.scan = action.payload;
+    })
+    .addCase(withScannerLoading, (state) => {
+      state.scanner.isLoading = true;
     });
 });
 
@@ -90,6 +95,10 @@ export const stateBuilder = (baseState = initialState) => {
     <T>(actionCreator: ActionCreatorWithPayload<T>) =>
     (payload: T) =>
       stateBuilder(reducer(baseState, actionCreator(payload)));
+
+  const reduceNoPayload =
+    (actionCreator: ActionCreatorWithPayload<undefined>) => () =>
+      stateBuilder(reducer(baseState, actionCreator(undefined)));
 
   return {
     withAuthUser: reduce(withAuthUser),
@@ -103,6 +112,7 @@ export const stateBuilder = (baseState = initialState) => {
     withFolderInFolderNotLoading: reduce(withFolderInFolderNotLoading),
     withTags: reduce(withTags),
     withScan: reduce(withScan),
+    withScannerLoading: reduceNoPayload(withScannerLoading),
     build: () => baseState,
   };
 };

@@ -16,7 +16,7 @@ import { StubFoldersGateway } from './folders/infra/gateways/stub-folders.gatewa
 import { UUIDProvider } from './common/uuid-provider/UUIDProvider';
 import { DeterministicUUIDProvider } from './common/uuid-provider/deterministic-uuid.provider';
 import { AsyncThunk } from '@reduxjs/toolkit';
-import { ScannerGateways } from './scanner/hexagon/gateways/scanner.gateways';
+import { ScannerGateway } from './scanner/hexagon/gateways/scannerGateway';
 import { StubScannerGateway } from './scanner/infra/gateways/stub-scanner.gateway';
 
 export type Dependencies = {
@@ -24,7 +24,7 @@ export type Dependencies = {
   itemsGateway: ItemsGateway;
   foldersGateway: FoldersGateway;
   uuidProvider: UUIDProvider;
-  scannerGateway: ScannerGateways;
+  scannerGateway: ScannerGateway;
 };
 
 export const EMPTY_ARGS = 'EMPTY_ARGS' as const;
