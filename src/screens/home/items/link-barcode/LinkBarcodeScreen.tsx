@@ -61,6 +61,7 @@ export default function LinkBarcodeScreen({
           torch={torchEnabled ? 'on' : 'off'}
           codeScanner={codeScanner}
         >
+          <ScanZone />
           <ContextMenu setTorch={setTorchEnabled} torch={torchEnabled} />
         </Camera>
       </View>
@@ -87,5 +88,13 @@ const ContextMenu = ({ torch, setTorch }: ContextMenuProps) => {
         </Button>
       </View>
     </SafeAreaView>
+  );
+};
+
+const ScanZone = () => {
+  return (
+    <View className="absolute h-screen w-screen justify-center p-8">
+      <View className="border border-white rounded-xl h-64 w-full"></View>
+    </View>
   );
 };
