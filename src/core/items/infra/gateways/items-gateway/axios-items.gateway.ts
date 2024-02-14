@@ -32,7 +32,7 @@ export class AxiosItemsGateway implements ItemsGateway {
       const response = await this.axios.post<Item>('/items', payload);
       return response.data;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       throw e;
     }
   }

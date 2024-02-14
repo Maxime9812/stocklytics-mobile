@@ -1,5 +1,5 @@
 import { ItemModel } from '../hexagon/models/item.model';
-import { Barcode } from '../hexagon/models/barcode';
+import { Barcode } from '../../scanner/hexagon/models/barcode';
 
 export const itemBuilder = (
   props: ItemModel = {

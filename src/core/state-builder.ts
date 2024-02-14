@@ -11,6 +11,7 @@ import {
   FolderModel,
 } from './folders/hexagon/models/folder.model';
 import { Tag, tagsAdapter } from './tags/hexagon/models/tag.model';
+import { Scan } from './scanner/hexagon/models/Scan';
 
 const initialState = rootReducer(undefined, createAction('')());
 
@@ -33,6 +34,8 @@ const withFolderInFolderLoading = createAction<string | null>(
 const withFolderInFolderNotLoading = createAction<string | null>(
   'withFolderInFolderNotLoading',
 );
+
+const withScan = createAction<Scan>('withScan');
 
 const withTags = createAction<Tag[]>('withTags');
 
@@ -76,6 +79,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(withTags, (state, action) => {
       tagsAdapter.addMany(state.tags, action.payload);
+    })
+    .addCase(withScan, (state, action) => {
+      state.scanner.scan = action.payload;
     });
 });
 
@@ -96,6 +102,7 @@ export const stateBuilder = (baseState = initialState) => {
     withFolderInFolderLoading: reduce(withFolderInFolderLoading),
     withFolderInFolderNotLoading: reduce(withFolderInFolderNotLoading),
     withTags: reduce(withTags),
+    withScan: reduce(withScan),
     build: () => baseState,
   };
 };

@@ -7,7 +7,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { RootStack, RootStackScreenProps } from './NavigationProvider';
-import ScanScreen from '../screens/home/Scan/ScanScreen';
+import ScanScreen from '../screens/home/scan/ScanScreen';
 import MenuScreen from '../screens/home/menu/MenuScreen';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import ItemsNavigation, { ItemsNavigator } from './ItemsNavigation';

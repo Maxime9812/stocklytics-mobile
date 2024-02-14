@@ -1,4 +1,4 @@
-import { Barcode } from '../models/barcode';
+import { Barcode } from '../../../scanner/hexagon/models/barcode';
 
 export type AddItemInFolderPayload = {
   id: string;

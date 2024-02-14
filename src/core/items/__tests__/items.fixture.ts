@@ -24,7 +24,7 @@ import {
   LinkBarcodeToItemUseCasePayload,
 } from '../hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
 import { StubBarcodeTypeProvider } from '../infra/gateways/barcode-type/stub-barcode-type.provider';
-import { BarcodeType } from '../hexagon/models/barcode';
+import { BarcodeType } from '../../scanner/hexagon/models/barcode';
 import {
   deleteItemUseCase,
   DeleteItemUseCasePayload,

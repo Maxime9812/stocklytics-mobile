@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { selectItemById } from '../../../../core/items/items.slice';
 import { AppDispatch, RootState } from '../../../../core/create-store';
 import { selectTags } from '../../../../core/tags/tags.slice';
-import { Barcode } from '../../../../core/items/hexagon/models/barcode';
+import { Barcode } from '../../../../core/scanner/hexagon/models/barcode';
 import { unlinkItemBarcodeUseCase } from '../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 
 export type CreateItemScreenViewModelParams = {

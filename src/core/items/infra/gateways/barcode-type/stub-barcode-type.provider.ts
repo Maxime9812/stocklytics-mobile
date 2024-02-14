@@ -1,5 +1,5 @@
 import { BarcodeTypeProvider } from '../../../hexagon/gateways/barcode-type.provider';
-import { BarcodeType } from '../../../hexagon/models/barcode';
+import { BarcodeType } from '../../../../scanner/hexagon/models/barcode';
 
 export class StubBarcodeTypeProvider implements BarcodeTypeProvider {
   private barcodeType: Map<string, BarcodeType | 'unsupported'> = new Map();

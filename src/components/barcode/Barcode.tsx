@@ -1,4 +1,4 @@
-import { Barcode as BarcodeModel } from '../../core/items/hexagon/models/barcode';
+import { Barcode as BarcodeModel } from '../../core/scanner/hexagon/models/barcode';
 import { Image, View } from 'react-native';
 import { useBwip } from './useBwip';
 

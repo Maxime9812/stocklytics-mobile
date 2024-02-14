@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from '@reduxjs/toolkit';
-import { Barcode } from './barcode';
+import { Barcode } from '../../../scanner/hexagon/models/barcode';
 
 export type ItemModel = {
   id: string;
