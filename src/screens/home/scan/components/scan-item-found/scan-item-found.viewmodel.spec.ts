@@ -38,7 +38,11 @@ describe('ScanItemFoundViewModel', () => {
   it('Should have item data', () => {
     const state = stateBuilder()
       .withItems([
-        itemBuilder().withId('item-id').withName('Iphone 13').build(),
+        itemBuilder()
+          .withId('item-id')
+          .withName('Iphone 13')
+          .withQuantity(1)
+          .build(),
       ])
       .build();
 
@@ -50,6 +54,7 @@ describe('ScanItemFoundViewModel', () => {
       expect.objectContaining({
         item: {
           name: 'Iphone 13',
+          quantity: 1,
         },
       }),
     );
