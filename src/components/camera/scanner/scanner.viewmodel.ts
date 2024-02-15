@@ -1,4 +1,4 @@
-import { Barcode } from '../../core/scanner/hexagon/models/barcode';
+import { Barcode } from '../../../core/scanner/hexagon/models/barcode';
 import dayjs from 'dayjs';
 
 type ScannerViewModelParams = {

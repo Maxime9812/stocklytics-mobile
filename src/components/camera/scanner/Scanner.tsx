@@ -1,4 +1,4 @@
-import CameraPermission from './camera-permission/CameraPermission';
+import CameraPermission from '../camera-permission/CameraPermission';
 import { SafeAreaView, View } from 'react-native';
 import {
   Camera,
@@ -6,13 +6,13 @@ import {
   useCameraDevice,
   useCodeScanner,
 } from 'react-native-vision-camera';
-import Button from '../buttons/Button';
+import Button from '../../buttons/Button';
 import { Feather } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import {
   Barcode,
   BarcodeType,
-} from '../../core/scanner/hexagon/models/barcode';
+} from '../../../core/scanner/hexagon/models/barcode';
 import { createScannerViewModel } from './scanner.viewmodel';
 
 type ScannerProps = {

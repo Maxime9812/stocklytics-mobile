@@ -3,7 +3,7 @@ import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import * as Haptics from 'expo-haptics';
 import { createLinkBarcodeScreenViewModel } from './link-barcode-screen.viewmodel';
 import { useAppDispatch } from '../../../../store-hooks';
-import Scanner from '../../../../components/camera/Scanner';
+import Scanner from '../../../../components/camera/scanner/Scanner';
 
 export default function LinkBarcodeScreen({
   navigation,

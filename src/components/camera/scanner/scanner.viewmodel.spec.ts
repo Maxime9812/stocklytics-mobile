@@ -1,5 +1,5 @@
 import { createScannerViewModel } from './scanner.viewmodel';
-import { Barcode } from '../../core/scanner/hexagon/models/barcode';
+import { Barcode } from '../../../core/scanner/hexagon/models/barcode';
 
 describe('ScannerViewModel', () => {
   it('Should call OnScan when scan is called', () => {

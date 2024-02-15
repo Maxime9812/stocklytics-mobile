@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HomeTabScreenProps } from '../../../navigation/HomeNavigation';
-import Scanner from '../../../components/camera/Scanner';
+import Scanner from '../../../components/camera/scanner/Scanner';
 import { Portal } from '@gorhom/portal';
 import ThemedBottomSheet from '../../../components/bottom-sheet/ThemedBottomSheet';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
