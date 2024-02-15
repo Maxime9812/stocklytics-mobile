@@ -13,10 +13,12 @@ import {
   Barcode,
   BarcodeType,
 } from '../../core/scanner/hexagon/models/barcode';
+import { createScannerViewModel } from './scanner.viewmodel';
 
 type ScannerProps = {
   isActive?: boolean;
   onCodeScanned: (barcode: Barcode) => void;
+  interval?: number;
 };
 
 const cameraVisionTypeToBarcodeType = (
@@ -37,16 +39,28 @@ const cameraVisionTypeToBarcodeType = (
 export default function Scanner({
   onCodeScanned,
   isActive = true,
+  interval = 1000,
 }: ScannerProps) {
   const [torchEnabled, setTorchEnabled] = useState(false);
   const device = useCameraDevice('back');
+  const [lastScannedAt, setLastScannedAt] = useState<Date | undefined>(
+    undefined,
+  );
+
+  const { scan } = createScannerViewModel({
+    interval,
+    lastScannedAt,
+    setLastScannedAt,
+    getNow: () => new Date(),
+    onScan: onCodeScanned,
+  });
 
   const codeScanner = useCodeScanner({
     codeTypes: ['code-128', 'ean-13', 'ean-8'],
     onCodeScanned: (code: Code[]) => {
       const type = cameraVisionTypeToBarcodeType(code[0].type);
       if (!type) return;
-      onCodeScanned({
+      scan({
         type,
         value: code[0].value || '',
       });
