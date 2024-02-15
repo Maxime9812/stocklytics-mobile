@@ -60,7 +60,6 @@ export default function ItemsNavigation() {
           headerRight: () => <FolderScreenHeader />,
         }}
       />
-      <Stack.Screen name="Item" component={ItemScreen} />
       <Stack.Group
         screenOptions={{
           presentation: 'transparentModal',
@@ -69,6 +68,11 @@ export default function ItemsNavigation() {
           ),
         }}
       >
+        <Stack.Screen
+          name="Item"
+          component={ItemScreen}
+          options={{ presentation: 'transparentModal' }}
+        />
         <Stack.Screen name="AddItem" component={AddItemScreen} />
         <Stack.Screen name="AddFolder" component={AddFolderScreen} />
         <Stack.Screen

@@ -95,3 +95,6 @@ export const selectItemsInFolder = (folderId: string | null) =>
 
 export const selectItemById = (id: string) => (state: RootState) =>
   itemsSelectors.selectById(state, id);
+
+export const selectItemIsLoading = (id: string) => (state: RootState) =>
+  state.items.isLoadingById[id] ?? false;

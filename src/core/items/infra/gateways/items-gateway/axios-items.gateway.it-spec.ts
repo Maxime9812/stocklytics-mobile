@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { AxiosItemsGateway } from './axios-items.gateway';
 import nock from 'nock';
+import { ItemModel } from '../../../hexagon/models/item.model';
 
 const BASE_URL = 'http://localhost';
 
@@ -118,6 +119,29 @@ describe('AxiosItemsGateway', () => {
       const scope = nock(BASE_URL).delete('/items/item-id/barcode').reply(200);
       await axiosItemsGateway.unlinkBarcode('item-id');
       expect(scope.isDone()).toBe(true);
+    });
+  });
+
+  describe('getById', () => {
+    it('Should return item', async () => {
+      nock(BASE_URL).get('/items/item-id').reply(200, {
+        id: 'item-id',
+        name: 'Item name',
+        quantity: 10,
+        tags: [],
+        folderId: 'folder-id',
+        note: '',
+        createdAt: '2024-01-01T00:00:00.000Z',
+      });
+      expect(await axiosItemsGateway.getById('item-id')).toEqual<ItemModel>({
+        id: 'item-id',
+        name: 'Item name',
+        quantity: 10,
+        tags: [],
+        folderId: 'folder-id',
+        note: '',
+        createdAt: '2024-01-01T00:00:00.000Z',
+      });
     });
   });
 });

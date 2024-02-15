@@ -17,7 +17,8 @@ export class AxiosItemsGateway implements ItemsGateway {
   }
 
   async getById(id: string): Promise<Item | undefined> {
-    return Promise.resolve(undefined);
+    const response = await this.axios.get<Item>(`/items/${id}`);
+    return response.data;
   }
 
   async getFromFolder(folderId: string | undefined): Promise<Item[]> {
