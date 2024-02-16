@@ -11,6 +11,7 @@ import { AxiosAuthGateway } from './src/core/auth/infra/gateways/auth/axios-auth
 import { AxiosItemsGateway } from './src/core/items/infra/gateways/items-gateway/axios-items.gateway';
 import { AxiosFoldersGateway } from './src/core/folders/infra/gateways/axios-folders.gateway';
 import { AxiosScannerGateway } from './src/core/scanner/infra/gateways/axios-scanner.gateway';
+import { CameraVisionPermissionGateway } from './src/core/permissions/infra/gateways/camera/camera-vision-permission.gateway';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -86,6 +87,7 @@ const store = createStore(
     foldersGateway: axiosFolderGateway,
     uuidProvider,
     scannerGateway,
+    cameraPermissionGateway: new CameraVisionPermissionGateway(),
   },
   stateBuilder().build(),
 );

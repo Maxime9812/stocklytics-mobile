@@ -18,6 +18,8 @@ import { DeterministicUUIDProvider } from './common/uuid-provider/deterministic-
 import { AsyncThunk } from '@reduxjs/toolkit';
 import { ScannerGateway } from './scanner/hexagon/gateways/scannerGateway';
 import { StubScannerGateway } from './scanner/infra/gateways/stub-scanner.gateway';
+import { CameraPermissionGateways } from './permissions/hexagon/gateways/camera-permission.gateways';
+import { StubCameraPermissionGateway } from './permissions/infra/gateways/camera/stub-camera-permission.gateway';
 
 export type Dependencies = {
   authGateway: AuthGateway;
@@ -25,6 +27,7 @@ export type Dependencies = {
   foldersGateway: FoldersGateway;
   uuidProvider: UUIDProvider;
   scannerGateway: ScannerGateway;
+  cameraPermissionGateway: CameraPermissionGateways;
 };
 
 export const EMPTY_ARGS = 'EMPTY_ARGS' as const;
@@ -57,6 +60,7 @@ export const createTestStore = (
     foldersGateway = new StubFoldersGateway(),
     uuidProvider = new DeterministicUUIDProvider(),
     scannerGateway = new StubScannerGateway(),
+    cameraPermissionGateway = new StubCameraPermissionGateway(),
   }: Partial<Dependencies> = {},
   preloadedState: Partial<RootState> = {},
 ) => {
@@ -75,6 +79,7 @@ export const createTestStore = (
       foldersGateway,
       uuidProvider,
       scannerGateway,
+      cameraPermissionGateway,
     },
     preloadedState,
     [logActionsMiddleware],
