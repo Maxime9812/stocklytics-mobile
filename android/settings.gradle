@@ -1,4 +1,4 @@
-rootProject.name = 'stocklytics-mobile'
+rootProject.name = 'Stocklytics'
 
 dependencyResolutionManagement {
   versionCatalogs {

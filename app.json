@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "stocklytics-mobile",
+    "name": "Stocklytics",
     "slug": "stocklytics-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -34,16 +34,24 @@
     },
     "plugins": [
       [
-        "expo-camera",
-        {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
-        }
-      ],
-      [
         "react-native-vision-camera",
         {
           "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera.",
           "enableCodeScanner": true
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to take photos."
         }
       ]
     ],

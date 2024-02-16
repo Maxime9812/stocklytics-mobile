@@ -14,6 +14,7 @@ import { exhaustiveGuard } from '../../../../core/common/utils/exhaustive-guard'
 import Badge from '../../../../components/badge/Badge';
 import Barcode from '../../../../components/barcode/Barcode';
 import { useAppDispatch } from '../../../../store-hooks';
+import ItemPhotos from './components/ItemPhotos';
 
 export default function ItemScreen({
   navigation,
@@ -71,26 +72,7 @@ const LoadedItemScreen = ({
   return (
     <BaseLayout>
       <ScrollView>
-        <View className="h-72 bg-neutral-200 dark:bg-neutral-700 justify-center items-center">
-          <View className="space-y-2 p-10">
-            <Text className="text-center dark:text-white text-lg">
-              Enhance visibility with great images
-            </Text>
-            <Text className="text-center text-neutral-500 dark:text-neutral-400">
-              Upload up to 8 images, with a total limit of 30 MB. Supported
-              formats JPG and PNG
-            </Text>
-
-            <View className="flex-row justify-center">
-              <View className="p-4 bg bg-white dark:bg-neutral-800 rounded-full">
-                <Text className="text-center text-black dark:text-white">
-                  <Feather name="image" size={20} />
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
+        <ItemPhotos />
         <View className="px-3 pb-3 space-y-3">
           <Card className="-mt-4 space-y-2 p-3">
             <Text className="dark:text-white text-2xl font-bold">

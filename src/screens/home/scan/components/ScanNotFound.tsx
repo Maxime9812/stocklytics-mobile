@@ -10,10 +10,15 @@ export default function ScanNotFound() {
   }, []);
 
   return (
-    <ThemedBottomSheet snapPoints={['30%', '30%']} enablePanDownToClose>
+    <ThemedBottomSheet snapPoints={['25%']} enablePanDownToClose>
       <BottomSheetView>
         <View className="p-3">
-          <Text className="dark:text-white">Nothing found</Text>
+          <Text className="text-xl font-bold dark:text-white">
+            Nothing found
+          </Text>
+          <Text className="text-neutral-400 dark:text-neutral-500">
+            You can link a barcode to an item from your inventory
+          </Text>
         </View>
       </BottomSheetView>
     </ThemedBottomSheet>

@@ -1,12 +1,19 @@
 import { createCameraPermissionViewModel } from './camera-permission.viewmodel';
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, ReactNode, useEffect } from 'react';
 import BaseLayout from '../../layouts/BaseLayout';
 import { Linking, Text, View } from 'react-native';
 import Button from '../../buttons/Button';
 import { exhaustiveGuard } from '../../../core/common/utils/exhaustive-guard';
 import { useCameraPermission } from 'react-native-vision-camera';
 
-export default function CameraPermission({ children }: PropsWithChildren) {
+type Props = PropsWithChildren<{
+  accessDenied?: ReactNode;
+}>;
+
+export default function CameraPermission({
+  children,
+  accessDenied = <AccessDenied />,
+}: Props) {
   const { hasPermission, requestPermission } = useCameraPermission();
   const viewModel = createCameraPermissionViewModel({
     hasPermission,
@@ -22,7 +29,7 @@ export default function CameraPermission({ children }: PropsWithChildren) {
 
   switch (viewModel.type) {
     case 'access-denied':
-      return <AccessDenied />;
+      return accessDenied;
     case 'ready':
       return children;
     default:

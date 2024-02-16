@@ -68,11 +68,7 @@ export default function ItemsNavigation() {
           ),
         }}
       >
-        <Stack.Screen
-          name="Item"
-          component={ItemScreen}
-          options={{ presentation: 'transparentModal' }}
-        />
+        <Stack.Screen name="Item" component={ItemScreen} />
         <Stack.Screen name="AddItem" component={AddItemScreen} />
         <Stack.Screen name="AddFolder" component={AddFolderScreen} />
         <Stack.Screen
