@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { KeyboardAvoidingView, Text, View } from 'react-native';
 import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import BaseLayout from '../../../../components/layouts/BaseLayout';
 import CloseKeyboardOnTouch from '../../../../components/CloseKeyboardOnTouch';
@@ -62,31 +62,48 @@ export default function AddFolderScreen({
 
   return (
     <CloseKeyboardOnTouch>
-      <BaseLayout>
-        <View className="p-2 space-y-2">
-          <Text className="dark:text-white text-2xl">
-            Add folder to {viewModel.folderName}
-          </Text>
-          <View>
-            <Text className="dark:text-white mb-2">Name</Text>
-            <Controller
-              render={({ field }) => (
-                <BaseTextInput
-                  {...field}
-                  onChangeText={field.onChange}
-                  value={field.value.toString()}
-                  returnKeyType="done"
-                  onSubmitEditing={handleSubmit(onSubmit)}
+      <BaseLayout variant="secondary">
+        <KeyboardAvoidingView
+          className="flex-1"
+          behavior="padding"
+          keyboardVerticalOffset={50}
+        >
+          <View className="p-4 justify-between space-y-2 flex-1">
+            <View className="space-y-4">
+              <View className="space-y-2">
+                <Text className="text-2xl dark:text-white font-bold">
+                  Add folder
+                </Text>
+                <Text className="text-neutral-500 dark:text-neutral-400">
+                  Add new folder to{' '}
+                  <Text className="text-black dark:text-white">
+                    {viewModel.folderName}
+                  </Text>
+                </Text>
+              </View>
+              <View>
+                <Text className="dark:text-white mb-2">Name</Text>
+                <Controller
+                  render={({ field }) => (
+                    <BaseTextInput
+                      {...field}
+                      placeholder="Folder name"
+                      onChangeText={field.onChange}
+                      value={field.value.toString()}
+                      returnKeyType="done"
+                      onSubmitEditing={handleSubmit(onSubmit)}
+                    />
+                  )}
+                  name="name"
+                  control={control}
                 />
-              )}
-              name="name"
-              control={control}
-            />
+              </View>
+            </View>
+            <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
+              <Button.Text>Add</Button.Text>
+            </Button>
           </View>
-          <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
-            <Button.Text>Add</Button.Text>
-          </Button>
-        </View>
+        </KeyboardAvoidingView>
       </BaseLayout>
     </CloseKeyboardOnTouch>
   );

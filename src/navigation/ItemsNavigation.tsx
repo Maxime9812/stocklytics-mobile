@@ -10,7 +10,6 @@ import { RootStack, RootStackScreenProps } from './NavigationProvider';
 import FolderScreen from '../screens/home/items/folder/FolderScreen';
 import StackBackButton from '../components/stack-navigation/StackBackButton';
 import FolderScreenHeader from '../screens/home/items/folder/components/header/FolderScreenHeader';
-import AddItemScreen from '../screens/home/items/item/add-item/AddItemScreen';
 import AddFolderScreen from '../screens/home/items/add-folder/AddFolderScreen';
 import DeleteFolderScreen from '../screens/home/items/delete-folder/DeleteFolderScreen';
 import LinkBarcodeScreen from '../screens/home/items/item/link-barcode/LinkBarcodeScreen';
@@ -18,6 +17,8 @@ import ItemDetailScreen from '../screens/home/items/item/item-detail/ItemDetailS
 import DeleteItemScreen from '../screens/home/items/item/delete-item/DeleteItemScreen';
 import EditItemNoteScreen from '../screens/home/items/item/edit-item-note/EditItemNoteScreen';
 import EditItemTagsScreen from '../screens/home/items/item/edit-item-tags/EditItemTagsScreen';
+import EditItemNameScreen from '../screens/home/items/item/edit-item-name/EditItemNameScreen';
+import AddItemScreen from '../screens/home/items/item/add-item/AddItemScreen';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
@@ -29,6 +30,7 @@ export type ItemsStack = {
   LinkBarcode: { itemId: string };
   EditItemTags: { itemId: string };
   DeleteFolder: { id: string };
+  EditItemName: { itemId: string; name: string };
 };
 
 export type ItemsStackScreenProps<T extends keyof ItemsStack> =
@@ -62,35 +64,18 @@ export default function ItemsNavigation() {
       />
       <Stack.Group
         screenOptions={{
-          presentation: 'transparentModal',
+          presentation: 'modal',
           headerLeft: ({ canGoBack }) => (
             <StackBackButton canGoBack={canGoBack} variant={'close'} />
           ),
         }}
       >
-        <Stack.Screen name="ItemDetails" component={ItemDetailScreen} />
-        <Stack.Screen name="AddItem" component={AddItemScreen} />
-        <Stack.Screen name="AddFolder" component={AddFolderScreen} />
         <Stack.Screen
-          name="DeleteItem"
-          component={DeleteItemScreen}
-          options={{ presentation: 'modal' }}
+          name="ItemDetails"
+          component={ItemDetailScreen}
+          options={{ presentation: 'transparentModal' }}
         />
-        <Stack.Screen
-          name="DeleteFolder"
-          component={DeleteFolderScreen}
-          options={{ presentation: 'modal' }}
-        />
-        <Stack.Screen
-          name="EditItemNote"
-          component={EditItemNoteScreen}
-          options={{ presentation: 'modal' }}
-        />
-        <Stack.Screen
-          name="EditItemTags"
-          component={EditItemTagsScreen}
-          options={{ presentation: 'modal' }}
-        />
+
         <Stack.Screen
           name="LinkBarcode"
           component={LinkBarcodeScreen}
@@ -105,6 +90,17 @@ export default function ItemsNavigation() {
             ),
           }}
         />
+
+        <Stack.Screen name="AddFolder" component={AddFolderScreen} />
+        <Stack.Screen name="AddItem" component={AddItemScreen} />
+
+        <Stack.Group>
+          <Stack.Screen name="DeleteItem" component={DeleteItemScreen} />
+          <Stack.Screen name="DeleteFolder" component={DeleteFolderScreen} />
+          <Stack.Screen name="EditItemNote" component={EditItemNoteScreen} />
+          <Stack.Screen name="EditItemTags" component={EditItemTagsScreen} />
+          <Stack.Screen name="EditItemName" component={EditItemNameScreen} />
+        </Stack.Group>
       </Stack.Group>
     </Stack.Navigator>
   );

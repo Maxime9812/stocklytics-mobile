@@ -55,7 +55,7 @@ export default function ItemPhotos() {
       <View className="h-72 bg-neutral-200 dark:bg-neutral-700 justify-center items-center">
         <View className="space-y-2 p-10">
           <Text className="text-center dark:text-white text-lg">
-            Enhance visibility with great images
+            Enhance visibility with great image
           </Text>
           <Text className="text-center text-neutral-500 dark:text-neutral-400">
             Upload a image, with a limit of 10 MB. Supported formats JPG and PNG

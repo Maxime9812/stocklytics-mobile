@@ -49,6 +49,10 @@ const LoadedItemScreen = ({
   viewModel: { item },
   navigation,
 }: LoadedItemScreenProps) => {
+  const goToEditName = () => {
+    navigation.push('EditItemName', { itemId: item.id, name: item.name });
+  };
+
   const goToEditNote = () => {
     navigation.push('EditItemNote', { itemId: item.id, note: item.note });
   };
@@ -75,9 +79,17 @@ const LoadedItemScreen = ({
         <ItemPhotos />
         <View className="px-3 pb-3 space-y-3">
           <Card className="-mt-4 space-y-2 p-3">
-            <Text className="dark:text-white text-2xl font-bold">
-              {item.name}
-            </Text>
+            <Card.Header className="justify-between">
+              <Text className="dark:text-white text-2xl font-bold">
+                {item.name}
+              </Text>
+              <Button variant="link" onPress={goToEditName}>
+                <Button.Icon>
+                  <Feather name="edit" />
+                </Button.Icon>
+                <Button.Text>Edit name</Button.Text>
+              </Button>
+            </Card.Header>
 
             <Button variant="link" onPress={() => console.log('')}>
               <Button.Icon>
@@ -98,7 +110,7 @@ const LoadedItemScreen = ({
                   <Button.Icon>
                     <Feather name="edit" />
                   </Button.Icon>
-                  <Button.Text>Edit</Button.Text>
+                  <Button.Text>Edit quantity</Button.Text>
                 </Button>
               </Card.Header>
               <Text className="dark:text-white">{item.quantity}</Text>

@@ -30,7 +30,7 @@ export default function ScanItemFound({ id, navigation }: ItemFoundViewProps) {
     bottomSheet.current?.close();
     navigation.navigate('Home', {
       screen: 'Items',
-      params: { screen: 'Item', params: { id } },
+      params: { screen: 'ItemDetails', params: { id } },
     });
   };
 
