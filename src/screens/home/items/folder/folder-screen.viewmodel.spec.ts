@@ -5,6 +5,16 @@ import { folderBuilder } from '../../../../core/folders/__tests__/folder.builder
 import { tagBuilder } from '../../../../core/tags/__tests__/tag.builder';
 
 describe('FolderScreenViewModel', () => {
+  it('should be in empty state when target folder is empty', () => {
+    const initialState = stateBuilder().build();
+
+    const { type } = createFolderScreenViewModel({ folderId: 'folder-id' })(
+      initialState,
+    );
+
+    expect(type).toEqual('empty');
+  });
+
   it('should be in loading state when folders items is loading', () => {
     const initialState = stateBuilder()
       .withLoadingFoldersItems(['folder-id'])
@@ -28,6 +38,7 @@ describe('FolderScreenViewModel', () => {
   it('should be in loaded state when folders items/folders is loaded', () => {
     const initialState = stateBuilder()
       .withNotLoadingFoldersItems(['folder-id'])
+      .withItems([itemBuilder().withFolderId('folder-id').build()])
       .build();
     const { type } = createFolderScreenViewModel({ folderId: 'folder-id' })(
       initialState,
@@ -155,23 +166,6 @@ describe('FolderScreenViewModel', () => {
   });
 
   describe('Stats', () => {
-    it('stats must be 0 when nothing', () => {
-      const initialState = stateBuilder()
-        .withNotLoadingFoldersItems(['folder-id'])
-        .build();
-      const viewModel = createFolderScreenViewModel({ folderId: 'folder-id' })(
-        initialState,
-      );
-      expect(viewModel).toEqual(
-        expect.objectContaining({
-          stats: {
-            totalItems: 0,
-            totalQuantity: 0,
-            totalFolders: 0,
-          },
-        }),
-      );
-    });
     it('should return stats', () => {
       const initialState = stateBuilder()
         .withNotLoadingFoldersItems(['folder-id'])

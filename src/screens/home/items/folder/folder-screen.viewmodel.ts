@@ -18,6 +18,10 @@ export type FolderScreenViewModelStateLoading = {
   type: 'loading';
 };
 
+export type FolderScreenViewModelStateEmpty = {
+  type: 'empty';
+};
+
 export type FolderScreenViewModelStateLoaded = {
   type: 'loaded';
   items: {
@@ -43,7 +47,8 @@ export type FolderScreenViewModelStateLoaded = {
 
 export type FolderScreenViewModelState =
   | FolderScreenViewModelStateLoading
-  | FolderScreenViewModelStateLoaded;
+  | FolderScreenViewModelStateLoaded
+  | FolderScreenViewModelStateEmpty;
 
 const selectIsLoading = (folderId: string | null) => (state: RootState) => {
   const itemsIsLoading = selectFolderItemsIsLoading(folderId)(state);
@@ -74,6 +79,12 @@ export const createFolderScreenViewModel = ({
       if (isLoading) {
         return {
           type: 'loading',
+        };
+      }
+
+      if (folders.length === 0 && items.length === 0) {
+        return {
+          type: 'empty',
         };
       }
 

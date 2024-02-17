@@ -30,7 +30,7 @@ export default function FolderScreen({
   useEffect(() => {
     appDispatch(getItemsInFolderUseCase(params.id));
     appDispatch(getFoldersInFolderUseCase(params.id));
-  }, [appDispatch]);
+  }, []);
 
   switch (viewModel.type) {
     case 'loaded':
@@ -39,6 +39,8 @@ export default function FolderScreen({
       );
     case 'loading':
       return <LoadingFolderScreen />;
+    case 'empty':
+      return <EmptyFolderScreen />;
     default:
       exhaustiveGuard(viewModel);
   }
@@ -101,6 +103,25 @@ const LoadedFolderScreen = ({
           </Card>
         </View>
       </ScrollView>
+    </BaseLayout>
+  );
+};
+
+const EmptyFolderScreen = () => {
+  return (
+    <BaseLayout>
+      <View className="p-3 pt-1">
+        <Card className="h-full">
+          <View className="m-auto">
+            <Text className="text-center dark:text-white text-lg font-bold">
+              This folder is empty
+            </Text>
+            <Text className="text-center dark:text-white text-neutral-500">
+              Add items or folders to this folder
+            </Text>
+          </View>
+        </Card>
+      </View>
     </BaseLayout>
   );
 };
