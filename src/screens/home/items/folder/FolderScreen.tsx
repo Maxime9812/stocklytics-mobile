@@ -78,7 +78,7 @@ const LoadedFolderScreen = ({
   return (
     <BaseLayout>
       <ScrollView>
-        <View className="p-3 space-y-3 flex-1">
+        <View className="p-3 pt-0 space-y-3 flex-1">
           <FolderListHeader {...viewModel.stats} />
           <Card className="p-1">
             {viewModel.folders.map((folder) => (

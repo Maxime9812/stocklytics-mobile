@@ -68,7 +68,7 @@ export default function AddFolderScreen({
           behavior="padding"
           keyboardVerticalOffset={50}
         >
-          <View className="p-4 justify-between space-y-2 flex-1">
+          <View className="p-4 pt-0 justify-between space-y-2 flex-1">
             <View className="space-y-4">
               <View className="space-y-2">
                 <Text className="text-2xl dark:text-white font-bold">
