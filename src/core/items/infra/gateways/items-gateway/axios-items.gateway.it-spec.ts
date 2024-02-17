@@ -144,4 +144,17 @@ describe('AxiosItemsGateway', () => {
       });
     });
   });
+
+  describe('editName', () => {
+    it('Should send request', async () => {
+      const scope = nock(BASE_URL)
+        .post('/items/item-id/name', { name: 'New name' })
+        .reply(200);
+      await axiosItemsGateway.editName({
+        itemId: 'item-id',
+        name: 'New name',
+      });
+      expect(scope.isDone()).toBe(true);
+    });
+  });
 });

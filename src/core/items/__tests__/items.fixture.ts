@@ -11,6 +11,7 @@ import {
 import { DeterministicUUIDProvider } from '../../common/uuid-provider/deterministic-uuid.provider';
 import {
   AddItemInFolderPayload,
+  EditNamePayload,
   EditNotePayload,
   Item,
 } from '../hexagon/gateways/items.gateway';
@@ -28,6 +29,10 @@ import {
   DeleteItemUseCasePayload,
 } from '../hexagon/usecases/delete-item/delete-item.usecase';
 import { unlinkItemBarcodeUseCase } from '../hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
+import {
+  editItemNameUseCase,
+  EditItemNameUseCasePayload,
+} from '../hexagon/usecases/edit-item-name/edit-item-name.usecase';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
@@ -84,6 +89,10 @@ export const createItemsFixture = () => {
       store = createTestStore({ itemsGateway }, initialState.build());
       return store.dispatch(unlinkItemBarcodeUseCase(itemId));
     },
+    whenChangeItemName: (payload: EditItemNameUseCasePayload) => {
+      store = createTestStore({ itemsGateway }, initialState.build());
+      return store.dispatch(editItemNameUseCase(payload));
+    },
     thenUnlinkBarcodeIsRequestedFor: (itemId: string) => {
       expect(itemsGateway.lastUnlinkedItemId).toEqual(itemId);
     },
@@ -107,6 +116,9 @@ export const createItemsFixture = () => {
     },
     thenNoteShouldBeenEdited: (payload: EditNotePayload) => {
       expect(itemsGateway.lastNoteEdit).toEqual(payload);
+    },
+    thenNameShouldBeChanged: (payload: EditNamePayload) => {
+      expect(itemsGateway.lastNameChange).toEqual(payload);
     },
     thenItemsIs: (items: ExpectedItem[]) => {
       expect(store.getState()).toEqual(

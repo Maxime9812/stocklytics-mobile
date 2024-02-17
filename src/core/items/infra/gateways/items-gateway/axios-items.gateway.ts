@@ -1,5 +1,6 @@
 import {
   AddItemInFolderPayload,
+  EditNamePayload,
   EditNotePayload,
   Item,
   ItemsGateway,
@@ -51,5 +52,11 @@ export class AxiosItemsGateway implements ItemsGateway {
 
   async delete(id: string): Promise<void> {
     await this.axios.delete(`/items/${id}`);
+  }
+
+  async editName(payload: EditNamePayload) {
+    await this.axios.post(`/items/${payload.itemId}/name`, {
+      name: payload.name,
+    });
   }
 }

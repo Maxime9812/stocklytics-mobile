@@ -1,5 +1,6 @@
 import {
   AddItemInFolderPayload,
+  EditNamePayload,
   EditNotePayload,
   Item,
   ItemsGateway,
@@ -14,6 +15,7 @@ export class StubItemsGateway implements ItemsGateway {
   lastBarcodeLink: LinkBarcodeToItemPayload | undefined;
   lastDeletedItemId: string | undefined;
   lastUnlinkedItemId: string | undefined;
+  lastNameChange: EditNamePayload | undefined;
 
   constructor(private readonly delay = 0) {}
 
@@ -62,6 +64,15 @@ export class StubItemsGateway implements ItemsGateway {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.lastUnlinkedItemId = itemId;
+        resolve();
+      }, this.delay);
+    });
+  }
+
+  async editName(payload: EditNamePayload): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.lastNameChange = payload;
         resolve();
       }, this.delay);
     });

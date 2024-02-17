@@ -50,7 +50,7 @@ const LoadedItemScreen = ({
   navigation,
 }: LoadedItemScreenProps) => {
   const goToEditName = () => {
-    navigation.push('EditItemName', { itemId: item.id, name: item.name });
+    navigation.push('EditItemName', { itemId: item.id });
   };
 
   const goToEditNote = () => {

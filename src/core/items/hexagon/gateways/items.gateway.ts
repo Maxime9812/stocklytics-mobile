@@ -31,6 +31,11 @@ export type LinkBarcodeToItemPayload = {
   barcode: Barcode;
 };
 
+export type EditNamePayload = {
+  itemId: string;
+  name: string;
+};
+
 export interface ItemsGateway {
   getFromFolder(folderId: string | undefined): Promise<Item[]>;
   getById(id: string): Promise<Item | undefined>;
@@ -39,4 +44,5 @@ export interface ItemsGateway {
   linkBarcode(payload: LinkBarcodeToItemPayload): Promise<void>;
   unlinkBarcode(itemId: string): Promise<void>;
   delete(id: string): Promise<void>;
+  editName(payload: EditNamePayload): Promise<void>;
 }

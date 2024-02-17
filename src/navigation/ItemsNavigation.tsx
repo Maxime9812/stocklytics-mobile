@@ -30,7 +30,7 @@ export type ItemsStack = {
   LinkBarcode: { itemId: string };
   EditItemTags: { itemId: string };
   DeleteFolder: { id: string };
-  EditItemName: { itemId: string; name: string };
+  EditItemName: { itemId: string };
 };
 
 export type ItemsStackScreenProps<T extends keyof ItemsStack> =

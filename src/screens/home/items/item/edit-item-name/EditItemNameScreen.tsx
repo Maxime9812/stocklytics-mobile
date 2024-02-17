@@ -8,6 +8,10 @@ import * as yup from 'yup';
 import { InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ItemsStackScreenProps } from '../../../../../navigation/ItemsNavigation';
+import { useAppDispatch } from '../../../../../store-hooks';
+import { useSelector } from 'react-redux';
+import { createEditItemNameScreenViewModel } from './edit-item-name-screen.viewmodel';
+import { isRejected } from '@reduxjs/toolkit';
 
 const formSchema = yup
   .object({
@@ -18,10 +22,15 @@ const formSchema = yup
 type FormValues = InferType<typeof formSchema>;
 
 export default function EditItemNameScreen({
+  navigation,
   route: {
-    params: { name, itemId },
+    params: { itemId },
   },
 }: ItemsStackScreenProps<'EditItemName'>) {
+  const dispatch = useAppDispatch();
+  const { name, editName } = useSelector(
+    createEditItemNameScreenViewModel({ itemId, dispatch }),
+  );
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       name,
@@ -29,8 +38,10 @@ export default function EditItemNameScreen({
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmit = (values: FormValues) => {
-    console.log(values);
+  const onSubmit = async (values: FormValues) => {
+    const action = await editName(values.name);
+    if (isRejected(action)) return;
+    navigation.goBack();
   };
 
   return (
