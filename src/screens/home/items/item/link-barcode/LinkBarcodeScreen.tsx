@@ -59,7 +59,12 @@ const LinkError = () => {
     <ThemedBottomSheet snapPoints={['25%']} enablePanDownToClose>
       <BottomSheetView>
         <View className="p-3">
-          <Text className="text-xl font-bold dark:text-white">Error</Text>
+          <Text className="text-xl font-bold dark:text-white">
+            Already linked
+          </Text>
+          <Text className="text-neutral-400 dark:text-neutral-500">
+            An item with this barcode is already linked
+          </Text>
         </View>
       </BottomSheetView>
     </ThemedBottomSheet>

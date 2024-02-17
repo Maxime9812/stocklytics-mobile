@@ -19,7 +19,7 @@ export type LinkBarcodeScreenViewModelStateIdle = {
   type: 'idle';
   linkBarcode: (barcode: Barcode) => Promise<void>;
 };
-type LinkBarcodeScreenViewModelStateError = {
+export type LinkBarcodeScreenViewModelStateError = {
   type: 'error';
   error: LinkBarcodeError;
 };
