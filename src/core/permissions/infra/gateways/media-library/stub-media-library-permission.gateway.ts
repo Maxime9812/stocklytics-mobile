@@ -1,8 +1,10 @@
-import { CameraPermissionGateway } from '../../../hexagon/gateways/camera-permission.gateway';
+import { MediaLibraryPermissionGateway } from '../../../hexagon/gateways/media-library-permission.gateway';
 
-export class StubCameraPermissionGateway implements CameraPermissionGateway {
+export class StubMediaLibraryPermissionGateway
+  implements MediaLibraryPermissionGateway
+{
   private requestPermissionResponse: boolean = false;
-  cameraPermissionIsAsked: boolean = false;
+  permissionIsAsked: boolean = false;
   private hasPermission: boolean = false;
 
   constructor(private delay: number = 0) {}
@@ -16,7 +18,7 @@ export class StubCameraPermissionGateway implements CameraPermissionGateway {
       setTimeout(resolve, this.delay);
     });
 
-    this.cameraPermissionIsAsked = true;
+    this.permissionIsAsked = true;
     return this.requestPermissionResponse;
   }
 

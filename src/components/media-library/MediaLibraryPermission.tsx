@@ -1,18 +1,60 @@
-import * as ImagePicker from 'expo-image-picker';
-import { useEffect } from 'react';
-import { View } from 'react-native';
+import { Linking, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import { createMediaLibraryPermissionViewModel } from './media-library-permission.viewmodel';
+import { useAppDispatch } from '../../store-hooks';
+import { exhaustiveGuard } from '../../core/common/utils/exhaustive-guard';
+import { PropsWithChildren, ReactNode, useEffect } from 'react';
+import BaseLayout from '../layouts/BaseLayout';
+import Button from '../buttons/Button';
 
-export const MediaLibraryPermission = () => {
-  const [permissionResponse, requestPermission] =
-    ImagePicker.useMediaLibraryPermissions();
+type Props = PropsWithChildren<{
+  accessDenied?: ReactNode;
+}>;
+export const MediaLibraryPermission = ({
+  children,
+  accessDenied = <AccessDenied />,
+}: Props) => {
+  const dispatch = useAppDispatch();
+  const viewModel = useSelector(
+    createMediaLibraryPermissionViewModel({ dispatch }),
+  );
 
   useEffect(() => {
-    const getMediaPermissions = async () => {
-      await requestPermission();
-    };
+    if (viewModel.type === 'access-denied') {
+      void viewModel.requestAccess();
+    }
+  }, [viewModel]);
+  switch (viewModel.type) {
+    case 'access-denied':
+      return accessDenied;
+    case 'ready':
+      return children;
+    default:
+      return exhaustiveGuard(viewModel);
+  }
+};
 
-    getMediaPermissions();
-  }, []);
+const AccessDenied = () => {
+  const openSettings = () => {
+    void Linking.openSettings();
+  };
 
-  return <View></View>;
+  return (
+    <BaseLayout>
+      <View className="flex-1 p-3 justify-between">
+        <View className="space-y-2">
+          <Text className="dark:text-white text-2xl font-bold">
+            Camera access needed
+          </Text>
+          <Text className="text-neutral-500 dark:text-neutral-400">
+            For use this feature, you need to grant access to camera
+          </Text>
+        </View>
+
+        <Button onPress={openSettings}>
+          <Button.Text>Grant Access</Button.Text>
+        </Button>
+      </View>
+    </BaseLayout>
+  );
 };

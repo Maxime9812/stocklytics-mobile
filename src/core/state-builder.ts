@@ -42,6 +42,9 @@ const withScannerNotLoading = createAction('withScannerNotLoading');
 const withTags = createAction<Tag[]>('withTags');
 
 const withCameraPermission = createAction<boolean>('withCameraPermission');
+const withMediaLibraryPermission = createAction<boolean>(
+  'withMediaLibraryPermission',
+);
 
 const reducer = createReducer(initialState, (builder) => {
   builder
@@ -95,6 +98,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(withCameraPermission, (state, action) => {
       state.permissions.hasCameraPermission = action.payload;
+    })
+    .addCase(withMediaLibraryPermission, (state, action) => {
+      state.permissions.hasMediaLibraryPermission = action.payload;
     });
 });
 
@@ -122,6 +128,7 @@ export const stateBuilder = (baseState = initialState) => {
     withScan: reduce(withScan),
     withScannerLoading: reduceNoPayload(withScannerLoading),
     withCameraPermission: reduce(withCameraPermission),
+    withMediaLibraryPermission: reduce(withMediaLibraryPermission),
     build: () => baseState,
   };
 };

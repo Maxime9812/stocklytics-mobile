@@ -18,8 +18,12 @@ import { DeterministicUUIDProvider } from './common/uuid-provider/deterministic-
 import { AsyncThunk } from '@reduxjs/toolkit';
 import { ScannerGateway } from './scanner/hexagon/gateways/scannerGateway';
 import { StubScannerGateway } from './scanner/infra/gateways/stub-scanner.gateway';
-import { CameraPermissionGateways } from './permissions/hexagon/gateways/camera-permission.gateways';
+import { CameraPermissionGateway } from './permissions/hexagon/gateways/camera-permission.gateway';
 import { StubCameraPermissionGateway } from './permissions/infra/gateways/camera/stub-camera-permission.gateway';
+import { onLoadCheckCameraPermissions } from './permissions/hexagon/listeners/on-load-check-camera-permissions/on-load-check-camera-permissions';
+import { MediaLibraryPermissionGateway } from './permissions/hexagon/gateways/media-library-permission.gateway';
+import { StubMediaLibraryPermissionGateway } from './permissions/infra/gateways/media-library/stub-media-library-permission.gateway';
+import { onLoadCheckMediaLibraryPermissions } from './permissions/hexagon/listeners/on-load-check-media-library-permissions/on-load-check-media-library-permissions';
 
 export type Dependencies = {
   authGateway: AuthGateway;
@@ -27,7 +31,8 @@ export type Dependencies = {
   foldersGateway: FoldersGateway;
   uuidProvider: UUIDProvider;
   scannerGateway: ScannerGateway;
-  cameraPermissionGateway: CameraPermissionGateways;
+  cameraPermissionGateway: CameraPermissionGateway;
+  mediaLibraryPermissionGateway: MediaLibraryPermissionGateway;
 };
 
 export const EMPTY_ARGS = 'EMPTY_ARGS' as const;
@@ -49,6 +54,14 @@ export const createStore = (
   });
 
   onAuthStateChangeListener(store, dependencies.authGateway);
+  void onLoadCheckCameraPermissions({
+    dispatch: store.dispatch,
+    cameraPermissionGateway: dependencies.cameraPermissionGateway,
+  });
+  void onLoadCheckMediaLibraryPermissions({
+    dispatch: store.dispatch,
+    mediaLibraryPermissionGateway: dependencies.mediaLibraryPermissionGateway,
+  });
 
   return store;
 };
@@ -61,6 +74,7 @@ export const createTestStore = (
     uuidProvider = new DeterministicUUIDProvider(),
     scannerGateway = new StubScannerGateway(),
     cameraPermissionGateway = new StubCameraPermissionGateway(),
+    mediaLibraryPermissionGateway = new StubMediaLibraryPermissionGateway(),
   }: Partial<Dependencies> = {},
   preloadedState: Partial<RootState> = {},
 ) => {
@@ -80,6 +94,7 @@ export const createTestStore = (
       uuidProvider,
       scannerGateway,
       cameraPermissionGateway,
+      mediaLibraryPermissionGateway,
     },
     preloadedState,
     [logActionsMiddleware],

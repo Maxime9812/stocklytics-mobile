@@ -1,7 +1,6 @@
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Feather, Ionicons } from '@expo/vector-icons';
-import React, { useEffect, useRef } from 'react';
-import * as MediaLibrary from 'expo-media-library';
+import React, { useRef } from 'react';
 import ThemedBottomSheet from '../../../../../components/bottom-sheet/ThemedBottomSheet';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import Button from '../../../../../components/buttons/Button';
@@ -12,6 +11,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { FullWindowOverlay } from 'react-native-screens';
 import { Portal } from '@gorhom/portal';
 import { useModal } from '../../../../../hooks/use-modal';
+import { MediaLibraryPermission } from '../../../../../components/media-library/MediaLibraryPermission';
 
 export default function ItemPhotos() {
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -113,16 +113,6 @@ const MediaLibraryBottomSheet = ({
   getImage,
   takePhoto,
 }: MediaLibraryBottomSheetProps) => {
-  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
-
-  useEffect(() => {
-    const getMediaPermissions = async () => {
-      await requestPermission();
-    };
-
-    getMediaPermissions();
-  }, []);
-
   const device = useCameraDevice('back');
 
   if (device == null) return <View></View>;
@@ -148,12 +138,25 @@ const MediaLibraryBottomSheet = ({
           </View>
         </TouchableWithoutFeedback>
       </CameraPermission>
-      <Button onPress={getImage}>
-        <Button.Icon>
-          <Feather name="image" size={20} />
-        </Button.Icon>
-        <Button.Text>Choose from media</Button.Text>
-      </Button>
+      <View>
+        <MediaLibraryPermission
+          accessDenied={
+            <Button disabled>
+              <Button.Icon>
+                <Feather name="image" size={20} />
+              </Button.Icon>
+              <Button.Text>Choose from media</Button.Text>
+            </Button>
+          }
+        >
+          <Button onPress={getImage}>
+            <Button.Icon>
+              <Feather name="image" size={20} />
+            </Button.Icon>
+            <Button.Text>Choose from media</Button.Text>
+          </Button>
+        </MediaLibraryPermission>
+      </View>
     </View>
   );
 };
