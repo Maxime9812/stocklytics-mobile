@@ -14,7 +14,7 @@ import { isRejected } from '@reduxjs/toolkit';
 
 const formSchema = yup
   .object({
-    note: yup.string().max(300).required(),
+    note: yup.string().max(300).default(''),
   })
   .required();
 
