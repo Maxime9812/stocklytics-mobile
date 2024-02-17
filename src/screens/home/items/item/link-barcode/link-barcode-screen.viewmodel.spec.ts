@@ -1,6 +1,6 @@
 import { createLinkBarcodeScreenViewModel } from './link-barcode-screen.viewmodel';
-import { createTestStore } from '../../../../core/create-store';
-import { linkBarcodeToItemUseCase } from '../../../../core/items/hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
+import { createTestStore } from '../../../../../core/create-store';
+import { linkBarcodeToItemUseCase } from '../../../../../core/items/hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
 
 describe('LinkBarcodeScreenViewModel', () => {
   it('should call linkBarcodeToItemUseCase when call scanBarcode', async () => {

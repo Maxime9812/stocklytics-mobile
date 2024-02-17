@@ -1,11 +1,11 @@
-import BaseLayout from '../../../../components/layouts/BaseLayout';
+import BaseLayout from '../../../../../components/layouts/BaseLayout';
 import { Text, View } from 'react-native';
-import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
-import Button from '../../../../components/buttons/Button';
 import { useSelector } from 'react-redux';
 import { createDeleteItemScreenViewModel } from './delete-item-screen.viewmodel';
-import { useAppDispatch } from '../../../../store-hooks';
 import { isRejected } from '@reduxjs/toolkit';
+import { ItemsStackScreenProps } from '../../../../../navigation/ItemsNavigation';
+import { useAppDispatch } from '../../../../../store-hooks';
+import Button from '../../../../../components/buttons/Button';
 
 export default function DeleteItemScreen({
   navigation,

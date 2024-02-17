@@ -1,16 +1,16 @@
-import BaseLayout from '../../../../components/layouts/BaseLayout';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
-import BaseTextInput from '../../../../components/inputs/BaseTextInput';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
-import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
-import { useAppDispatch } from '../../../../store-hooks';
-import Button from '../../../../components/buttons/Button';
-import CloseKeyboardOnTouch from '../../../../components/CloseKeyboardOnTouch';
 import { createEditItemNoteScreenViewModel } from './edit-item-note-screen.viewmodel';
 import { isRejected } from '@reduxjs/toolkit';
+import { ItemsStackScreenProps } from '../../../../../navigation/ItemsNavigation';
+import { useAppDispatch } from '../../../../../store-hooks';
+import CloseKeyboardOnTouch from '../../../../../components/CloseKeyboardOnTouch';
+import BaseLayout from '../../../../../components/layouts/BaseLayout';
+import BaseTextInput from '../../../../../components/inputs/BaseTextInput';
+import Button from '../../../../../components/buttons/Button';
 
 const formSchema = yup
   .object({

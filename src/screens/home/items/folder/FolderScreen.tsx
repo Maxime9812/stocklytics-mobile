@@ -60,7 +60,7 @@ const LoadedFolderScreen = ({
   navigation,
 }: LoadedFolderScreenProps) => {
   const goToItem = (id: string) => {
-    navigation.push('Item', { id });
+    navigation.push('ItemDetails', { id });
   };
 
   const goToFolder = (id: string) => {

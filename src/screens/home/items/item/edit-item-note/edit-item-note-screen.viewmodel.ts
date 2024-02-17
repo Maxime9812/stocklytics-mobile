@@ -1,5 +1,5 @@
-import { AppDispatch } from '../../../../core/create-store';
-import { editItemNoteUseCase } from '../../../../core/items/hexagon/usecases/edit-item-note/edit-item-note.usecase';
+import { AppDispatch } from '../../../../../core/create-store';
+import { editItemNoteUseCase } from '../../../../../core/items/hexagon/usecases/edit-item-note/edit-item-note.usecase';
 
 export type CreateEditItemNoteScreenViewModelParams = {
   itemId: string;

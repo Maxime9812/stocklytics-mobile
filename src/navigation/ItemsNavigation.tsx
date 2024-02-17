@@ -7,21 +7,21 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import { RootStack, RootStackScreenProps } from './NavigationProvider';
-import ItemScreen from '../screens/home/items/item/ItemScreen';
 import FolderScreen from '../screens/home/items/folder/FolderScreen';
 import StackBackButton from '../components/stack-navigation/StackBackButton';
 import FolderScreenHeader from '../screens/home/items/folder/components/header/FolderScreenHeader';
-import AddItemScreen from '../screens/home/items/add-item/AddItemScreen';
+import AddItemScreen from '../screens/home/items/item/add-item/AddItemScreen';
 import AddFolderScreen from '../screens/home/items/add-folder/AddFolderScreen';
-import DeleteItemScreen from '../screens/home/items/delete-item/DeleteItemScreen';
-import EditItemNoteScreen from '../screens/home/items/edit-item-note/EditItemNoteScreen';
-import LinkBarcodeScreen from '../screens/home/items/link-barcode/LinkBarcodeScreen';
-import EditItemTagsScreen from '../screens/home/items/edit-item-tags/EditItemTagsScreen';
 import DeleteFolderScreen from '../screens/home/items/delete-folder/DeleteFolderScreen';
+import LinkBarcodeScreen from '../screens/home/items/item/link-barcode/LinkBarcodeScreen';
+import ItemDetailScreen from '../screens/home/items/item/item-detail/ItemDetailScreen';
+import DeleteItemScreen from '../screens/home/items/item/delete-item/DeleteItemScreen';
+import EditItemNoteScreen from '../screens/home/items/item/edit-item-note/EditItemNoteScreen';
+import EditItemTagsScreen from '../screens/home/items/item/edit-item-tags/EditItemTagsScreen';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
-  Item: { id: string };
+  ItemDetails: { id: string };
   AddItem: { folderId?: string };
   DeleteItem: { id: string };
   AddFolder: { parentId?: string };
@@ -68,7 +68,7 @@ export default function ItemsNavigation() {
           ),
         }}
       >
-        <Stack.Screen name="Item" component={ItemScreen} />
+        <Stack.Screen name="ItemDetails" component={ItemDetailScreen} />
         <Stack.Screen name="AddItem" component={AddItemScreen} />
         <Stack.Screen name="AddFolder" component={AddFolderScreen} />
         <Stack.Screen

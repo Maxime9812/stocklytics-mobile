@@ -1,8 +1,8 @@
-import { createTestStore } from '../../../../core/create-store';
+import { createTestStore } from '../../../../../core/create-store';
 import { createAddItemScreenViewModel } from './add-item-screen.viewmodel';
-import { addItemInFolderUseCase } from '../../../../core/items/hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
-import { stateBuilder } from '../../../../core/state-builder';
-import { folderBuilder } from '../../../../core/folders/__tests__/folder.builder';
+import { addItemInFolderUseCase } from '../../../../../core/items/hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
+import { stateBuilder } from '../../../../../core/state-builder';
+import { folderBuilder } from '../../../../../core/folders/__tests__/folder.builder';
 
 describe('AddItemScreenViewModel', () => {
   test('Should call addItemInFolderUseCase when call addItem', async () => {

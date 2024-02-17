@@ -1,17 +1,17 @@
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import React, { useRef } from 'react';
-import ThemedBottomSheet from '../../../../../components/bottom-sheet/ThemedBottomSheet';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import Button from '../../../../../components/buttons/Button';
-import CameraPermission from '../../../../../components/camera/camera-permission/CameraPermission';
 import { Camera, useCameraDevice } from 'react-native-vision-camera';
 import { styled } from 'nativewind';
 import * as ImagePicker from 'expo-image-picker';
 import { FullWindowOverlay } from 'react-native-screens';
 import { Portal } from '@gorhom/portal';
-import { useModal } from '../../../../../hooks/use-modal';
-import { MediaLibraryPermission } from '../../../../../components/media-library/MediaLibraryPermission';
+import { useModal } from '../../../../../../hooks/use-modal';
+import Button from '../../../../../../components/buttons/Button';
+import ThemedBottomSheet from '../../../../../../components/bottom-sheet/ThemedBottomSheet';
+import CameraPermission from '../../../../../../components/camera/camera-permission/CameraPermission';
+import { MediaLibraryPermission } from '../../../../../../components/media-library/MediaLibraryPermission';
 
 export default function ItemPhotos() {
   const bottomSheetRef = useRef<BottomSheet>(null);

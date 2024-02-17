@@ -1,8 +1,8 @@
-import { createTestStore } from '../../../../core/create-store';
 import { createDeleteItemScreenViewModel } from './delete-item-screen.viewmodel';
-import { deleteItemUseCase } from '../../../../core/items/hexagon/usecases/delete-item/delete-item.usecase';
-import { stateBuilder } from '../../../../core/state-builder';
-import { itemBuilder } from '../../../../core/items/__tests__/item.builder';
+import { createTestStore } from '../../../../../core/create-store';
+import { deleteItemUseCase } from '../../../../../core/items/hexagon/usecases/delete-item/delete-item.usecase';
+import { stateBuilder } from '../../../../../core/state-builder';
+import { itemBuilder } from '../../../../../core/items/__tests__/item.builder';
 
 describe('DeleteItemScreenViewModel', () => {
   it('Should call deleteItemUseCase when call deleteItem', async () => {

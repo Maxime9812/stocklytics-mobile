@@ -1,6 +1,6 @@
-import { AppDispatch } from '../../../../core/create-store';
-import { linkBarcodeToItemUseCase } from '../../../../core/items/hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
-import { Barcode } from '../../../../core/scanner/hexagon/models/barcode';
+import { AppDispatch } from '../../../../../core/create-store';
+import { Barcode } from '../../../../../core/scanner/hexagon/models/barcode';
+import { linkBarcodeToItemUseCase } from '../../../../../core/items/hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
 
 export type LinkBarcodeScreenViewModelParams = {
   itemId: string;

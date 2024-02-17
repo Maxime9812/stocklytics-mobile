@@ -1,12 +1,12 @@
-import BaseLayout from '../../../../components/layouts/BaseLayout';
-import CloseKeyboardOnTouch from '../../../../components/CloseKeyboardOnTouch';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
-import BaseTextInput from '../../../../components/inputs/BaseTextInput';
-import Button from '../../../../components/buttons/Button';
-import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ItemsStackScreenProps } from '../../../../../navigation/ItemsNavigation';
+import CloseKeyboardOnTouch from '../../../../../components/CloseKeyboardOnTouch';
+import BaseLayout from '../../../../../components/layouts/BaseLayout';
+import BaseTextInput from '../../../../../components/inputs/BaseTextInput';
+import Button from '../../../../../components/buttons/Button';
 
 const formSchema = yup.object({
   search: yup.string(),

@@ -1,7 +1,7 @@
-import { AppDispatch } from '../../../../core/create-store';
-import { deleteItemUseCase } from '../../../../core/items/hexagon/usecases/delete-item/delete-item.usecase';
-import { selectItemById } from '../../../../core/items/items.slice';
 import { createSelector } from '@reduxjs/toolkit';
+import { AppDispatch } from '../../../../../core/create-store';
+import { selectItemById } from '../../../../../core/items/items.slice';
+import { deleteItemUseCase } from '../../../../../core/items/hexagon/usecases/delete-item/delete-item.usecase';
 
 type DeleteItemScreenViewModelParams = {
   itemId: string;

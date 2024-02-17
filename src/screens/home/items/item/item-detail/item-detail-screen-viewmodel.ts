@@ -1,21 +1,21 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { selectItemById } from '../../../../core/items/items.slice';
-import { AppDispatch, RootState } from '../../../../core/create-store';
-import { selectTags } from '../../../../core/tags/tags.slice';
-import { Barcode } from '../../../../core/scanner/hexagon/models/barcode';
-import { unlinkItemBarcodeUseCase } from '../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
+import { AppDispatch, RootState } from '../../../../../core/create-store';
+import { Barcode } from '../../../../../core/scanner/hexagon/models/barcode';
+import { selectItemById } from '../../../../../core/items/items.slice';
+import { selectTags } from '../../../../../core/tags/tags.slice';
+import { unlinkItemBarcodeUseCase } from '../../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 
-export type CreateItemScreenViewModelParams = {
+export type CreateItemDetailScreenViewModelParams = {
   itemId: string;
   locale?: string;
   dispatch: AppDispatch;
 };
 
-export type ItemScreenViewModelLoading = {
+export type ItemDetailScreenViewModelLoading = {
   type: 'loading';
 };
 
-export type ItemScreenViewModelLoaded = {
+export type ItemDetailScreenViewModelLoaded = {
   type: 'loaded';
   item: {
     id: string;
@@ -33,16 +33,16 @@ export type ItemScreenViewModelLoaded = {
   };
 };
 
-export type ItemScreenViewModelState =
-  | ItemScreenViewModelLoading
-  | ItemScreenViewModelLoaded;
-export const createItemScreenViewModel = ({
+export type ItemDetailScreenViewModelState =
+  | ItemDetailScreenViewModelLoading
+  | ItemDetailScreenViewModelLoaded;
+export const createItemDetailScreenViewModel = ({
   itemId,
   locale,
   dispatch,
-}: CreateItemScreenViewModelParams): ((
+}: CreateItemDetailScreenViewModelParams): ((
   state: RootState,
-) => ItemScreenViewModelState) =>
+) => ItemDetailScreenViewModelState) =>
   createSelector([selectItemById(itemId), selectTags], (item, selectTags) => {
     if (!item) {
       return {

@@ -1,6 +1,6 @@
-import { createTestStore } from '../../../../core/create-store';
 import { createEditItemNoteScreenViewModel } from './edit-item-note-screen.viewmodel';
-import { editItemNoteUseCase } from '../../../../core/items/hexagon/usecases/edit-item-note/edit-item-note.usecase';
+import { createTestStore } from '../../../../../core/create-store';
+import { editItemNoteUseCase } from '../../../../../core/items/hexagon/usecases/edit-item-note/edit-item-note.usecase';
 
 describe('EditItemNoteScreenViewModel', () => {
   it('Should call editItemNoteUseCase when call editNote', async () => {

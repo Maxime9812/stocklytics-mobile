@@ -1,11 +1,11 @@
-import { AppDispatch, RootState } from '../../../../core/create-store';
+import { AppDispatch, RootState } from '../../../../../core/create-store';
 
 import { createSelector } from '@reduxjs/toolkit';
 import {
   addItemInFolderUseCase,
   AddItemInFolderUseCasePayload,
-} from '../../../../core/items/hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
-import { selectFolderById } from '../../../../core/folders/folders.slice';
+} from '../../../../../core/items/hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
+import { selectFolderById } from '../../../../../core/folders/folders.slice';
 
 type AddItemScreenViewModelParams = {
   folderId?: string;

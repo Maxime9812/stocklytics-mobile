@@ -1,15 +1,15 @@
 import {
-  createItemScreenViewModel,
-  ItemScreenViewModelLoaded,
-} from './item-screen-viewmodel';
-import { stateBuilder } from '../../../../core/state-builder';
-import { itemBuilder } from '../../../../core/items/__tests__/item.builder';
-import { createTestStore } from '../../../../core/create-store';
-import { unlinkItemBarcodeUseCase } from '../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
+  createItemDetailScreenViewModel,
+  ItemDetailScreenViewModelLoaded,
+} from './item-detail-screen-viewmodel';
+import { stateBuilder } from '../../../../../core/state-builder';
+import { itemBuilder } from '../../../../../core/items/__tests__/item.builder';
+import { createTestStore } from '../../../../../core/create-store';
+import { unlinkItemBarcodeUseCase } from '../../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 
-describe('ItemScreenViewModel', () => {
+describe('ItemDetailScreenViewModel', () => {
   it('Should be in error state when item is not found', () => {
-    const viewModel = createItemScreenViewModel({
+    const viewModel = createItemDetailScreenViewModel({
       itemId: 'item-id',
       dispatch: jest.fn(),
     })(stateBuilder().build());
@@ -26,7 +26,7 @@ describe('ItemScreenViewModel', () => {
       .withItems([itemBuilder().withId('item-id').build()])
       .build();
 
-    const viewModel = createItemScreenViewModel({
+    const viewModel = createItemDetailScreenViewModel({
       itemId: 'item-id',
       dispatch: jest.fn(),
     })(state);
@@ -54,7 +54,7 @@ describe('ItemScreenViewModel', () => {
       ])
       .build();
 
-    const viewModel = createItemScreenViewModel({
+    const viewModel = createItemDetailScreenViewModel({
       itemId: 'item-id',
       dispatch: jest.fn(),
     })(state);
@@ -81,12 +81,12 @@ describe('ItemScreenViewModel', () => {
       .build();
     const store = createTestStore({}, state);
 
-    const viewModel = createItemScreenViewModel({
+    const viewModel = createItemDetailScreenViewModel({
       itemId: 'item-id',
       dispatch: store.dispatch,
     })(store.getState());
 
-    await (viewModel as ItemScreenViewModelLoaded).item.unlinkBarcode();
+    await (viewModel as ItemDetailScreenViewModelLoaded).item.unlinkBarcode();
 
     expect(store.getDispatchedUseCaseArgs(unlinkItemBarcodeUseCase)).toEqual(
       'item-id',
@@ -99,7 +99,7 @@ describe('ItemScreenViewModel', () => {
         .withItems([itemBuilder().withId('item-id').withNote('').build()])
         .build();
 
-      const viewModel = createItemScreenViewModel({
+      const viewModel = createItemDetailScreenViewModel({
         itemId: 'item-id',
         dispatch: jest.fn(),
       })(state);
@@ -119,7 +119,7 @@ describe('ItemScreenViewModel', () => {
         ])
         .build();
 
-      const viewModel = createItemScreenViewModel({
+      const viewModel = createItemDetailScreenViewModel({
         itemId: 'item-id',
         dispatch: jest.fn(),
       })(state);
@@ -140,7 +140,7 @@ describe('ItemScreenViewModel', () => {
         .withItems([itemBuilder().withId('item-id').build()])
         .build();
 
-      const viewModel = createItemScreenViewModel({
+      const viewModel = createItemDetailScreenViewModel({
         itemId: 'item-id',
         dispatch: jest.fn(),
       })(state);
@@ -161,7 +161,7 @@ describe('ItemScreenViewModel', () => {
         .withTags([{ id: 'tag-id', name: 'tag-name' }])
         .build();
 
-      const viewModel = createItemScreenViewModel({
+      const viewModel = createItemDetailScreenViewModel({
         itemId: 'item-id',
         dispatch: jest.fn(),
       })(state);
@@ -192,7 +192,7 @@ describe('ItemScreenViewModel', () => {
         ])
         .build();
 
-      const viewModel = createItemScreenViewModel({
+      const viewModel = createItemDetailScreenViewModel({
         itemId: 'item-id',
         locale: 'fr-FR',
         dispatch: jest.fn(),

@@ -1,18 +1,18 @@
 import { Text, View } from 'react-native';
-import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
-import BaseLayout from '../../../../components/layouts/BaseLayout';
+import { ItemsStackScreenProps } from '../../../../../navigation/ItemsNavigation';
+import BaseLayout from '../../../../../components/layouts/BaseLayout';
 import { Controller, useForm } from 'react-hook-form';
-import BaseTextInput from '../../../../components/inputs/BaseTextInput';
+import BaseTextInput from '../../../../../components/inputs/BaseTextInput';
 import * as yup from 'yup';
 import { InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import CloseKeyboardOnTouch from '../../../../components/CloseKeyboardOnTouch';
+import CloseKeyboardOnTouch from '../../../../../components/CloseKeyboardOnTouch';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../../../store-hooks';
+import { useAppDispatch } from '../../../../../store-hooks';
 import { isRejected } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { createAddItemScreenViewModel } from './add-item-screen.viewmodel';
-import Button from '../../../../components/buttons/Button';
+import Button from '../../../../../components/buttons/Button';
 
 const addItemFormSchema = yup
   .object({

@@ -1,30 +1,30 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { ItemsStackScreenProps } from '../../../../navigation/ItemsNavigation';
-import BaseLayout from '../../../../components/layouts/BaseLayout';
-import Card from '../../../../components/cards/Card';
 import { Feather } from '@expo/vector-icons';
-import Button from '../../../../components/buttons/Button';
 import { useSelector } from 'react-redux';
-import {
-  createItemScreenViewModel,
-  ItemScreenViewModelLoaded,
-} from './item-screen-viewmodel';
-import { exhaustiveGuard } from '../../../../core/common/utils/exhaustive-guard';
-import Badge from '../../../../components/badge/Badge';
-import Barcode from '../../../../components/barcode/Barcode';
-import { useAppDispatch } from '../../../../store-hooks';
 import ItemPhotos from './components/ItemPhotos';
+import { ItemsStackScreenProps } from '../../../../../navigation/ItemsNavigation';
+import { useAppDispatch } from '../../../../../store-hooks';
+import BaseLayout from '../../../../../components/layouts/BaseLayout';
+import {
+  createItemDetailScreenViewModel,
+  ItemDetailScreenViewModelLoaded,
+} from './item-detail-screen-viewmodel';
+import { exhaustiveGuard } from '../../../../../core/common/utils/exhaustive-guard';
+import Card from '../../../../../components/cards/Card';
+import Button from '../../../../../components/buttons/Button';
+import Badge from '../../../../../components/badge/Badge';
+import Barcode from '../../../../../components/barcode/Barcode';
 
-export default function ItemScreen({
+export default function ItemDetailScreen({
   navigation,
   route: {
     params: { id },
   },
-}: ItemsStackScreenProps<'Item'>) {
+}: ItemsStackScreenProps<'ItemDetails'>) {
   const dispatch = useAppDispatch();
   const viewModel = useSelector(
-    createItemScreenViewModel({ itemId: id, dispatch }),
+    createItemDetailScreenViewModel({ itemId: id, dispatch }),
   );
 
   switch (viewModel.type) {
@@ -42,8 +42,8 @@ export default function ItemScreen({
 }
 
 type LoadedItemScreenProps = {
-  viewModel: ItemScreenViewModelLoaded;
-  navigation: ItemsStackScreenProps<'Item'>['navigation'];
+  viewModel: ItemDetailScreenViewModelLoaded;
+  navigation: ItemsStackScreenProps<'ItemDetails'>['navigation'];
 };
 const LoadedItemScreen = ({
   viewModel: { item },
