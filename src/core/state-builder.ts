@@ -12,6 +12,7 @@ import {
 } from './folders/hexagon/models/folder.model';
 import { Tag, tagsAdapter } from './tags/hexagon/models/tag.model';
 import { Scan } from './scanner/hexagon/models/Scan';
+import { LinkBarcodeError } from './items/hexagon/gateways/items.gateway';
 
 const initialState = rootReducer(undefined, createAction('')());
 
@@ -25,6 +26,16 @@ const withLoadingFoldersItems = createAction<string[]>(
 );
 const withNotLoadingFoldersItems = createAction<string[]>(
   'withNotLoadingFoldersItems',
+);
+const withLinkBarcodeToItemError = createAction<{
+  itemId: string;
+  error: LinkBarcodeError;
+}>('withLinkBarcodeToItemError');
+const withoutLinkBarcodeToItemError = createAction<string>(
+  'withoutLinkBarcodeToItemError',
+);
+const withLinkingBarcodeToItem = createAction<string>(
+  'withLinkingBarcodeToItem',
 );
 
 const withFolders = createAction<FolderModel[]>('withFolders');
@@ -53,7 +64,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.auth.hasCheckedAuthState = true;
     })
     .addCase(withItems, (state, action) => {
-      itemsAdapter.addMany(state.items, action.payload);
+      itemsAdapter.upsertMany(state.items, action.payload);
     })
     .addCase(withItemLoading, (state, action) => {
       action.payload.forEach((id) => {
@@ -101,6 +112,16 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(withMediaLibraryPermission, (state, action) => {
       state.permissions.hasMediaLibraryPermission = action.payload;
+    })
+    .addCase(withLinkBarcodeToItemError, (state, action) => {
+      state.items.linkBarcodeErrors[action.payload.itemId] =
+        action.payload.error;
+    })
+    .addCase(withoutLinkBarcodeToItemError, (state, action) => {
+      delete state.items.linkBarcodeErrors[action.payload];
+    })
+    .addCase(withLinkingBarcodeToItem, (state, action) => {
+      state.items.isLinkingBarcode[action.payload] = true;
     });
 });
 
@@ -129,6 +150,11 @@ export const stateBuilder = (baseState = initialState) => {
     withScannerLoading: reduceNoPayload(withScannerLoading),
     withCameraPermission: reduce(withCameraPermission),
     withMediaLibraryPermission: reduce(withMediaLibraryPermission),
+    withLinkBarcodeToItemError: reduce(withLinkBarcodeToItemError),
+    withLinkingBarcodeToItem: reduce(withLinkingBarcodeToItem),
+    withoutLinkBarcodeToItemError: reduce(withoutLinkBarcodeToItemError),
     build: () => baseState,
   };
 };
+
+export type StateBuilder = ReturnType<typeof stateBuilder>;

@@ -35,6 +35,7 @@
     "expo-image-picker": "~14.7.1",
     "expo-media-library": "~15.9.1",
     "expo-status-bar": "~1.11.1",
+    "fp-ts": "^2.16.2",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-hook-form": "^7.49.3",

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { AxiosItemsGateway } from './axios-items.gateway';
 import nock from 'nock';
 import { ItemModel } from '../../../hexagon/models/item.model';
+import { isRight, Left } from 'fp-ts/Either';
 
 const BASE_URL = 'http://localhost';
 
@@ -95,7 +96,7 @@ describe('AxiosItemsGateway', () => {
           },
         })
         .reply(200);
-      await axiosItemsGateway.linkBarcode({
+      const result = await axiosItemsGateway.linkBarcode({
         itemId: 'item-id',
         barcode: {
           type: 'ean13',
@@ -103,6 +104,32 @@ describe('AxiosItemsGateway', () => {
         },
       });
       expect(scope.isDone()).toBe(true);
+      expect(isRight(result)).toEqual(true);
+    });
+    it('Should return already linked error', async () => {
+      nock(BASE_URL)
+        .post('/items/item-id/barcode', {
+          barcode: {
+            type: 'ean13',
+            value: '1234567890',
+          },
+        })
+        .reply(409, {
+          type: 'BarcodeAlreadyLinkedToAnotherItemError',
+          itemId: 'item-id',
+        });
+
+      const result = await axiosItemsGateway.linkBarcode({
+        itemId: 'item-id',
+        barcode: {
+          type: 'ean13',
+          value: '1234567890',
+        },
+      });
+      expect((result as Left<any>).left).toEqual({
+        type: 'BarcodeAlreadyLinkedToAnotherItemError',
+        itemId: 'item-id',
+      });
     });
   });
 

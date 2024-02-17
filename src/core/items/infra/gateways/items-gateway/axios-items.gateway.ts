@@ -4,9 +4,11 @@ import {
   EditNotePayload,
   Item,
   ItemsGateway,
+  LinkBarcodeError,
   LinkBarcodeToItemPayload,
 } from '../../../hexagon/gateways/items.gateway';
-import { AxiosInstance } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
+import { Either, left, right } from 'fp-ts/Either';
 
 export class AxiosItemsGateway implements ItemsGateway {
   constructor(private readonly axios: AxiosInstance) {}
@@ -42,8 +44,17 @@ export class AxiosItemsGateway implements ItemsGateway {
   async linkBarcode({
     itemId,
     barcode,
-  }: LinkBarcodeToItemPayload): Promise<void> {
-    await this.axios.post(`/items/${itemId}/barcode`, { barcode });
+  }: LinkBarcodeToItemPayload): Promise<Either<LinkBarcodeError, void>> {
+    try {
+      await this.axios.post(`/items/${itemId}/barcode`, { barcode });
+      return right(undefined);
+    } catch (e) {
+      const error = e as AxiosError;
+      if (error.response?.status === 409) {
+        return left({ type: 'BarcodeAlreadyLinkedToAnotherItemError', itemId });
+      }
+      throw e;
+    }
   }
 
   async unlinkBarcode(itemId: string): Promise<void> {

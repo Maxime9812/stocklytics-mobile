@@ -1,7 +1,7 @@
 import { ItemModel } from '../hexagon/models/item.model';
 import { createTestStore, TestStore } from '../../create-store';
 import { getItemByIdUseCase } from '../hexagon/usecases/get-item-by-id/get-item-by-id.usecase';
-import { stateBuilder } from '../../state-builder';
+import { StateBuilder, stateBuilder } from '../../state-builder';
 import { StubItemsGateway } from '../infra/gateways/items-gateway/stub-items.gateway';
 import { getItemsInFolderUseCase } from '../hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
 import {
@@ -14,6 +14,7 @@ import {
   EditNamePayload,
   EditNotePayload,
   Item,
+  LinkBarcodeError,
 } from '../hexagon/gateways/items.gateway';
 import { Tag } from '../../tags/hexagon/models/tag.model';
 import {
@@ -40,9 +41,12 @@ export const createItemsFixture = () => {
   const itemsGateway = new StubItemsGateway();
   const uuidProvider = new DeterministicUUIDProvider();
   let store: TestStore;
-  let initialState = stateBuilder();
+  let initialState: StateBuilder = stateBuilder();
 
   return {
+    givenInitialState: (fn: (initialState: StateBuilder) => StateBuilder) => {
+      initialState = fn(initialState);
+    },
     givenUUID(uuid: string) {
       uuidProvider.givenUUID(uuid);
     },
@@ -60,6 +64,9 @@ export const createItemsFixture = () => {
       itemAdded: Item,
     ) => {
       itemsGateway.givenAddedItemInFolder(payload, itemAdded);
+    },
+    givenLinkBarcodeError: (error: LinkBarcodeError) => {
+      itemsGateway.givenLinkBarcodeError(error);
     },
     whenGetItemById: (id: string) => {
       store = createTestStore({ itemsGateway });
@@ -150,6 +157,9 @@ export const createItemsFixture = () => {
           .withNotLoadingFoldersItems([folderId ?? 'root'])
           .build(),
       );
+    },
+    thenStateIs: (callback: (initialState: StateBuilder) => StateBuilder) => {
+      expect(store.getState()).toEqual(callback(initialState).build());
     },
   };
 };

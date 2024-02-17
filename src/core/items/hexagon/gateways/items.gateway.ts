@@ -1,4 +1,5 @@
 import { Barcode } from '../../../scanner/hexagon/models/barcode';
+import { Either } from 'fp-ts/Either';
 
 export type AddItemInFolderPayload = {
   id: string;
@@ -36,12 +37,19 @@ export type EditNamePayload = {
   name: string;
 };
 
+export type LinkBarcodeError = {
+  type: 'BarcodeAlreadyLinkedToAnotherItemError';
+  itemId: string;
+};
+
 export interface ItemsGateway {
   getFromFolder(folderId: string | undefined): Promise<Item[]>;
   getById(id: string): Promise<Item | undefined>;
   addItemInFolder(payload: AddItemInFolderPayload): Promise<Item>;
   editNote(payload: EditNotePayload): Promise<void>;
-  linkBarcode(payload: LinkBarcodeToItemPayload): Promise<void>;
+  linkBarcode(
+    payload: LinkBarcodeToItemPayload,
+  ): Promise<Either<LinkBarcodeError, void>>;
   unlinkBarcode(itemId: string): Promise<void>;
   delete(id: string): Promise<void>;
   editName(payload: EditNamePayload): Promise<void>;

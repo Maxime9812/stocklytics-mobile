@@ -5,22 +5,32 @@ import { getItemsInFolderUseCase } from './hexagon/usecases/get-items-in-folder/
 import { RootState } from '../create-store';
 import { addItemInFolderUseCase } from './hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
 import { editItemNoteUseCase } from './hexagon/usecases/edit-item-note/edit-item-note.usecase';
-import { linkBarcodeToItemUseCase } from './hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
+import {
+  linkBarcodeToItemError,
+  linkBarcodeToItemUseCase,
+} from './hexagon/usecases/link-barcode-to-item/link-barcode-to-item.usecase';
 import { deleteItemUseCase } from './hexagon/usecases/delete-item/delete-item.usecase';
 import { unlinkItemBarcodeUseCase } from './hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 import { editItemNameUseCase } from './hexagon/usecases/edit-item-name/edit-item-name.usecase';
+import { LinkBarcodeError } from './hexagon/gateways/items.gateway';
 
 export type ItemsSliceState = ItemsEntityState & {
   isLoadingById: Record<string, boolean>;
   isLoadingFoldersItemsById: Record<string, boolean>;
+  linkBarcodeErrors: Record<string, LinkBarcodeError>;
+  isLinkingBarcode: Record<string, boolean>;
 };
+
+const initialState: ItemsSliceState = itemsAdapter.getInitialState({
+  isLoadingById: {},
+  isLoadingFoldersItemsById: {},
+  linkBarcodeErrors: {},
+  isLinkingBarcode: {},
+});
 
 export const itemsSlice = createSlice({
   name: 'items',
-  initialState: itemsAdapter.getInitialState({
-    isLoadingById: {},
-    isLoadingFoldersItemsById: {},
-  }) as ItemsSliceState,
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -68,6 +78,16 @@ export const itemsSlice = createSlice({
           id: itemId,
           changes: { barcode },
         });
+        delete state.isLinkingBarcode[itemId];
+      })
+      .addCase(linkBarcodeToItemUseCase.pending, (state, action) => {
+        state.isLinkingBarcode[action.meta.arg.itemId] = true;
+        delete state.linkBarcodeErrors[action.meta.arg.itemId];
+      })
+      .addCase(linkBarcodeToItemError, (state, action) => {
+        const { itemId, error } = action.payload;
+        state.linkBarcodeErrors[itemId] = error;
+        delete state.isLinkingBarcode[itemId];
       })
       .addCase(deleteItemUseCase.fulfilled, (state, action) => {
         itemsAdapter.removeOne(state, action.meta.arg.itemId);

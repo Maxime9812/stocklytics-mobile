@@ -4,8 +4,10 @@ import {
   EditNotePayload,
   Item,
   ItemsGateway,
+  LinkBarcodeError,
   LinkBarcodeToItemPayload,
 } from '../../../hexagon/gateways/items.gateway';
+import { Either, left, right } from 'fp-ts/Either';
 
 export class StubItemsGateway implements ItemsGateway {
   private itemsInFolder: Map<string, Item[]> = new Map();
@@ -16,6 +18,7 @@ export class StubItemsGateway implements ItemsGateway {
   lastDeletedItemId: string | undefined;
   lastUnlinkedItemId: string | undefined;
   lastNameChange: EditNamePayload | undefined;
+  private linkBarcodeError: LinkBarcodeError | undefined;
 
   constructor(private readonly delay = 0) {}
 
@@ -51,11 +54,16 @@ export class StubItemsGateway implements ItemsGateway {
     });
   }
 
-  async linkBarcode(payload: LinkBarcodeToItemPayload): Promise<void> {
+  async linkBarcode(
+    payload: LinkBarcodeToItemPayload,
+  ): Promise<Either<LinkBarcodeError, void>> {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.lastBarcodeLink = payload;
-        resolve();
+        if (this.linkBarcodeError) {
+          return resolve(left(this.linkBarcodeError));
+        }
+        resolve(right(undefined));
       }, this.delay);
     });
   }
@@ -88,6 +96,10 @@ export class StubItemsGateway implements ItemsGateway {
 
   givenAddedItemInFolder(payload: AddItemInFolderPayload, itemAdded: Item) {
     this.addedItems.set(this.getAddedItemInFolderKey(payload), itemAdded);
+  }
+
+  givenLinkBarcodeError(error: LinkBarcodeError) {
+    this.linkBarcodeError = error;
   }
 
   private getAddedItemInFolderKey(payload: AddItemInFolderPayload) {

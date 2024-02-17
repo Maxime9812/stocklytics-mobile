@@ -1,9 +1,16 @@
-import { useState } from 'react';
-import * as Haptics from 'expo-haptics';
+import { useEffect, useState } from 'react';
 import { createLinkBarcodeScreenViewModel } from './link-barcode-screen.viewmodel';
 import { ItemsStackScreenProps } from '../../../../../navigation/ItemsNavigation';
 import { useAppDispatch } from '../../../../../store-hooks';
 import Scanner from '../../../../../components/camera/scanner/Scanner';
+import { useSelector } from 'react-redux';
+import { Barcode } from '../../../../../core/scanner/hexagon/models/barcode';
+import * as Haptics from 'expo-haptics';
+import ThemedBottomSheet from '../../../../../components/bottom-sheet/ThemedBottomSheet';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
+import { Text, View } from 'react-native';
+import { Portal } from '@gorhom/portal';
+import { FullWindowOverlay } from 'react-native-screens';
 
 export default function LinkBarcodeScreen({
   navigation,
@@ -12,20 +19,49 @@ export default function LinkBarcodeScreen({
   },
 }: ItemsStackScreenProps<'LinkBarcode'>) {
   const dispatch = useAppDispatch();
-  const [hasScanned, setHasScanned] = useState(false);
+  const [lastScannedBarcode, setLastScannedBarcode] = useState<
+    Barcode | undefined
+  >(undefined);
+  const viewModel = useSelector(
+    createLinkBarcodeScreenViewModel({
+      itemId,
+      setLastScannedBarcode,
+      lastScannedBarcode,
+      dispatch,
+    }),
+  );
 
-  const onScannedSuccessfully = () => {
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    navigation.goBack();
-  };
+  useEffect(() => {
+    if (viewModel.type === 'success') {
+      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      navigation.goBack();
+    }
+  }, [viewModel.type]);
 
-  const viewModel = createLinkBarcodeScreenViewModel({
-    itemId,
-    hasScanned,
-    setHasScanned,
-    dispatch,
-    onScannedSuccessfully,
-  });
-
-  return <Scanner onCodeScanned={viewModel.scanBarcode} />;
+  return (
+    <>
+      <Scanner onCodeScanned={viewModel.linkBarcode} />
+      <Portal>
+        <FullWindowOverlay>
+          {viewModel.type === 'error' && <LinkError />}
+        </FullWindowOverlay>
+      </Portal>
+    </>
+  );
 }
+
+const LinkError = () => {
+  useEffect(() => {
+    void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+  }, []);
+
+  return (
+    <ThemedBottomSheet snapPoints={['25%']} enablePanDownToClose>
+      <BottomSheetView>
+        <View className="p-3">
+          <Text className="text-xl font-bold dark:text-white">Error</Text>
+        </View>
+      </BottomSheetView>
+    </ThemedBottomSheet>
+  );
+};
