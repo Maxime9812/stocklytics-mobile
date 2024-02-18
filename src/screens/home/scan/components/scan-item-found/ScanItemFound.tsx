@@ -60,9 +60,19 @@ export default function ScanItemFound({ id, navigation }: ItemFoundViewProps) {
                 </Text>
               </View>
             </View>
-            <Card className="p-1 bg-neutral-800">
-              <Button variant="ghost" onPress={goToItem}>
-                <Button.Text>Detail</Button.Text>
+            <Card className="p-1" type="secondary">
+              <Button
+                variant="ghost"
+                type="secondary"
+                className="p-3"
+                onPress={goToItem}
+              >
+                <Button.Icon className="text-royal-blue-500">
+                  <Feather name="eye" size={18} />
+                </Button.Icon>
+                <Button.Text className="text-royal-blue-500">
+                  Detail
+                </Button.Text>
               </Button>
             </Card>
           </View>

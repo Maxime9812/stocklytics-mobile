@@ -18,7 +18,7 @@ export default function NewElementBottomSheetContent({
 }: NewElementBottomSheetContentProps) {
   return (
     <View className="p-3 space-y-4 mb-4">
-      <Text className="dark:text-white">Adding to : {folderName}</Text>
+      <Text className="dark:text-white">Adding to {folderName}</Text>
       <View className="space-y-2">
         <ActionButton onPress={onAddItem} icon="file" text="Add file" />
         <ActionButton onPress={onAddFolder} icon="folder" text="Add folder" />
@@ -37,11 +37,8 @@ const ActionIcon = styled(Feather, 'text-lg');
 
 const ActionButton = ({ onPress, icon, text, ...props }: ActionButtonProps) => {
   return (
-    <Card
-      {...props}
-      className="dark:bg-neutral-950 dark:shadow-neutral-900 p-1"
-    >
-      <Button variant="ghost" onPress={onPress}>
+    <Card {...props} type="secondary" className="p-1">
+      <Button variant="ghost" type="secondary" onPress={onPress}>
         <Button.Icon>
           <ActionIcon name={icon as any} />
         </Button.Icon>
