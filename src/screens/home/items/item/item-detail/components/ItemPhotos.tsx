@@ -142,11 +142,12 @@ const MediaLibraryBottomSheet = ({
       <View>
         <MediaLibraryPermission alwaysRender>
           {(hasAccess) => (
-            <Card className="p-1 bg-neutral-800">
+            <Card type="secondary">
               <Button
                 variant="ghost"
+                type="secondary"
                 onPress={getImage}
-                className="active:bg-neutral-900 p-3"
+                className="p-3"
                 disabled={!hasAccess}
               >
                 <Button.Icon className="text-royal-blue-500">

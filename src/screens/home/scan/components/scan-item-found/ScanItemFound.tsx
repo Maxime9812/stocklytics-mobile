@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../../../../store-hooks';
 import { createScanItemFoundViewModel } from './scan-item-found.viewmodel';
 import { getItemByIdUseCase } from '../../../../../core/items/hexagon/usecases/get-item-by-id/get-item-by-id.usecase';
 import { Feather } from '@expo/vector-icons';
+import Card from '../../../../../components/cards/Card';
 
 type ItemFoundViewProps = {
   id: string;
@@ -59,9 +60,11 @@ export default function ScanItemFound({ id, navigation }: ItemFoundViewProps) {
                 </Text>
               </View>
             </View>
-            <Button onPress={goToItem}>
-              <Button.Text>Detail</Button.Text>
-            </Button>
+            <Card className="p-1 bg-neutral-800">
+              <Button variant="ghost" onPress={goToItem}>
+                <Button.Text>Detail</Button.Text>
+              </Button>
+            </Card>
           </View>
         </BottomSheetView>
       )}

@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 
 type Variant = 'solid' | 'ghost' | 'link';
 type Size = 'sm' | 'md';
-type Type = 'primary' | 'destructive';
+type Type = 'primary' | 'destructive' | 'secondary';
 
 export type ButtonProps = PropsWithChildren<
   {
@@ -51,7 +51,9 @@ export default function Button({
 
         variant == 'ghost' &&
           'active:bg-neutral-100 dark:active:bg-neutral-800 rounded-xl p-2',
-
+        variant == 'ghost' &&
+          type == 'secondary' &&
+          'dark:active:bg-neutral-900',
         variant == 'link' && 'active:opacity-40',
         className,
       )}
