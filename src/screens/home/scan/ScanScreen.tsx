@@ -31,10 +31,6 @@ export default function ScanScreen({ navigation }: HomeTabScreenProps<'Scan'>) {
     await viewModel.scanBarcode(code);
   };
 
-  useEffect(() => {
-    console.log(viewModel.type);
-  }, [viewModel.type]);
-
   return (
     <>
       <Scanner onCodeScanned={handleCodeScanned} isActive={isActive} />

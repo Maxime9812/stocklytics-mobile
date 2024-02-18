@@ -12,6 +12,7 @@ import Button from '../../../../../../components/buttons/Button';
 import ThemedBottomSheet from '../../../../../../components/bottom-sheet/ThemedBottomSheet';
 import CameraPermission from '../../../../../../components/camera/camera-permission/CameraPermission';
 import { MediaLibraryPermission } from '../../../../../../components/media-library/MediaLibraryPermission';
+import Card from '../../../../../../components/cards/Card';
 
 export default function ItemPhotos() {
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -139,22 +140,24 @@ const MediaLibraryBottomSheet = ({
         </TouchableWithoutFeedback>
       </CameraPermission>
       <View>
-        <MediaLibraryPermission
-          accessDenied={
-            <Button disabled>
-              <Button.Icon>
-                <Feather name="image" size={20} />
-              </Button.Icon>
-              <Button.Text>Choose from media</Button.Text>
-            </Button>
-          }
-        >
-          <Button onPress={getImage}>
-            <Button.Icon>
-              <Feather name="image" size={20} />
-            </Button.Icon>
-            <Button.Text>Choose from media</Button.Text>
-          </Button>
+        <MediaLibraryPermission alwaysRender>
+          {(hasAccess) => (
+            <Card className="p-1 bg-neutral-800">
+              <Button
+                variant="ghost"
+                onPress={getImage}
+                className="active:bg-neutral-900 p-3"
+                disabled={!hasAccess}
+              >
+                <Button.Icon className="text-royal-blue-500">
+                  <Feather name="image" size={20} />
+                </Button.Icon>
+                <Button.Text className="text-royal-blue-500">
+                  Choose from media
+                </Button.Text>
+              </Button>
+            </Card>
+          )}
         </MediaLibraryPermission>
       </View>
     </View>

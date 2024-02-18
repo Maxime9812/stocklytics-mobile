@@ -4,6 +4,7 @@ import { requestMediaLibraryPermissionUseCase } from '../../core/permissions/hex
 
 export type MediaLibraryPermissionViewModelStateReady = {
   type: 'ready';
+  hasPermission: boolean;
 };
 export type MediaLibraryPermissionViewModelStateAccessDenied = {
   type: 'access-denied';
@@ -16,13 +17,16 @@ type MediaLibraryPermissionViewModelState =
 
 export const createMediaLibraryPermissionViewModel = ({
   dispatch,
+  alwaysRender,
 }: {
   dispatch: AppDispatch;
+  alwaysRender: boolean;
 }): ((state: RootState) => MediaLibraryPermissionViewModelState) =>
   createSelector(
     [(state: RootState) => state.permissions.hasMediaLibraryPermission],
     (hasPermission) => {
-      if (hasPermission) return { type: 'ready' };
+      if (hasPermission || alwaysRender)
+        return { type: 'ready', hasPermission: hasPermission };
       return {
         type: 'access-denied',
         requestAccess: async () => {

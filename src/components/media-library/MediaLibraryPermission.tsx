@@ -3,20 +3,23 @@ import { useSelector } from 'react-redux';
 import { createMediaLibraryPermissionViewModel } from './media-library-permission.viewmodel';
 import { useAppDispatch } from '../../store-hooks';
 import { exhaustiveGuard } from '../../core/common/utils/exhaustive-guard';
-import { PropsWithChildren, ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import BaseLayout from '../layouts/BaseLayout';
 import Button from '../buttons/Button';
 
-type Props = PropsWithChildren<{
+type Props = {
   accessDenied?: ReactNode;
-}>;
+  alwaysRender?: boolean;
+  children: ReactNode | ((hasPermission: boolean) => ReactNode);
+};
 export const MediaLibraryPermission = ({
   children,
   accessDenied = <AccessDenied />,
+  alwaysRender = false,
 }: Props) => {
   const dispatch = useAppDispatch();
   const viewModel = useSelector(
-    createMediaLibraryPermissionViewModel({ dispatch }),
+    createMediaLibraryPermissionViewModel({ dispatch, alwaysRender }),
   );
 
   useEffect(() => {
@@ -28,7 +31,9 @@ export const MediaLibraryPermission = ({
     case 'access-denied':
       return accessDenied;
     case 'ready':
-      return children;
+      return typeof children == 'function'
+        ? children(viewModel.hasPermission)
+        : children;
     default:
       return exhaustiveGuard(viewModel);
   }
