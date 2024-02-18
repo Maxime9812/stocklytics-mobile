@@ -44,7 +44,7 @@ export default function ScanItemFound({ id, navigation }: ItemFoundViewProps) {
       {viewModel.type === 'loading' && <View />}
       {viewModel.type === 'loaded' && (
         <BottomSheetView>
-          <View className="p-4 h-full justify-between">
+          <View className="p-4 pt-0 space-y-4">
             <View className="space-y-2">
               <Text className="text-xl font-bold dark:text-white">
                 {viewModel.item.name}

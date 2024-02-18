@@ -119,7 +119,7 @@ const MediaLibraryBottomSheet = ({
   if (device == null) return <View></View>;
 
   return (
-    <View className="p-4 space-y-4">
+    <View className="p-4 pt-0 space-y-4">
       <CameraPermission
         accessDenied={
           <View className="w-24 h-24 rounded-xl bg-white dark:bg-black">
