@@ -11,11 +11,52 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Card from '../../../components/cards/Card';
 import Button from '../../../components/buttons/Button';
 import { styled } from 'nativewind';
+import { AuthUser } from '../../../core/auth/hexagon/models/auth-user';
 
 const LogoutIcon = styled(MaterialIcons, 'text-lg');
 export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
-  const appDispatch = useAppDispatch();
   const authUser = useSelector(authUserSelector);
+
+  return (
+    <BaseLayout>
+      <View className="p-4 space-y-4">
+        {authUser && <UserInfos user={authUser} />}
+        <View>
+          <Actions navigation={navigation} />
+        </View>
+      </View>
+    </BaseLayout>
+  );
+}
+
+const UserInfos = ({ user }: { user: AuthUser }) => (
+  <View className="items-center space-y-4">
+    <Avatar name={user.fullName} />
+    <View className="items-center">
+      <Text className="text-xl font-bold dark:text-white">{user.fullName}</Text>
+      <Text className="text-neutral-400 dark:text-neutral-500">
+        {user.email}
+      </Text>
+    </View>
+  </View>
+);
+
+type ActionsProps = {
+  navigation: HomeTabScreenProps<'Menu'>['navigation'];
+};
+
+const Actions = ({ navigation }: ActionsProps) => (
+  <Card className="p-1">
+    <LogoutButton navigation={navigation} />
+  </Card>
+);
+
+type LogoutButtonProps = {
+  navigation: HomeTabScreenProps<'Menu'>['navigation'];
+};
+
+const LogoutButton = ({ navigation }: LogoutButtonProps) => {
+  const appDispatch = useAppDispatch();
 
   const logout = async () => {
     await appDispatch(logoutUseCase());
@@ -48,30 +89,11 @@ export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
   };
 
   return (
-    <BaseLayout>
-      <View className="p-4 space-y-4">
-        {authUser && (
-          <View className="items-center space-y-4">
-            <Avatar name={authUser.fullName} />
-            <View className="items-center">
-              <Text className="text-xl font-bold dark:text-white">
-                {authUser.fullName}
-              </Text>
-              <Text className="text-lg text-neutral-400">{authUser.email}</Text>
-            </View>
-          </View>
-        )}
-        <View>
-          <Card className="p-1">
-            <Button variant="ghost" onPress={requestLogout}>
-              <Button.Icon>
-                <LogoutIcon name="logout" />
-              </Button.Icon>
-              <Button.Text>Sign out</Button.Text>
-            </Button>
-          </Card>
-        </View>
-      </View>
-    </BaseLayout>
+    <Button variant="ghost" onPress={requestLogout}>
+      <Button.Icon>
+        <LogoutIcon name="logout" />
+      </Button.Icon>
+      <Button.Text>Sign out</Button.Text>
+    </Button>
   );
-}
+};
