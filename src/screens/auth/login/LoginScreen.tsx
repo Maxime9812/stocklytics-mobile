@@ -76,7 +76,7 @@ export default function LoginScreen({
   return (
     <CloseKeyboardOnTouch>
       <BaseLayout>
-        <View className="p-4 flex space-y-2">
+        <View className="p-4 pt-0 flex space-y-2">
           <Title />
           <View className="space-y-4">
             <View>
@@ -118,7 +118,7 @@ export default function LoginScreen({
           </View>
           <View className="space-y-2">
             <Button variant="link" onPress={goToResetPassword}>
-              <Button.Text>Forgot password ?</Button.Text>
+              <Button.Text>I forgot my password</Button.Text>
             </Button>
             <Text className="text-center dark:text-white">
               By using the app, you agree to stocklytics's Terms & Conditions
@@ -143,9 +143,11 @@ export default function LoginScreen({
 
 const Title = () => {
   return (
-    <View className="flex items-center">
-      <Text className="text-2xl font-bold dark:text-white">Welcome back !</Text>
-      <Text className="text-xl text-neutral-400">Login to your account</Text>
+    <View className="space-y-2">
+      <Text className="text-3xl font-bold dark:text-white">Welcome back !</Text>
+      <Text className="text-neutral-500 dark:text-neutral-400">
+        Login to your account
+      </Text>
     </View>
   );
 };

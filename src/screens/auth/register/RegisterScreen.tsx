@@ -60,7 +60,7 @@ export default function RegisterScreen({
   return (
     <CloseKeyboardOnTouch>
       <BaseLayout>
-        <View className="p-4 flex h-screen space-y-2">
+        <View className="p-4 pt-0 h-screen space-y-2">
           <Title />
           <View className="space-y-4">
             <View>
@@ -138,10 +138,12 @@ export default function RegisterScreen({
 }
 
 const Title = () => (
-  <View className="flex items-center">
-    <Text className="text-2xl font-bold dark:text-white">
+  <View className="space-y-2">
+    <Text className="text-3xl font-bold dark:text-white">
       Create an account
     </Text>
-    <Text className="text-xl text-neutral-400">Get started for free today</Text>
+    <Text className="text-neutral-500 dark:text-neutral-400">
+      Get started for free today
+    </Text>
   </View>
 );
