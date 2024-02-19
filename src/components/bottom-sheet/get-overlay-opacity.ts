@@ -14,9 +14,8 @@ export const getOverlayOpacity = ({
   const hasReachMaxScreen = position <= screenPercentToReach;
   if (hasReachMaxScreen) return opacityMax;
 
-  const percent =
-    (screenHeight - position) / (screenHeight - screenPercentToReach);
-  const opacity = opacityMax * percent;
-  if (opacity > opacityMax) return opacityMax;
-  return opacity;
+  return (
+    (opacityMax * (screenHeight - position)) /
+    (screenHeight - screenPercentToReach)
+  );
 };
