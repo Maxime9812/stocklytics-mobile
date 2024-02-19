@@ -5,7 +5,6 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { Camera, useCameraDevice } from 'react-native-vision-camera';
 import { styled } from 'nativewind';
 import * as ImagePicker from 'expo-image-picker';
-import { FullWindowOverlay } from 'react-native-screens';
 import { Portal } from '@gorhom/portal';
 import { useModal } from '../../../../../../hooks/use-modal';
 import Button from '../../../../../../components/buttons/Button';
@@ -23,7 +22,7 @@ export default function ItemPhotos() {
   } = useModal();
 
   const handleGetImage = async () => {
-    closeMediaLibrary();
+    bottomSheetRef.current?.close();
     const image = await getImage();
     console.log(image);
   };
@@ -37,7 +36,7 @@ export default function ItemPhotos() {
   };
 
   const handleTakePhoto = async () => {
-    closeMediaLibrary();
+    bottomSheetRef.current?.close();
     const image = await takePhoto();
     console.log(image);
   };
@@ -77,26 +76,20 @@ export default function ItemPhotos() {
       </View>
       {isOpen && (
         <Portal>
-          <FullWindowOverlay>
-            <TouchableWithoutFeedback
-              onPress={() => bottomSheetRef.current?.close()}
-            >
-              <View className="flex-1 bg-black opacity-40"></View>
-            </TouchableWithoutFeedback>
-            <ThemedBottomSheet
-              ref={bottomSheetRef}
-              enablePanDownToClose
-              enableDynamicSizing
-              onClose={closeMediaLibrary}
-            >
-              <BottomSheetView>
-                <MediaLibraryBottomSheet
-                  takePhoto={handleTakePhoto}
-                  getImage={handleGetImage}
-                />
-              </BottomSheetView>
-            </ThemedBottomSheet>
-          </FullWindowOverlay>
+          <ThemedBottomSheet
+            ref={bottomSheetRef}
+            enablePanDownToClose
+            enableDynamicSizing
+            onClose={closeMediaLibrary}
+            withOverlay
+          >
+            <BottomSheetView>
+              <MediaLibraryBottomSheet
+                takePhoto={handleTakePhoto}
+                getImage={handleGetImage}
+              />
+            </BottomSheetView>
+          </ThemedBottomSheet>
         </Portal>
       )}
     </>

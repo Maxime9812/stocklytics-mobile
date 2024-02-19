@@ -1,11 +1,10 @@
-import { View, TouchableWithoutFeedback } from 'react-native';
+import { View } from 'react-native';
 import { styled } from 'nativewind';
 import { Feather } from '@expo/vector-icons';
 import { Portal } from '@gorhom/portal';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useRef, useState } from 'react';
 import ThemedBottomSheet from '../../../../../../components/bottom-sheet/ThemedBottomSheet';
-import { FullWindowOverlay } from 'react-native-screens';
 import NewElementBottomSheetContent from './NewElementBottomSheetContent';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ItemsStackScreenProps } from '../../../../../../navigation/ItemsNavigation';
@@ -44,27 +43,21 @@ export default function FolderScreenHeader(props: View['props']) {
       </Button>
       {isBottomSheetOpen && (
         <Portal>
-          <FullWindowOverlay>
-            <TouchableWithoutFeedback
-              onPress={() => bottomSheetRef.current?.close()}
-            >
-              <View className="flex-1 bg-black opacity-40"></View>
-            </TouchableWithoutFeedback>
-            <ThemedBottomSheet
-              enablePanDownToClose
-              enableDynamicSizing
-              ref={bottomSheetRef}
-              onClose={() => setIsBottomSheetOpen(false)}
-            >
-              <BottomSheetView>
-                <NewElementBottomSheetContent
-                  folderName="Folder"
-                  onAddFolder={onPressFolder}
-                  onAddItem={onPressItem}
-                />
-              </BottomSheetView>
-            </ThemedBottomSheet>
-          </FullWindowOverlay>
+          <ThemedBottomSheet
+            enablePanDownToClose
+            enableDynamicSizing
+            ref={bottomSheetRef}
+            onClose={() => setIsBottomSheetOpen(false)}
+            withOverlay
+          >
+            <BottomSheetView>
+              <NewElementBottomSheetContent
+                folderName="Folder"
+                onAddFolder={onPressFolder}
+                onAddItem={onPressItem}
+              />
+            </BottomSheetView>
+          </ThemedBottomSheet>
         </Portal>
       )}
     </View>

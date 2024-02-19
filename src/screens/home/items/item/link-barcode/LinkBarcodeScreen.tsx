@@ -10,7 +10,6 @@ import ThemedBottomSheet from '../../../../../components/bottom-sheet/ThemedBott
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { Text, View } from 'react-native';
 import { Portal } from '@gorhom/portal';
-import { FullWindowOverlay } from 'react-native-screens';
 
 export default function LinkBarcodeScreen({
   navigation,
@@ -41,11 +40,7 @@ export default function LinkBarcodeScreen({
   return (
     <>
       <Scanner onCodeScanned={viewModel.linkBarcode} />
-      <Portal>
-        <FullWindowOverlay>
-          {viewModel.type === 'error' && <LinkError />}
-        </FullWindowOverlay>
-      </Portal>
+      <Portal>{viewModel.type === 'error' && <LinkError />}</Portal>
     </>
   );
 }
