@@ -7,7 +7,6 @@ import * as yup from 'yup';
 import { InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CloseKeyboardOnTouch from '../../../../../components/CloseKeyboardOnTouch';
-import { useEffect } from 'react';
 import { useAppDispatch } from '../../../../../store-hooks';
 import { isRejected } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
@@ -51,17 +50,6 @@ export default function AddItemScreen({
     navigation.goBack();
   };
 
-  const focusOnTransitionEnd = () => {
-    return navigation.addListener('transitionEnd', (e) => {
-      if (e.data.closing) return;
-      setFocus('name');
-    });
-  };
-
-  useEffect(() => {
-    return focusOnTransitionEnd();
-  }, []);
-
   return (
     <CloseKeyboardOnTouch>
       <BaseLayout variant="secondary">
@@ -89,6 +77,7 @@ export default function AddItemScreen({
                   render={({ field }) => (
                     <BaseTextInput
                       {...field}
+                      autoFocus
                       placeholder="Item name"
                       onChangeText={field.onChange}
                       returnKeyType="next"

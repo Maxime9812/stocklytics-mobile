@@ -4,7 +4,6 @@ import BaseLayout from '../../../../components/layouts/BaseLayout';
 import CloseKeyboardOnTouch from '../../../../components/CloseKeyboardOnTouch';
 import { Controller, useForm } from 'react-hook-form';
 import BaseTextInput from '../../../../components/inputs/BaseTextInput';
-import { useEffect } from 'react';
 import { isRejected } from '@reduxjs/toolkit';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch } from '../../../../store-hooks';
@@ -49,17 +48,6 @@ export default function AddFolderScreen({
     navigation.goBack();
   };
 
-  const focusOnTransitionEnd = () => {
-    return navigation.addListener('transitionEnd', (e) => {
-      if (e.data.closing) return;
-      setFocus('name');
-    });
-  };
-
-  useEffect(() => {
-    return focusOnTransitionEnd();
-  }, []);
-
   return (
     <CloseKeyboardOnTouch>
       <BaseLayout variant="secondary">
@@ -87,6 +75,7 @@ export default function AddFolderScreen({
                   render={({ field }) => (
                     <BaseTextInput
                       {...field}
+                      autoFocus
                       placeholder="Folder name"
                       onChangeText={field.onChange}
                       value={field.value.toString()}
