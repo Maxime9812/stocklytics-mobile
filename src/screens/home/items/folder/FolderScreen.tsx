@@ -28,8 +28,10 @@ export default function FolderScreen({
   );
 
   useEffect(() => {
-    appDispatch(getItemsInFolderUseCase(params.id));
-    appDispatch(getFoldersInFolderUseCase(params.id));
+    return navigation.addListener('focus', () => {
+      appDispatch(getItemsInFolderUseCase(params.id));
+      appDispatch(getFoldersInFolderUseCase(params.id));
+    });
   }, []);
 
   switch (viewModel.type) {
