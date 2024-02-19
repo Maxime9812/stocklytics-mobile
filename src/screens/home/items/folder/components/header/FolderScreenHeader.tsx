@@ -52,7 +52,7 @@ export default function FolderScreenHeader(props: View['props']) {
             </TouchableWithoutFeedback>
             <ThemedBottomSheet
               enablePanDownToClose
-              snapPoints={['30%']}
+              enableDynamicSizing
               ref={bottomSheetRef}
               onClose={() => setIsBottomSheetOpen(false)}
             >

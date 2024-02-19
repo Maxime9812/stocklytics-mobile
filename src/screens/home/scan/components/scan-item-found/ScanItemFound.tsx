@@ -38,13 +38,13 @@ export default function ScanItemFound({ id, navigation }: ItemFoundViewProps) {
   return (
     <ThemedBottomSheet
       ref={bottomSheet}
-      snapPoints={['30%', '30%']}
+      enableDynamicSizing
       enablePanDownToClose
     >
       {viewModel.type === 'loading' && <View />}
       {viewModel.type === 'loaded' && (
         <BottomSheetView>
-          <View className="p-4 pt-0 space-y-4">
+          <View className="p-4 pt-0 space-y-4 mb-4">
             <View className="space-y-2">
               <Text className="text-xl font-bold dark:text-white">
                 {viewModel.item.name}

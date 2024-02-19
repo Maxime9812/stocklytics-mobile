@@ -13,7 +13,7 @@
     "test:all": "jest --config test/jest-all.json"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "^4",
+    "@gorhom/bottom-sheet": "^5.0.0-alpha.7",
     "@gorhom/portal": "^1.0.14",
     "@hookform/resolvers": "^3.3.4",
     "@react-native-async-storage/async-storage": "1.21.0",

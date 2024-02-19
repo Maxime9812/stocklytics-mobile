@@ -5,6 +5,7 @@ import { useTheme } from '../../hooks/use-theme';
 const ThemedBottomSheet = forwardRef(
   ({ children, ...props }: PropsWithChildren<BottomSheetProps>, ref) => {
     const { theme } = useTheme();
+
     return (
       <BottomSheet
         ref={ref as any}
