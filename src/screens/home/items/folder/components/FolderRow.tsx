@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Swipeable } from 'react-native-gesture-handler';
 import Button from '../../../../../components/buttons/Button';
@@ -32,8 +32,8 @@ export default function FolderRow({
       friction={2}
       leftThreshold={30}
       rightThreshold={40}
-      renderRightActions={() => (
-        <FolderActions id={id} onDelete={onDeleteHandler} />
+      renderRightActions={(progress) => (
+        <FolderActions onPress={onDeleteHandler} progress={progress} />
       )}
     >
       <Button
@@ -58,22 +58,29 @@ export default function FolderRow({
 }
 
 type FolderActionsProps = {
-  id: string;
-  onDelete: (itemId: string) => void;
+  onPress: () => void;
+  progress: Animated.AnimatedInterpolation<string | number>;
 };
 
 const ActionIcon = styled(Feather, 'text-lg text-white');
 
-const FolderActions = ({ id, onDelete }: FolderActionsProps) => {
+const FolderActions = ({ onPress, progress }: FolderActionsProps) => {
+  const trans = progress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [60, 0],
+  });
+
   return (
-    <Button
-      type="destructive"
-      className="px-5 rounded-l-none rounded-r-xl justify-center"
-      onPress={() => onDelete(id)}
-    >
-      <Button.Icon>
-        <ActionIcon name="trash" />
-      </Button.Icon>
-    </Button>
+    <View style={{ width: 60 }}>
+      <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+        <Button
+          type="destructive"
+          className="flex-1 rounded-l-none rounded-r-xl justify-center"
+          onPress={onPress}
+        >
+          <ActionIcon name="trash" />
+        </Button>
+      </Animated.View>
+    </View>
   );
 };

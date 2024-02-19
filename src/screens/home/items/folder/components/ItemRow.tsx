@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Swipeable } from 'react-native-gesture-handler';
 import { useRef } from 'react';
@@ -34,8 +34,13 @@ export default function ItemRow({
       friction={2}
       leftThreshold={30}
       rightThreshold={40}
-      renderRightActions={() => {
-        return <ItemActions onPress={onDeleteHandler} />;
+      renderRightActions={(progressAnimatedValue, dragAnimatedValue) => {
+        return (
+          <ItemActions
+            onPress={onDeleteHandler}
+            progress={progressAnimatedValue}
+          />
+        );
       }}
     >
       <Button
@@ -68,18 +73,28 @@ export default function ItemRow({
 
 type ItemActionsProps = {
   onPress: () => void;
+  progress: Animated.AnimatedInterpolation<string | number>;
 };
 
 const ActionIcon = styled(Feather, 'text-lg text-white');
 
-const ItemActions = ({ onPress }: ItemActionsProps) => {
+const ItemActions = ({ onPress, progress }: ItemActionsProps) => {
+  const trans = progress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [60, 0],
+  });
+
   return (
-    <Button
-      type="destructive"
-      className="px-5 rounded-l-none rounded-r-xl justify-center"
-      onPress={onPress}
-    >
-      <ActionIcon name="trash" />
-    </Button>
+    <View style={{ width: 60 }}>
+      <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+        <Button
+          type="destructive"
+          className="flex-1 rounded-l-none rounded-r-xl justify-center"
+          onPress={onPress}
+        >
+          <ActionIcon name="trash" />
+        </Button>
+      </Animated.View>
+    </View>
   );
 };
