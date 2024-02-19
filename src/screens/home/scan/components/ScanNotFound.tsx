@@ -10,7 +10,11 @@ export default function ScanNotFound() {
   }, []);
 
   return (
-    <ThemedBottomSheet snapPoints={['25%']} enablePanDownToClose>
+    <ThemedBottomSheet
+      snapPoints={['25%']}
+      enablePanDownToClose
+      enableDynamicSizing={false}
+    >
       <BottomSheetView>
         <View className="p-4 pt-0">
           <Text className="text-xl font-bold dark:text-white">
