@@ -142,7 +142,7 @@ const MediaLibraryBottomSheet = ({
       <View>
         <MediaLibraryPermission alwaysRender>
           {(hasAccess) => (
-            <Card type="secondary">
+            <Card type="secondary" className="p-1">
               <Button
                 variant="ghost"
                 type="secondary"
