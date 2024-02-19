@@ -34,6 +34,7 @@ export default function ItemRow({
       friction={2}
       leftThreshold={30}
       rightThreshold={40}
+      overshootRight={false}
       renderRightActions={(progressAnimatedValue, dragAnimatedValue) => {
         return (
           <ItemActions
@@ -48,7 +49,7 @@ export default function ItemRow({
         className="justify-between"
         onPress={() => onPress(id)}
       >
-        <View className="flex-row space-x-2">
+        <View className="flex-row space-x-2 p-1">
           <View className="rounded-xl bg-neutral-300 dark:bg-neutral-700 w-20 h-20 justify-center items-center">
             <Text className="text-neutral-50">
               <Feather name="file" size={36} />
@@ -89,7 +90,7 @@ const ItemActions = ({ onPress, progress }: ItemActionsProps) => {
       <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
         <Button
           type="destructive"
-          className="flex-1 rounded-l-none rounded-r-xl justify-center"
+          className="flex-1 rounded-none justify-center"
           onPress={onPress}
         >
           <ActionIcon name="trash" />
