@@ -52,3 +52,8 @@ export const selectFoldersInFolder = (folderId: string | null) =>
 
 export const selectFolderById = (id: string) => (state: RootState) =>
   folderSelectors.selectById(state, id);
+
+export const createSelectFolderById = createSelector(
+  [folderSelectors.selectAll],
+  (folders) => (id: string) => folders.find((f) => f.id === id),
+);

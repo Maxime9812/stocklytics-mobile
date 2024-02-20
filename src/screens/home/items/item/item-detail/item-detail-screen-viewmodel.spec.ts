@@ -230,7 +230,7 @@ describe('ItemDetailScreenViewModel', () => {
     });
   });
 
-  describe.skip('Item has parent folder', () => {
+  describe('Item has parent folder', () => {
     it('Should return parent folder', () => {
       const state = stateBuilder()
         .withItems([
@@ -249,7 +249,7 @@ describe('ItemDetailScreenViewModel', () => {
       expect(viewModel).toEqual(
         expect.objectContaining({
           item: expect.objectContaining({
-            parentFolder: {
+            folder: {
               id: 'folder-id',
               name: 'Electronics',
             },

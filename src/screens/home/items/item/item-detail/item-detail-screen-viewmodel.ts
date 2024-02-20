@@ -5,6 +5,7 @@ import { selectItemById } from '../../../../../core/items/items.slice';
 import { selectTags } from '../../../../../core/tags/tags.slice';
 import { unlinkItemBarcodeUseCase } from '../../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 import { deleteItemImageUseCase } from '../../../../../core/items/hexagon/usecases/delete-item-image/delete-item-image.usecase';
+import { createSelectFolderById } from '../../../../../core/folders/folders.slice';
 
 export type CreateItemDetailScreenViewModelParams = {
   itemId: string;
@@ -29,7 +30,7 @@ export type ItemDetailScreenViewModelLoaded = {
     quantity: number;
     createdAt: string;
     hasNote: boolean;
-    parentFolder?: {
+    folder?: {
       id: string;
       name: string;
     };
@@ -50,46 +51,54 @@ export const createItemDetailScreenViewModel = ({
 }: CreateItemDetailScreenViewModelParams): ((
   state: RootState,
 ) => ItemDetailScreenViewModelState) =>
-  createSelector([selectItemById(itemId), selectTags], (item, selectTags) => {
-    if (!item) {
-      return {
-        type: 'loading',
+  createSelector(
+    [selectItemById(itemId), selectTags, createSelectFolderById],
+    (item, selectTags, selectFolderById) => {
+      if (!item) {
+        return {
+          type: 'loading',
+        };
+      }
+
+      const folder = item.folderId
+        ? selectFolderById(item.folderId)
+        : undefined;
+
+      const unlinkBarcode = async () => {
+        await dispatch(unlinkItemBarcodeUseCase(itemId));
       };
-    }
 
-    const unlinkBarcode = async () => {
-      await dispatch(unlinkItemBarcodeUseCase(itemId));
-    };
+      const deleteImage = async () => {
+        await dispatch(deleteItemImageUseCase(itemId));
+      };
 
-    const deleteImage = async () => {
-      await dispatch(deleteItemImageUseCase(itemId));
-    };
+      const dateFormatter = new Intl.DateTimeFormat(locale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      });
 
-    const dateFormatter = new Intl.DateTimeFormat(locale, {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    });
-
-    return {
-      type: 'loaded',
-      item: {
-        id: item.id,
-        name: item.name,
-        note: item.note,
-        tags: selectTags(item.tags).map((tag) => ({
-          id: tag.id,
-          name: tag.name,
-        })),
-        quantity: item.quantity,
-        createdAt: dateFormatter.format(new Date(item.createdAt)),
-        hasNote: !!item.note,
-        barcode: item.barcode,
-        image: item.image,
-        unlinkBarcode,
-        deleteImage,
-      },
-    };
-  });
+      return {
+        type: 'loaded',
+        item: {
+          id: item.id,
+          name: item.name,
+          note: item.note,
+          tags: selectTags(item.tags).map((tag) => ({
+            id: tag.id,
+            name: tag.name,
+          })),
+          quantity: item.quantity,
+          createdAt: dateFormatter.format(new Date(item.createdAt)),
+          hasNote: !!item.note,
+          barcode: item.barcode,
+          image: item.image,
+          folder: folder ? { id: folder.id, name: folder.name } : undefined,
+          unlinkBarcode,
+          deleteImage,
+        },
+      };
+    },
+  );

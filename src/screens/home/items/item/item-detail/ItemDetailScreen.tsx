@@ -73,7 +73,9 @@ const LoadedItemScreen = ({
     navigation.push('DeleteItem', { id: item.id });
   };
 
-  const goToParentFolder = () => {};
+  const goToParentFolder = () => {
+    navigation.replace('Folder', { id: item.folder?.id });
+  };
 
   return (
     <BaseLayout>
@@ -98,7 +100,9 @@ const LoadedItemScreen = ({
                 <Feather name="folder" />
               </Button.Icon>
 
-              <Button.Text>Electronics</Button.Text>
+              <Button.Text>
+                {item.folder ? item.folder.name : 'Root'}
+              </Button.Text>
             </Button>
           </Card>
 
