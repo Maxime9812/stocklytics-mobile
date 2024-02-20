@@ -18,7 +18,14 @@ export default function NewElementBottomSheetContent({
 }: NewElementBottomSheetContentProps) {
   return (
     <View className="p-4 pt-0 space-y-4 mb-4">
-      <Text className="dark:text-white">Adding to {folderName}</Text>
+      <View>
+        <Text className="text-xl dark:text-white">Add</Text>
+        <Text className="text-neutral-500 dark:text-neutral-400">
+          Add item or folder to{' '}
+          <Text className="text-black dark:text-white">{folderName}</Text>
+        </Text>
+      </View>
+
       <View className="space-y-2">
         <ActionButton onPress={onAddItem} icon="file" text="Add file" />
         <ActionButton onPress={onAddFolder} icon="folder" text="Add folder" />
