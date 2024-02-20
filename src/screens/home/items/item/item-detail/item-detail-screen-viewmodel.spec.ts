@@ -6,6 +6,8 @@ import { stateBuilder } from '../../../../../core/state-builder';
 import { itemBuilder } from '../../../../../core/items/__tests__/item.builder';
 import { createTestStore } from '../../../../../core/create-store';
 import { unlinkItemBarcodeUseCase } from '../../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
+import { folderBuilder } from '../../../../../core/folders/__tests__/folder.builder';
+import { deleteItemImageUseCase } from '../../../../../core/items/hexagon/usecases/delete-item-image/delete-item-image.usecase';
 
 describe('ItemDetailScreenViewModel', () => {
   it('Should be in error state when item is not found', () => {
@@ -50,6 +52,7 @@ describe('ItemDetailScreenViewModel', () => {
             type: 'qrcode',
             value: 'barcode-value',
           })
+          .withImage('https://image.com')
           .build(),
       ])
       .build();
@@ -70,6 +73,7 @@ describe('ItemDetailScreenViewModel', () => {
             type: 'qrcode',
             value: 'barcode-value',
           },
+          image: 'https://image.com',
         }),
       }),
     );
@@ -89,6 +93,24 @@ describe('ItemDetailScreenViewModel', () => {
     await (viewModel as ItemDetailScreenViewModelLoaded).item.unlinkBarcode();
 
     expect(store.getDispatchedUseCaseArgs(unlinkItemBarcodeUseCase)).toEqual(
+      'item-id',
+    );
+  });
+
+  it('Should call deleteItemImageUseCase when deleteImage is called', async () => {
+    const state = stateBuilder()
+      .withItems([itemBuilder().withId('item-id').build()])
+      .build();
+    const store = createTestStore({}, state);
+
+    const viewModel = createItemDetailScreenViewModel({
+      itemId: 'item-id',
+      dispatch: store.dispatch,
+    })(store.getState());
+
+    await (viewModel as ItemDetailScreenViewModelLoaded).item.deleteImage();
+
+    expect(store.getDispatchedUseCaseArgs(deleteItemImageUseCase)).toEqual(
       'item-id',
     );
   });
@@ -202,6 +224,35 @@ describe('ItemDetailScreenViewModel', () => {
         expect.objectContaining({
           item: expect.objectContaining({
             createdAt: '01/01/2024 01:00',
+          }),
+        }),
+      );
+    });
+  });
+
+  describe.skip('Item has parent folder', () => {
+    it('Should return parent folder', () => {
+      const state = stateBuilder()
+        .withItems([
+          itemBuilder().withId('item-id').withFolderId('folder-id').build(),
+        ])
+        .withFolders([
+          folderBuilder().withId('folder-id').withName('Electronics').build(),
+        ])
+        .build();
+
+      const viewModel = createItemDetailScreenViewModel({
+        itemId: 'item-id',
+        dispatch: jest.fn(),
+      })(state);
+
+      expect(viewModel).toEqual(
+        expect.objectContaining({
+          item: expect.objectContaining({
+            parentFolder: {
+              id: 'folder-id',
+              name: 'Electronics',
+            },
           }),
         }),
       );

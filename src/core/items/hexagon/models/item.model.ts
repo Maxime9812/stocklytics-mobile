@@ -9,6 +9,7 @@ export type ItemModel = {
   tags: string[];
   folderId: string | null;
   barcode?: Barcode;
+  image?: string;
   createdAt: string;
 };
 

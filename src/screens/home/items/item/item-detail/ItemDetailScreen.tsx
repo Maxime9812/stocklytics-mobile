@@ -73,10 +73,12 @@ const LoadedItemScreen = ({
     navigation.push('DeleteItem', { id: item.id });
   };
 
+  const goToParentFolder = () => {};
+
   return (
     <BaseLayout>
       <ScrollView>
-        <ItemPhotos />
+        <ItemPhotos image={item.image} deleteImage={item.deleteImage} />
         <View className="px-3 pb-3 space-y-3">
           <Card className="-mt-4 space-y-2 p-3">
             <Card.Header className="justify-between">
@@ -91,7 +93,7 @@ const LoadedItemScreen = ({
               </Button>
             </Card.Header>
 
-            <Button variant="link" onPress={() => console.log('')}>
+            <Button variant="link" onPress={goToParentFolder}>
               <Button.Icon>
                 <Feather name="folder" />
               </Button.Icon>
