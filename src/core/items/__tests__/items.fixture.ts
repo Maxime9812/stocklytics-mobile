@@ -34,6 +34,7 @@ import {
   editItemNameUseCase,
   EditItemNameUseCasePayload,
 } from '../hexagon/usecases/edit-item-name/edit-item-name.usecase';
+import { deleteItemImageUseCase } from '../hexagon/usecases/delete-item-image/delete-item-image.usecase';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
@@ -100,6 +101,10 @@ export const createItemsFixture = () => {
       store = createTestStore({ itemsGateway }, initialState.build());
       return store.dispatch(editItemNameUseCase(payload));
     },
+    whenDeleteItemImage: (itemId: string) => {
+      store = createTestStore({ itemsGateway }, initialState.build());
+      return store.dispatch(deleteItemImageUseCase(itemId));
+    },
     thenUnlinkBarcodeIsRequestedFor: (itemId: string) => {
       expect(itemsGateway.lastUnlinkedItemId).toEqual(itemId);
     },
@@ -126,6 +131,9 @@ export const createItemsFixture = () => {
     },
     thenNameShouldBeChanged: (payload: EditNamePayload) => {
       expect(itemsGateway.lastNameChange).toEqual(payload);
+    },
+    thenItemImageIsDeleted: (itemId: string) => {
+      expect(itemsGateway.lastDeletedItemImageId).toEqual(itemId);
     },
     thenItemsIs: (items: ExpectedItem[]) => {
       expect(store.getState()).toEqual(

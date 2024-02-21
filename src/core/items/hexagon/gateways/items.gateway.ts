@@ -54,4 +54,5 @@ export interface ItemsGateway {
   unlinkBarcode(itemId: string): Promise<void>;
   delete(id: string): Promise<void>;
   editName(payload: EditNamePayload): Promise<void>;
+  deleteImage(itemId: string): Promise<void>;
 }

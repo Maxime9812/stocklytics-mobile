@@ -184,4 +184,12 @@ describe('AxiosItemsGateway', () => {
       expect(scope.isDone()).toBe(true);
     });
   });
+
+  describe('deleteImage', () => {
+    it('Should send request', async () => {
+      const scope = nock(BASE_URL).delete('/items/item-id/image').reply(200);
+      await axiosItemsGateway.deleteImage('item-id');
+      expect(scope.isDone()).toBe(true);
+    });
+  });
 });

@@ -18,6 +18,7 @@ export class StubItemsGateway implements ItemsGateway {
   lastDeletedItemId: string | undefined;
   lastUnlinkedItemId: string | undefined;
   lastNameChange: EditNamePayload | undefined;
+  lastDeletedItemImageId: string | undefined;
   private linkBarcodeError: LinkBarcodeError | undefined;
 
   constructor(private readonly delay = 0) {}
@@ -81,6 +82,15 @@ export class StubItemsGateway implements ItemsGateway {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.lastNameChange = payload;
+        resolve();
+      }, this.delay);
+    });
+  }
+
+  async deleteImage(itemId: string): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.lastDeletedItemImageId = itemId;
         resolve();
       }, this.delay);
     });

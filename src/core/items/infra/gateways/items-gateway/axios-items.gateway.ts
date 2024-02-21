@@ -70,4 +70,8 @@ export class AxiosItemsGateway implements ItemsGateway {
       name: payload.name,
     });
   }
+
+  async deleteImage(itemId: string): Promise<void> {
+    await this.axios.delete(`/items/${itemId}/image`);
+  }
 }

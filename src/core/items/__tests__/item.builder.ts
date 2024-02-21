@@ -25,5 +25,6 @@ export const itemBuilder = (
   withBarcode: (barcode: Barcode) => itemBuilder({ ...props, barcode }),
   withoutBarcode: () => itemBuilder({ ...props, barcode: undefined }),
   withImage: (image: string) => itemBuilder({ ...props, imageUrl: image }),
+  withoutImage: () => itemBuilder({ ...props, imageUrl: undefined }),
   build: () => props,
 });
