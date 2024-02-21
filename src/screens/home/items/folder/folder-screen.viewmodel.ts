@@ -31,6 +31,7 @@ export type FolderScreenViewModelStateLoaded = {
       id: string;
       name: string;
     }[];
+    imageUrl?: string;
     quantity: number;
   }[];
   folders: {
@@ -94,6 +95,7 @@ export const createFolderScreenViewModel = ({
           id: item.id,
           name: item.name,
           tags: selectTags(item.tags),
+          imageUrl: item.imageUrl,
           quantity: item.quantity,
         })),
         folders: folders.map((folder) => ({

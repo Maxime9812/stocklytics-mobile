@@ -52,7 +52,7 @@ itemsGateway.givenItemsInFolder('folder-1', [
         name: 'Smartphone',
       },
     ],
-    image: 'https://via.placeholder.com/500',
+    imageUrl: 'https://via.placeholder.com/500',
     createdAt: new Date('2021-01-01T00:00:00.000Z').toISOString(),
   },
 ]);

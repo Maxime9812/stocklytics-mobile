@@ -14,6 +14,7 @@ export type ScanItemFoundViewModelStateLoaded = {
   type: 'loaded';
   item: {
     name: string;
+    imageUrl?: string;
     quantity: number;
   };
 };
@@ -35,7 +36,11 @@ export const createScanItemFoundViewModel = ({
       }
       return {
         type: 'loaded',
-        item: { name: item.name, quantity: item.quantity },
+        item: {
+          name: item.name,
+          quantity: item.quantity,
+          imageUrl: item.imageUrl,
+        },
       };
     },
   );

@@ -42,6 +42,7 @@ describe('ScanItemFoundViewModel', () => {
           .withId('item-id')
           .withName('Iphone 13')
           .withQuantity(1)
+          .withImage('image')
           .build(),
       ])
       .build();
@@ -54,6 +55,7 @@ describe('ScanItemFoundViewModel', () => {
       expect.objectContaining({
         item: {
           name: 'Iphone 13',
+          imageUrl: 'image',
           quantity: 1,
         },
       }),

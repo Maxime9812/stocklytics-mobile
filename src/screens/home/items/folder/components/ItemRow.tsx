@@ -1,4 +1,4 @@
-import { Animated, Text, View } from 'react-native';
+import { Animated, Text, View, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Swipeable } from 'react-native-gesture-handler';
 import { useRef } from 'react';
@@ -13,13 +13,14 @@ type ItemRowProps = {
     id: string;
     name: string;
     quantity: number;
+    imageUrl?: string;
     tags: { id: string; name: string }[];
   };
 };
 export default function ItemRow({
   onPress,
   onDelete,
-  item: { id, name, quantity, tags },
+  item: { id, name, quantity, tags, imageUrl },
 }: ItemRowProps) {
   const swipeableRef = useRef<Swipeable>(null);
 
@@ -35,7 +36,7 @@ export default function ItemRow({
       leftThreshold={30}
       rightThreshold={40}
       overshootRight={false}
-      renderRightActions={(progressAnimatedValue, dragAnimatedValue) => {
+      renderRightActions={(progressAnimatedValue) => {
         return (
           <ItemActions
             onPress={onDeleteHandler}
@@ -50,10 +51,18 @@ export default function ItemRow({
         onPress={() => onPress(id)}
       >
         <View className="flex-row space-x-2 p-1">
-          <View className="rounded-xl bg-neutral-300 dark:bg-neutral-700 w-20 h-20 justify-center items-center">
-            <Text className="text-neutral-50">
-              <Feather name="file" size={36} />
-            </Text>
+          <View className="rounded-xl bg-neutral-300 dark:bg-neutral-700 w-20 h-20 justify-center items-center overflow-hidden">
+            {imageUrl && (
+              <Image
+                source={{ uri: imageUrl }}
+                className="w-full h-full"
+              ></Image>
+            )}
+            {!imageUrl && (
+              <Text className="text-neutral-50">
+                <Feather name="file" size={36} />
+              </Text>
+            )}
           </View>
           <View className="flex-col justify-between">
             <Text className="text-lg font-bold dark:text-white">{name}</Text>

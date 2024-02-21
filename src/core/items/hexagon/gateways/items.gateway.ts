@@ -19,7 +19,7 @@ export type Item = {
     id: string;
     name: string;
   }[];
-  image?: string;
+  imageUrl?: string;
   barcode?: Barcode;
 };
 

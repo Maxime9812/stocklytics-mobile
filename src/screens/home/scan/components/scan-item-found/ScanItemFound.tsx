@@ -3,7 +3,7 @@ import { HomeTabScreenProps } from '../../../../../navigation/HomeNavigation';
 import React, { useEffect, useRef } from 'react';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import ThemedBottomSheet from '../../../../../components/bottom-sheet/ThemedBottomSheet';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import Button from '../../../../../components/buttons/Button';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../../../store-hooks';
@@ -50,10 +50,18 @@ export default function ScanItemFound({ id, navigation }: ItemFoundViewProps) {
                 {viewModel.item.name}
               </Text>
               <View className="justify-between flex-row items-center">
-                <View className="rounded-xl bg-neutral-300 dark:bg-neutral-700 w-24 h-24 justify-center items-center">
-                  <Text className="text-neutral-50">
-                    <Feather name="file" size={40} />
-                  </Text>
+                <View className="rounded-xl bg-neutral-300 dark:bg-neutral-700 w-24 h-24 justify-center items-center overflow-hidden">
+                  {viewModel.item.imageUrl && (
+                    <Image
+                      source={{ uri: viewModel.item.imageUrl }}
+                      className="w-full h-full"
+                    ></Image>
+                  )}
+                  {!viewModel.item.imageUrl && (
+                    <Text className="text-neutral-50">
+                      <Feather name="file" size={40} />
+                    </Text>
+                  )}
                 </View>
                 <Text className="text-lg dark:text-white">
                   {viewModel.item.quantity} unit

@@ -24,6 +24,6 @@ export const itemBuilder = (
   withTags: (tags: string[]) => itemBuilder({ ...props, tags }),
   withBarcode: (barcode: Barcode) => itemBuilder({ ...props, barcode }),
   withoutBarcode: () => itemBuilder({ ...props, barcode: undefined }),
-  withImage: (image: string) => itemBuilder({ ...props, image }),
+  withImage: (image: string) => itemBuilder({ ...props, imageUrl: image }),
   build: () => props,
 });

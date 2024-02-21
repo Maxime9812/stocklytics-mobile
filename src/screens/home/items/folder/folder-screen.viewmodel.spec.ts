@@ -59,6 +59,7 @@ describe('FolderScreenViewModel', () => {
           .withId('item-id-2')
           .withName('Iphone 14 pro max')
           .withFolderId('folder-id')
+          .withImage('image-url')
           .build(),
       ])
       .build();
@@ -78,6 +79,7 @@ describe('FolderScreenViewModel', () => {
             id: 'item-id-2',
             name: 'Iphone 14 pro max',
             tags: [],
+            imageUrl: 'image-url',
             quantity: 1,
           },
         ],

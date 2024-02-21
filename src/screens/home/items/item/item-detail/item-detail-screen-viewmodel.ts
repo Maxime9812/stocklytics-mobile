@@ -94,7 +94,7 @@ export const createItemDetailScreenViewModel = ({
           createdAt: dateFormatter.format(new Date(item.createdAt)),
           hasNote: !!item.note,
           barcode: item.barcode,
-          image: item.image,
+          image: item.imageUrl,
           folder: folder ? { id: folder.id, name: folder.name } : undefined,
           unlinkBarcode,
           deleteImage,
