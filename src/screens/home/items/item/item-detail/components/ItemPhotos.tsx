@@ -12,12 +12,22 @@ import ThemedBottomSheet from '../../../../../../components/bottom-sheet/ThemedB
 import CameraPermission from '../../../../../../components/camera/camera-permission/CameraPermission';
 import { MediaLibraryPermission } from '../../../../../../components/media-library/MediaLibraryPermission';
 import Card from '../../../../../../components/cards/Card';
+import { useAppDispatch } from '../../../../../../store-hooks';
 
 type Props = {
+  itemId: string;
   image?: string;
   deleteImage: () => void;
+  addImage: (imagePath: string) => Promise<void>;
 };
-export default function ItemPhotos({ image, deleteImage }: Props) {
+
+export default function ItemPhotos({
+  itemId,
+  image,
+  deleteImage,
+  addImage,
+}: Props) {
+  const dispatch = useAppDispatch();
   const bottomSheetRef = useRef<BottomSheet>(null);
   const {
     isOpen,
@@ -28,7 +38,8 @@ export default function ItemPhotos({ image, deleteImage }: Props) {
   const handleGetImage = async () => {
     bottomSheetRef.current?.close();
     const image = await getImage();
-    console.log(image);
+    if (!image) return;
+    await addImage(image.uri);
   };
   const getImage = async () => {
     const picker = await ImagePicker.launchImageLibraryAsync({
@@ -42,7 +53,8 @@ export default function ItemPhotos({ image, deleteImage }: Props) {
   const handleTakePhoto = async () => {
     bottomSheetRef.current?.close();
     const image = await takePhoto();
-    console.log(image);
+    if (!image) return;
+    await addImage(image.uri);
   };
 
   const takePhoto = async () => {

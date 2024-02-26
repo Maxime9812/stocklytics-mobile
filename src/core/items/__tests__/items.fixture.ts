@@ -10,6 +10,7 @@ import {
 } from '../hexagon/usecases/add-item-in-folder/add-item-in-folder.usecase';
 import { DeterministicUUIDProvider } from '../../common/uuid-provider/deterministic-uuid.provider';
 import {
+  AddItemImagePayload,
   AddItemInFolderPayload,
   EditNamePayload,
   EditNotePayload,
@@ -35,6 +36,10 @@ import {
   EditItemNameUseCasePayload,
 } from '../hexagon/usecases/edit-item-name/edit-item-name.usecase';
 import { deleteItemImageUseCase } from '../hexagon/usecases/delete-item-image/delete-item-image.usecase';
+import {
+  addImageToItemUseCase,
+  AddImageToItemUseCasePayload,
+} from '../hexagon/usecases/add-image-to-item/add-image-to-item.usecase';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
@@ -68,6 +73,9 @@ export const createItemsFixture = () => {
     },
     givenLinkBarcodeError: (error: LinkBarcodeError) => {
       itemsGateway.givenLinkBarcodeError(error);
+    },
+    givenImageAdded: (payload: AddItemImagePayload, url: string) => {
+      itemsGateway.givenImageAdded(payload, url);
     },
     whenGetItemById: (id: string) => {
       store = createTestStore({ itemsGateway });
@@ -104,6 +112,13 @@ export const createItemsFixture = () => {
     whenDeleteItemImage: (itemId: string) => {
       store = createTestStore({ itemsGateway }, initialState.build());
       return store.dispatch(deleteItemImageUseCase(itemId));
+    },
+    whenAddImageToItem: (payload: AddImageToItemUseCasePayload) => {
+      store = createTestStore(
+        { itemsGateway, uuidProvider },
+        initialState.build(),
+      );
+      return store.dispatch(addImageToItemUseCase(payload));
     },
     thenUnlinkBarcodeIsRequestedFor: (itemId: string) => {
       expect(itemsGateway.lastUnlinkedItemId).toEqual(itemId);

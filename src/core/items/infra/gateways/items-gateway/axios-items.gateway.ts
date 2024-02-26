@@ -1,4 +1,5 @@
 import {
+  AddItemImagePayload,
   AddItemInFolderPayload,
   EditNamePayload,
   EditNotePayload,
@@ -73,5 +74,33 @@ export class AxiosItemsGateway implements ItemsGateway {
 
   async deleteImage(itemId: string): Promise<void> {
     await this.axios.delete(`/items/${itemId}/image`);
+  }
+
+  async addImage(payload: AddItemImagePayload) {
+    const formData = new FormData();
+    const ext = payload.image.path.split('.').pop();
+    const name = payload.image.path.split('/').pop();
+
+    const type = ext === 'jpg' ? 'image/jpeg' : 'image/png';
+
+    const file = {
+      uri: payload.image.path,
+      type,
+      name,
+    };
+
+    formData.append('image', file as any);
+    formData.append('imageId', '152840e0-48e0-4632-8f77-8f2d312ae627');
+
+    const response = await this.axios.post(
+      `/items/${payload.itemId}/images`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+    return response.data.imageUrl;
   }
 }

@@ -80,7 +80,12 @@ const LoadedItemScreen = ({
   return (
     <BaseLayout>
       <ScrollView>
-        <ItemPhotos image={item.image} deleteImage={item.deleteImage} />
+        <ItemPhotos
+          itemId={item.id}
+          image={item.image}
+          deleteImage={item.deleteImage}
+          addImage={item.addImage}
+        />
         <View className="px-3 pb-3 space-y-3">
           <Card className="-mt-4 space-y-2 p-3">
             <Card.Header className="justify-between">

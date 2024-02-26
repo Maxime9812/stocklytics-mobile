@@ -14,6 +14,7 @@ import { unlinkItemBarcodeUseCase } from './hexagon/usecases/unlink-item-barcode
 import { editItemNameUseCase } from './hexagon/usecases/edit-item-name/edit-item-name.usecase';
 import { LinkBarcodeError } from './hexagon/gateways/items.gateway';
 import { deleteItemImageUseCase } from './hexagon/usecases/delete-item-image/delete-item-image.usecase';
+import { addImageToItemUseCase } from './hexagon/usecases/add-image-to-item/add-image-to-item.usecase';
 
 export type ItemsSliceState = ItemsEntityState & {
   isLoadingById: Record<string, boolean>;
@@ -110,6 +111,12 @@ export const itemsSlice = createSlice({
         itemsAdapter.updateOne(state, {
           id: action.meta.arg,
           changes: { imageUrl: undefined },
+        });
+      })
+      .addCase(addImageToItemUseCase.fulfilled, (state, action) => {
+        itemsAdapter.updateOne(state, {
+          id: action.meta.arg.itemId,
+          changes: { imageUrl: action.payload },
         });
       });
   },

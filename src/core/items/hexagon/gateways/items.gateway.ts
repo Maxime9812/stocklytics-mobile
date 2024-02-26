@@ -43,6 +43,11 @@ export type LinkBarcodeError = {
   itemId: string;
 };
 
+export type AddItemImagePayload = {
+  itemId: string;
+  image: { id: string; path: string };
+};
+
 export interface ItemsGateway {
   getFromFolder(folderId: string | undefined): Promise<Item[]>;
   getById(id: string): Promise<Item | undefined>;
@@ -55,4 +60,5 @@ export interface ItemsGateway {
   delete(id: string): Promise<void>;
   editName(payload: EditNamePayload): Promise<void>;
   deleteImage(itemId: string): Promise<void>;
+  addImage(payload: AddItemImagePayload): Promise<string>;
 }

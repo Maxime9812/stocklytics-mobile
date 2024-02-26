@@ -8,6 +8,7 @@ import { createTestStore } from '../../../../../core/create-store';
 import { unlinkItemBarcodeUseCase } from '../../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 import { folderBuilder } from '../../../../../core/folders/__tests__/folder.builder';
 import { deleteItemImageUseCase } from '../../../../../core/items/hexagon/usecases/delete-item-image/delete-item-image.usecase';
+import { addImageToItemUseCase } from '../../../../../core/items/hexagon/usecases/add-image-to-item/add-image-to-item.usecase';
 
 describe('ItemDetailScreenViewModel', () => {
   it('Should be in error state when item is not found', () => {
@@ -256,6 +257,27 @@ describe('ItemDetailScreenViewModel', () => {
           }),
         }),
       );
+    });
+  });
+
+  it('Should call addImageToItemUseCase when addImage is called', async () => {
+    const state = stateBuilder()
+      .withItems([itemBuilder().withId('item-id').build()])
+      .build();
+    const store = createTestStore({}, state);
+
+    const viewModel = createItemDetailScreenViewModel({
+      itemId: 'item-id',
+      dispatch: store.dispatch,
+    })(store.getState());
+
+    await (viewModel as ItemDetailScreenViewModelLoaded).item.addImage(
+      'image-path',
+    );
+
+    expect(store.getDispatchedUseCaseArgs(addImageToItemUseCase)).toEqual({
+      itemId: 'item-id',
+      imagePath: 'image-path',
     });
   });
 });

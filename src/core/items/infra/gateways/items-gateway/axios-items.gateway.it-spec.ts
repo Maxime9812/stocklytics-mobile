@@ -192,4 +192,26 @@ describe('AxiosItemsGateway', () => {
       expect(scope.isDone()).toBe(true);
     });
   });
+
+  describe('addImage', () => {
+    it('Should send request', async () => {
+      nock(BASE_URL)
+        .post('/items/item-id/images', (body) => {
+          return true;
+        })
+        .reply(200, {
+          imageUrl: 'image-url',
+        });
+
+      expect(
+        await axiosItemsGateway.addImage({
+          itemId: 'item-id',
+          image: {
+            id: 'image-id',
+            path: 'file:///var/mobile/Containers/Data/Application/C3852992-8A96-4F6C-9607-4FC9758D447F/Library/Caches/ImagePicker/7FAC7758-BBA2-485D-9661-5D4F043E82AD.jpg"',
+          },
+        }),
+      ).toEqual('image-url');
+    });
+  });
 });

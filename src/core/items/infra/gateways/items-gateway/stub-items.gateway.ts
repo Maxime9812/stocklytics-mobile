@@ -1,4 +1,5 @@
 import {
+  AddItemImagePayload,
   AddItemInFolderPayload,
   EditNamePayload,
   EditNotePayload,
@@ -13,6 +14,7 @@ export class StubItemsGateway implements ItemsGateway {
   private itemsInFolder: Map<string, Item[]> = new Map();
   private itemsById: Map<string, Item> = new Map();
   private addedItems: Map<string, Item> = new Map();
+  private imageUrlAdded: Map<string, string> = new Map();
   lastNoteEdit: EditNotePayload | undefined;
   lastBarcodeLink: LinkBarcodeToItemPayload | undefined;
   lastDeletedItemId: string | undefined;
@@ -96,6 +98,14 @@ export class StubItemsGateway implements ItemsGateway {
     });
   }
 
+  async addImage(payload: AddItemImagePayload): Promise<string> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this.imageUrlAdded.get(this.getImageAddedKey(payload))!);
+      }, this.delay);
+    });
+  }
+
   givenItemsInFolder(folderId: string | undefined, items: Item[]) {
     this.itemsInFolder.set(folderId ?? 'root', items);
   }
@@ -110,6 +120,14 @@ export class StubItemsGateway implements ItemsGateway {
 
   givenLinkBarcodeError(error: LinkBarcodeError) {
     this.linkBarcodeError = error;
+  }
+
+  givenImageAdded(payload: AddItemImagePayload, imageUrl: string) {
+    this.imageUrlAdded.set(this.getImageAddedKey(payload), imageUrl);
+  }
+
+  private getImageAddedKey(payload: AddItemImagePayload) {
+    return `${payload.itemId}-${payload.image.id}-${payload.image.path}`;
   }
 
   private getAddedItemInFolderKey(payload: AddItemInFolderPayload) {

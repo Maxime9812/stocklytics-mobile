@@ -6,6 +6,7 @@ import { selectTags } from '../../../../../core/tags/tags.slice';
 import { unlinkItemBarcodeUseCase } from '../../../../../core/items/hexagon/usecases/unlink-item-barcode/unlink-item-barcode.usecase';
 import { deleteItemImageUseCase } from '../../../../../core/items/hexagon/usecases/delete-item-image/delete-item-image.usecase';
 import { createSelectFolderById } from '../../../../../core/folders/folders.slice';
+import { addImageToItemUseCase } from '../../../../../core/items/hexagon/usecases/add-image-to-item/add-image-to-item.usecase';
 
 export type CreateItemDetailScreenViewModelParams = {
   itemId: string;
@@ -38,6 +39,7 @@ export type ItemDetailScreenViewModelLoaded = {
     barcode?: Barcode;
     unlinkBarcode: () => Promise<void>;
     deleteImage: () => Promise<void>;
+    addImage: (imagePath: string) => Promise<void>;
   };
 };
 
@@ -72,6 +74,10 @@ export const createItemDetailScreenViewModel = ({
         await dispatch(deleteItemImageUseCase(itemId));
       };
 
+      const addImage = async (imagePath: string) => {
+        await dispatch(addImageToItemUseCase({ itemId, imagePath }));
+      };
+
       const dateFormatter = new Intl.DateTimeFormat(locale, {
         year: 'numeric',
         month: 'numeric',
@@ -98,6 +104,7 @@ export const createItemDetailScreenViewModel = ({
           folder: folder ? { id: folder.id, name: folder.name } : undefined,
           unlinkBarcode,
           deleteImage,
+          addImage,
         },
       };
     },
