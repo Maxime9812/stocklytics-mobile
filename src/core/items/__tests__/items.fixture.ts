@@ -40,6 +40,10 @@ import {
   addImageToItemUseCase,
   AddImageToItemUseCasePayload,
 } from '../hexagon/usecases/add-image-to-item/add-image-to-item.usecase';
+import {
+  adjustItemQuantityUseCase,
+  AdjustItemQuantityUseCasePayload,
+} from '../hexagon/usecases/adjust-item-quantity/adjust-item-quantity.usecase';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
@@ -119,6 +123,10 @@ export const createItemsFixture = () => {
         initialState.build(),
       );
       return store.dispatch(addImageToItemUseCase(payload));
+    },
+    whenAdjustQuantity: (payload: AdjustItemQuantityUseCasePayload) => {
+      store = createTestStore({ itemsGateway }, initialState.build());
+      return store.dispatch(adjustItemQuantityUseCase(payload));
     },
     thenUnlinkBarcodeIsRequestedFor: (itemId: string) => {
       expect(itemsGateway.lastUnlinkedItemId).toEqual(itemId);

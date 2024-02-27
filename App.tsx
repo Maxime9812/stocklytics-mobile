@@ -13,6 +13,7 @@ import { AxiosFoldersGateway } from './src/core/folders/infra/gateways/axios-fol
 import { AxiosScannerGateway } from './src/core/scanner/infra/gateways/axios-scanner.gateway';
 import { CameraVisionPermissionGateway } from './src/core/permissions/infra/gateways/camera/camera-vision-permission.gateway';
 import { ImagePickerMediaLibraryPermissionGateway } from './src/core/permissions/infra/gateways/media-library/image-picker-media-library-permission.gateway';
+import { StubTranslationGateway } from './src/core/translations/infra/gateways/stub-translation.gateway';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -28,7 +29,7 @@ stubAuthGateway.givenUserWithCredentials({
 });
 const authGateway = new AsyncStorageAuthGateway(stubAuthGateway);
 const axiosInstance = axios.create({
-  baseURL: 'http://192.168.5.50:3000',
+  baseURL: 'http://192.168.5.69:3000',
   withCredentials: true,
 });
 
@@ -98,6 +99,9 @@ const store = createStore(
   stateBuilder().build(),
 );
 
+const translationGateway = new StubTranslationGateway();
+translationGateway.givenLocale('fr');
+
 export default function App() {
-  return <Providers store={store} />;
+  return <Providers store={store} translationGateway={translationGateway} />;
 }

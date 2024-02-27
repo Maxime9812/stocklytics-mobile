@@ -15,6 +15,7 @@ import BaseLayout from '../../../components/layouts/BaseLayout';
 import { InputLabel } from '../../../components/inputs/InputLabel';
 import Button from '../../../components/buttons/Button';
 import { styled } from 'nativewind';
+import { useTranslation } from 'react-i18next';
 
 const loginFormSchema = yup
   .object({
@@ -31,6 +32,7 @@ export default function LoginScreen({
   navigation,
 }: AuthStackScreenProps<'Login'>) {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation();
   const { login } = createLoginScreenViewModel(appDispatch)();
   const { control, handleSubmit, formState, setFocus, getValues, resetField } =
     useForm<LoginFormValues>({
@@ -80,7 +82,7 @@ export default function LoginScreen({
           <Title />
           <View className="space-y-4">
             <View>
-              <InputLabel>Email</InputLabel>
+              <InputLabel>{t('login.form.email')}</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -98,7 +100,7 @@ export default function LoginScreen({
               />
             </View>
             <View>
-              <InputLabel>Password</InputLabel>
+              <InputLabel>{t('login.form.password')}</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -118,21 +120,20 @@ export default function LoginScreen({
           </View>
           <View className="space-y-2">
             <Button variant="link" onPress={goToResetPassword}>
-              <Button.Text>I forgot my password</Button.Text>
+              <Button.Text>{t('login.forgotPassword')}</Button.Text>
             </Button>
             <Text className="text-center dark:text-white">
-              By using the app, you agree to stocklytics's Terms & Conditions
-              and Privacy Policy
+              {t('login.termsAndConditions')}
             </Text>
           </View>
           <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
             {isLoading && <LoadingIcon name="loader" />}
-            <Button.Text>Continue</Button.Text>
+            <Button.Text>{t('login.continue')}</Button.Text>
           </Button>
           <View className="flex flex-row justify-center space-x-1">
-            <Text className="dark:text-white">New here ?</Text>
+            <Text className="dark:text-white">{t('login.newHere')}</Text>
             <Button variant="link" onPress={goToRegister}>
-              <Button.Text>Create an account</Button.Text>
+              <Button.Text>{t('login.createAccount')}</Button.Text>
             </Button>
           </View>
         </View>
@@ -142,11 +143,14 @@ export default function LoginScreen({
 }
 
 const Title = () => {
+  const { t } = useTranslation();
   return (
     <View className="space-y-2">
-      <Text className="text-3xl font-bold dark:text-white">Welcome back !</Text>
+      <Text className="text-3xl font-bold dark:text-white">
+        {t('login.title')}
+      </Text>
       <Text className="text-neutral-500 dark:text-neutral-400">
-        Login to your account
+        {t('login.subTitle')}
       </Text>
     </View>
   );
