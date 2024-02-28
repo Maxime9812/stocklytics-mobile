@@ -32,7 +32,7 @@ export default function LoginScreen({
   navigation,
 }: AuthStackScreenProps<'Login'>) {
   const appDispatch = useAppDispatch();
-  const { t } = useTranslation();
+  const { t } = useTranslation('auth');
   const { login } = createLoginScreenViewModel(appDispatch)();
   const { control, handleSubmit, formState, setFocus, getValues, resetField } =
     useForm<LoginFormValues>({
@@ -143,7 +143,7 @@ export default function LoginScreen({
 }
 
 const Title = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('auth');
   return (
     <View className="space-y-2">
       <Text className="text-3xl font-bold dark:text-white">

@@ -9,6 +9,7 @@ import BaseLayout from '../../../components/layouts/BaseLayout';
 import { AuthStackScreenProps } from '../../../navigation/AuthStackNavigation';
 import BaseTextInput from '../../../components/inputs/BaseTextInput';
 import Button from '../../../components/buttons/Button';
+import { useTranslation } from 'react-i18next';
 
 const resetPasswordFormSchema = yup
   .object({
@@ -22,6 +23,7 @@ export default function ResetPasswordScreen({
   navigation,
   route: { params: defaultValues },
 }: AuthStackScreenProps<'ResetPassword'>) {
+  const { t } = useTranslation('auth');
   const { control, handleSubmit, formState, setFocus } =
     useForm<ResetPasswordFormValues>({
       defaultValues,
@@ -53,7 +55,9 @@ export default function ResetPasswordScreen({
             <View className="space-y-4">
               <Title />
               <View>
-                <Text className="mb-2 font-medium dark:text-white">Email</Text>
+                <Text className="mb-2 font-medium dark:text-white">
+                  {t('resetPassword.form.email')}
+                </Text>
                 <Controller
                   control={control}
                   render={({ field }) => (
@@ -72,7 +76,7 @@ export default function ResetPasswordScreen({
               </View>
             </View>
             <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
-              <Button.Text>Send Link</Button.Text>
+              <Button.Text>{t('resetPassword.sendLink')}</Button.Text>
             </Button>
           </View>
         </KeyboardAvoidingView>
@@ -81,11 +85,16 @@ export default function ResetPasswordScreen({
   );
 }
 
-const Title = () => (
-  <View className="space-y-2">
-    <Text className="text-3xl font-bold dark:text-white">Reset Password</Text>
-    <Text className="text-neutral-500 dark:text-neutral-400">
-      Enter your email to receive a password reset link
-    </Text>
-  </View>
-);
+const Title = () => {
+  const { t } = useTranslation('auth');
+  return (
+    <View className="space-y-2">
+      <Text className="text-3xl font-bold dark:text-white">
+        {t('resetPassword.title')}
+      </Text>
+      <Text className="text-neutral-500 dark:text-neutral-400">
+        {t('resetPassword.subTitle')}
+      </Text>
+    </View>
+  );
+};

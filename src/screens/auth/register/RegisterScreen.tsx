@@ -13,6 +13,7 @@ import { isRejected } from '@reduxjs/toolkit';
 import BaseTextInput from '../../../components/inputs/BaseTextInput';
 import { InputLabel } from '../../../components/inputs/InputLabel';
 import Button from '../../../components/buttons/Button';
+import { useTranslation } from 'react-i18next';
 
 const registerFormSchema = yup
   .object({
@@ -27,6 +28,7 @@ type RegisterFormValues = InferType<typeof registerFormSchema>;
 export default function RegisterScreen({
   navigation,
 }: AuthStackScreenProps<'Register'>) {
+  const { t } = useTranslation('auth');
   const appDispatch = useAppDispatch();
   const { control, handleSubmit, formState, setFocus } =
     useForm<RegisterFormValues>({
@@ -64,7 +66,7 @@ export default function RegisterScreen({
           <Title />
           <View className="space-y-4">
             <View>
-              <InputLabel>Full Name</InputLabel>
+              <InputLabel>{t('register.form.fullName')}</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -82,7 +84,7 @@ export default function RegisterScreen({
               />
             </View>
             <View>
-              <InputLabel>Email</InputLabel>
+              <InputLabel>{t('register.form.email')}</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -100,7 +102,7 @@ export default function RegisterScreen({
               />
             </View>
             <View>
-              <InputLabel>Password</InputLabel>
+              <InputLabel>{t('register.form.password')}</InputLabel>
               <Controller
                 control={control}
                 render={({ field }) => (
@@ -119,16 +121,17 @@ export default function RegisterScreen({
             </View>
           </View>
           <Text className="text-center dark:text-white">
-            By using the app, you agree to stocklytics's Terms & Conditions and
-            Privacy Policy
+            {t('register.termsAndConditions')}
           </Text>
           <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
-            <Button.Text>Create account</Button.Text>
+            <Button.Text>{t('register.createAccount')}</Button.Text>
           </Button>
           <View className="flex flex-row justify-center space-x-1">
-            <Text className="dark:text-white">Already have an account ?</Text>
+            <Text className="dark:text-white">
+              {t('register.alreadyHaveAccount')}
+            </Text>
             <Button variant="link" onPress={goToLogin}>
-              <Button.Text>Sign in</Button.Text>
+              <Button.Text>{t('register.signIn')}</Button.Text>
             </Button>
           </View>
         </View>
@@ -137,13 +140,17 @@ export default function RegisterScreen({
   );
 }
 
-const Title = () => (
-  <View className="space-y-2">
-    <Text className="text-3xl font-bold dark:text-white">
-      Create an account
-    </Text>
-    <Text className="text-neutral-500 dark:text-neutral-400">
-      Get started for free today
-    </Text>
-  </View>
-);
+const Title = () => {
+  const { t } = useTranslation('auth');
+
+  return (
+    <View className="space-y-2">
+      <Text className="text-3xl font-bold dark:text-white">
+        {t('register.title')}
+      </Text>
+      <Text className="text-neutral-500 dark:text-neutral-400">
+        {t('register.subTitle')}
+      </Text>
+    </View>
+  );
+};

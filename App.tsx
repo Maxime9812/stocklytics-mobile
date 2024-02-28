@@ -1,4 +1,5 @@
 import Providers from './src/Providers';
+
 import { createStore } from './src/core/create-store';
 import { StubAuthGateway } from './src/core/auth/infra/gateways/auth/stub-auth.gateway';
 import { stateBuilder } from './src/core/state-builder';

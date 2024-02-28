@@ -1,3 +1,3 @@
-import translation from './en/translation';
+import auth from './en/auth';
 
-export type Translation = typeof translation;
+export type Translation = typeof auth;
