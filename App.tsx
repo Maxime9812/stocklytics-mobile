@@ -89,9 +89,9 @@ const mediaLibraryPermissionGateway =
 
 const store = createStore(
   {
-    authGateway: axiosAuthGateway,
-    itemsGateway: axiosItemGateways,
-    foldersGateway: axiosFolderGateway,
+    authGateway,
+    itemsGateway,
+    foldersGateway,
     uuidProvider,
     scannerGateway,
     cameraPermissionGateway,

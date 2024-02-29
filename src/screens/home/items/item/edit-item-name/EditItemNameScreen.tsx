@@ -12,6 +12,7 @@ import { useAppDispatch } from '../../../../../store-hooks';
 import { useSelector } from 'react-redux';
 import { createEditItemNameScreenViewModel } from './edit-item-name-screen.viewmodel';
 import { isRejected } from '@reduxjs/toolkit';
+import { useTranslation } from 'react-i18next';
 
 const formSchema = yup
   .object({
@@ -27,6 +28,7 @@ export default function EditItemNameScreen({
     params: { itemId },
   },
 }: ItemsStackScreenProps<'EditItemName'>) {
+  const { t } = useTranslation('home');
   const dispatch = useAppDispatch();
   const { name, editName } = useSelector(
     createEditItemNameScreenViewModel({ itemId, dispatch }),
@@ -55,9 +57,11 @@ export default function EditItemNameScreen({
           <View className="p-4 pt-0 justify-between space-y-2 flex-1">
             <View className="space-y-4">
               <View className="space-y-2">
-                <Text className="text-2xl dark:text-white font-bold">Name</Text>
+                <Text className="text-2xl dark:text-white font-bold">
+                  {t('edit.item.name.title')}
+                </Text>
                 <Text className="text-neutral-500 dark:text-neutral-400">
-                  Edit item's name
+                  {t('edit.item.name.subTitle')}
                 </Text>
               </View>
               <View>
@@ -68,7 +72,7 @@ export default function EditItemNameScreen({
                       {...field}
                       autoFocus
                       onChangeText={field.onChange}
-                      placeholder="Item name"
+                      placeholder={t('edit.item.name.form.name.placeholder')}
                     />
                   )}
                   name="name"
@@ -76,7 +80,7 @@ export default function EditItemNameScreen({
               </View>
             </View>
             <Button onPress={handleSubmit(onSubmit)}>
-              <Button.Text>Save</Button.Text>
+              <Button.Text>{t('edit.item.name.form.submit')}</Button.Text>
             </Button>
           </View>
         </KeyboardAvoidingView>

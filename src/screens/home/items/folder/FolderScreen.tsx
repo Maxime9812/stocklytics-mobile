@@ -17,6 +17,7 @@ import { useAppDispatch } from '../../../../store-hooks';
 import { getItemsInFolderUseCase } from '../../../../core/items/hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
 import { getFoldersInFolderUseCase } from '../../../../core/folders/hexagon/usecases/get-folders-in-folder/get-folders-in-folder.usecase';
 import Card from '../../../../components/cards/Card';
+import { useTranslation } from 'react-i18next';
 
 export default function FolderScreen({
   navigation,
@@ -110,16 +111,17 @@ const LoadedFolderScreen = ({
 };
 
 const EmptyFolderScreen = () => {
+  const { t } = useTranslation('home');
   return (
     <BaseLayout>
       <View className="p-3 pt-1">
         <Card className="h-full">
           <View className="m-auto">
             <Text className="text-center dark:text-white text-lg font-bold">
-              This folder is empty
+              {t('items.emptyFolder.title')}
             </Text>
             <Text className="text-center text-neutral-500 dark:text-neutral-400">
-              Add items or folders to this folder
+              {t('items.emptyFolder.subTitle')}
             </Text>
           </View>
         </Card>

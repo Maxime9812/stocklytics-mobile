@@ -12,6 +12,7 @@ import Card from '../../../components/cards/Card';
 import Button from '../../../components/buttons/Button';
 import { styled } from 'nativewind';
 import { AuthUser } from '../../../core/auth/hexagon/models/auth-user';
+import { useTranslation } from 'react-i18next';
 
 const LogoutIcon = styled(MaterialIcons, 'text-lg');
 export default function MenuScreen({ navigation }: HomeTabScreenProps<'Menu'>) {
@@ -56,6 +57,7 @@ type LogoutButtonProps = {
 };
 
 const LogoutButton = ({ navigation }: LogoutButtonProps) => {
+  const { t } = useTranslation('home');
   const appDispatch = useAppDispatch();
 
   const logout = async () => {
@@ -65,18 +67,17 @@ const LogoutButton = ({ navigation }: LogoutButtonProps) => {
 
   const requestLogout = () => {
     if (Platform.OS === 'android') {
-      Alert.alert('Are you sure you want to sign out ?', '', [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Sign out', onPress: logout },
+      Alert.alert(t('menu.signOut.message'), '', [
+        { text: t('menu.signOut.cancel'), style: 'cancel' },
+        { text: t('menu.signOut.confirm'), onPress: logout },
       ]);
       return;
     }
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: 'Are you sure you want to sign out ?',
-        message:
-          'Please ensure your items & folders have been synced before signing out.',
-        options: ['Sign out', 'Cancel'],
+        title: t('menu.signOut.title'),
+        message: t('menu.signOut.message'),
+        options: [t('menu.signOut.confirm'), t('menu.signOut.cancel')],
         destructiveButtonIndex: 0,
         cancelButtonIndex: 1,
       },
@@ -93,7 +94,7 @@ const LogoutButton = ({ navigation }: LogoutButtonProps) => {
       <Button.Icon>
         <LogoutIcon name="logout" />
       </Button.Icon>
-      <Button.Text>Sign out</Button.Text>
+      <Button.Text>{t('menu.signOut.button')}</Button.Text>
     </Button>
   );
 };

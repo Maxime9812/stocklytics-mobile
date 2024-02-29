@@ -11,6 +11,7 @@ import CloseKeyboardOnTouch from '../../../../../components/CloseKeyboardOnTouch
 import BaseLayout from '../../../../../components/layouts/BaseLayout';
 import BaseTextInput from '../../../../../components/inputs/BaseTextInput';
 import Button from '../../../../../components/buttons/Button';
+import { useTranslation } from 'react-i18next';
 
 const formSchema = yup
   .object({
@@ -25,6 +26,7 @@ export default function EditItemNoteScreen({
     params: { note, itemId },
   },
 }: ItemsStackScreenProps<'EditItemNote'>) {
+  const { t } = useTranslation('home');
   const dispatch = useAppDispatch();
   const { editNote } = createEditItemNoteScreenViewModel({ itemId, dispatch });
 
@@ -52,9 +54,11 @@ export default function EditItemNoteScreen({
           <View className="p-4 pt-0 justify-between space-y-2 flex-1">
             <View className="space-y-4">
               <View className="space-y-2">
-                <Text className="text-2xl dark:text-white font-bold">Note</Text>
+                <Text className="text-2xl dark:text-white font-bold">
+                  {t('edit.item.note.title')}
+                </Text>
                 <Text className="text-neutral-500 dark:text-neutral-400">
-                  Edit item's note
+                  {t('edit.item.note.subTitle')}
                 </Text>
               </View>
               <View>
@@ -67,7 +71,7 @@ export default function EditItemNoteScreen({
                       maxLength={300}
                       multiline
                       onChangeText={field.onChange}
-                      placeholder="Add a note"
+                      placeholder={t('edit.item.note.form.note.placeholder')}
                       style={{ maxHeight: 160 }}
                     />
                   )}
@@ -76,7 +80,7 @@ export default function EditItemNoteScreen({
               </View>
             </View>
             <Button onPress={handleSubmit(onSaveNote)}>
-              <Button.Text>Save</Button.Text>
+              <Button.Text>{t('edit.item.note.form.submit')}</Button.Text>
             </Button>
           </View>
         </KeyboardAvoidingView>

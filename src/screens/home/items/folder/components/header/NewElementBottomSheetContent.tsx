@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import Button from '../../../../../../components/buttons/Button';
 import { styled } from 'nativewind';
+import { useTranslation } from 'react-i18next';
 
 export type NewElementBottomSheetContentProps = {
   onAddItem: () => void;
@@ -16,19 +17,30 @@ export default function NewElementBottomSheetContent({
   onAddItem,
   folderName,
 }: NewElementBottomSheetContentProps) {
+  const { t } = useTranslation('home');
   return (
     <View className="p-4 pt-0 space-y-4 mb-4">
       <View>
-        <Text className="text-xl dark:text-white">Add</Text>
+        <Text className="text-xl dark:text-white">
+          {t('items.addBottomSheet.title')}
+        </Text>
         <Text className="text-neutral-500 dark:text-neutral-400">
-          Add item or folder to{' '}
+          {t('items.addBottomSheet.subTitle')}{' '}
           <Text className="text-black dark:text-white">{folderName}</Text>
         </Text>
       </View>
 
       <View className="space-y-2">
-        <ActionButton onPress={onAddItem} icon="file" text="Add file" />
-        <ActionButton onPress={onAddFolder} icon="folder" text="Add folder" />
+        <ActionButton
+          onPress={onAddItem}
+          icon="file"
+          text={t('items.addBottomSheet.item')}
+        />
+        <ActionButton
+          onPress={onAddFolder}
+          icon="folder"
+          text={t('items.addBottomSheet.folder')}
+        />
       </View>
     </View>
   );

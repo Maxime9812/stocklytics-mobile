@@ -12,6 +12,7 @@ import MenuScreen from '../screens/home/menu/MenuScreen';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import ItemsNavigation, { ItemsNavigator } from './ItemsNavigation';
 import { useTheme } from '../hooks/use-theme';
+import { useTranslation } from 'react-i18next';
 
 export type HomeTab = {
   Dashboard: undefined;
@@ -50,6 +51,7 @@ const MenuIcon = (props: IconProps) => {
 
 export default function HomeNavigation() {
   const { theme } = useTheme();
+  const { t } = useTranslation('home');
   return (
     <Tab.Navigator
       initialRouteName="Dashboard"
@@ -66,17 +68,17 @@ export default function HomeNavigation() {
       <Tab.Screen
         name="Items"
         component={ItemsNavigation}
-        options={{ tabBarIcon: ItemsIcon }}
+        options={{ tabBarIcon: ItemsIcon, tabBarLabel: t('navigation.items') }}
       />
       <Tab.Screen
         name="Scan"
         component={ScanScreen}
-        options={{ tabBarIcon: ScanIcon }}
+        options={{ tabBarIcon: ScanIcon, tabBarLabel: t('navigation.scan') }}
       />
       <Tab.Screen
         name="Menu"
         component={MenuScreen}
-        options={{ tabBarIcon: MenuIcon }}
+        options={{ tabBarIcon: MenuIcon, tabBarLabel: t('navigation.menu') }}
       />
     </Tab.Navigator>
   );

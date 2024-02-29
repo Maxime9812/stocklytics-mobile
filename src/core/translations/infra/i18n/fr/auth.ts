@@ -1,6 +1,6 @@
-import { Translation } from '../type';
+import { AuthTranslation } from '../type';
 
-const auth: Translation = {
+const auth: AuthTranslation = {
   welcome: {
     alreadyHaveAccount: 'Vous avez déjà un compte ?',
     signIn: 'Se connecter',

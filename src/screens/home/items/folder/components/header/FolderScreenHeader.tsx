@@ -9,10 +9,12 @@ import NewElementBottomSheetContent from './NewElementBottomSheetContent';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ItemsStackScreenProps } from '../../../../../../navigation/ItemsNavigation';
 import Button from '../../../../../../components/buttons/Button';
+import { useTranslation } from 'react-i18next';
 
 const Icon = styled(Feather, 'text-white text-lg');
 
 export default function FolderScreenHeader(props: View['props']) {
+  const { t } = useTranslation('home');
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -39,7 +41,9 @@ export default function FolderScreenHeader(props: View['props']) {
     <View {...props}>
       <Button size="sm" onPress={openBottomSheet}>
         <Icon name="plus" />
-        <Button.Text className="text-white font-bold">New</Button.Text>
+        <Button.Text className="text-white font-bold">
+          {t('items.new')}
+        </Button.Text>
       </Button>
       {isBottomSheetOpen && (
         <Portal>

@@ -6,6 +6,7 @@ import { isRejected } from '@reduxjs/toolkit';
 import { ItemsStackScreenProps } from '../../../../../navigation/ItemsNavigation';
 import { useAppDispatch } from '../../../../../store-hooks';
 import Button from '../../../../../components/buttons/Button';
+import { useTranslation } from 'react-i18next';
 
 export default function DeleteItemScreen({
   navigation,
@@ -14,6 +15,7 @@ export default function DeleteItemScreen({
   },
 }: ItemsStackScreenProps<'DeleteItem'>) {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation('home');
 
   const { deleteItem, item } = useSelector(
     createDeleteItemScreenViewModel({ itemId: id, dispatch }),
@@ -32,15 +34,17 @@ export default function DeleteItemScreen({
       <View className="p-4 pt-0 justify-between space-y-2 flex-1">
         <View className="space-y-4">
           <View className="space-y-2">
-            <Text className="text-2xl dark:text-white font-bold">Delete</Text>
+            <Text className="text-2xl dark:text-white font-bold">
+              {t('delete.item.title')}
+            </Text>
             <Text className="text-neutral-500 dark:text-neutral-400">
-              Are you sure you want to delete item{' '}
+              {t('delete.item.subTitle')}
               <Text className="dark:text-white font-bold">{item.name}</Text> ?
             </Text>
           </View>
         </View>
         <Button type="destructive" onPress={handleDelete}>
-          <Button.Text>Delete</Button.Text>
+          <Button.Text>{t('delete.item.confirm')}</Button.Text>
         </Button>
       </View>
     </BaseLayout>

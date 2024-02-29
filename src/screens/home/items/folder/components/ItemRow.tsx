@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import Button from '../../../../../components/buttons/Button';
 import { styled } from 'nativewind';
 import Badge from '../../../../../components/badge/Badge';
+import { useTranslation } from 'react-i18next';
 
 type ItemRowProps = {
   onPress: (itemId: string) => void;
@@ -23,6 +24,7 @@ export default function ItemRow({
   item: { id, name, quantity, tags, imageUrl },
 }: ItemRowProps) {
   const swipeableRef = useRef<Swipeable>(null);
+  const { t } = useTranslation('home');
 
   const onDeleteHandler = () => {
     swipeableRef.current?.close();
@@ -66,7 +68,9 @@ export default function ItemRow({
           </View>
           <View className="flex-col justify-between">
             <Text className="text-lg font-bold dark:text-white">{name}</Text>
-            <Text className="text-neutral-500">{quantity} unit</Text>
+            <Text className="text-neutral-500">
+              {t('items.unit', { count: quantity })}
+            </Text>
             <View className="flex-row space-x-2">
               {tags.map((tag) => (
                 <Badge key={tag.id} size="sm">

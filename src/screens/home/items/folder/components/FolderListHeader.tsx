@@ -1,5 +1,6 @@
 import { Text, View } from 'react-native';
 import Card from '../../../../../components/cards/Card';
+import { useTranslation } from 'react-i18next';
 
 type FolderListHeaderProps = {
   totalFolders: number;
@@ -11,11 +12,12 @@ export default function FolderListHeader({
   totalItems,
   totalQuantity,
 }: FolderListHeaderProps) {
+  const { t } = useTranslation('home');
   return (
     <Card className="flex-row justify-between p-3">
-      <Item name="Folders" value={`${totalFolders}`} />
-      <Item name="Items" value={`${totalItems}`} />
-      <Item name="Total Qty" value={`${totalQuantity}`} />
+      <Item name={t('items.folders')} value={`${totalFolders}`} />
+      <Item name={t('items.items')} value={`${totalItems}`} />
+      <Item name={t('items.totalQuantity')} value={`${totalQuantity}`} />
     </Card>
   );
 }

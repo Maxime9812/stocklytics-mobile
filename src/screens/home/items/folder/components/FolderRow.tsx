@@ -4,6 +4,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 import Button from '../../../../../components/buttons/Button';
 import { styled } from 'nativewind';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type ItemRowProps = {
   onPress: (folderId: string) => void;
@@ -20,6 +21,7 @@ export default function FolderRow({
   folder: { id, quantity, name },
 }: ItemRowProps) {
   const swipeableRef = useRef<Swipeable>(null);
+  const { t } = useTranslation('home');
 
   const onDeleteHandler = () => {
     swipeableRef.current?.close();
@@ -50,7 +52,9 @@ export default function FolderRow({
           </View>
           <View className="space-y-2">
             <Text className="text-lg font-bold dark:text-white">{name}</Text>
-            <Text className="text-neutral-500">{quantity} unit</Text>
+            <Text className="text-neutral-500">
+              {t('items.unit', { count: quantity })}
+            </Text>
           </View>
         </View>
       </Button>

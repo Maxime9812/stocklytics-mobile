@@ -12,6 +12,7 @@ import { isRejected } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { createAddItemScreenViewModel } from './add-item-screen.viewmodel';
 import Button from '../../../../../components/buttons/Button';
+import { useTranslation } from 'react-i18next';
 
 const addItemFormSchema = yup
   .object({
@@ -29,6 +30,7 @@ export default function AddItemScreen({
   },
 }: ItemsStackScreenProps<'AddItem'>) {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation('home');
   const viewModel = useSelector(
     createAddItemScreenViewModel({ folderId, dispatch }),
   );
@@ -62,23 +64,25 @@ export default function AddItemScreen({
             <View className="space-y-4">
               <View className="space-y-2">
                 <Text className="text-2xl dark:text-white font-bold">
-                  Add item
+                  {t('add.item.title')}
                 </Text>
                 <Text className="text-neutral-500 dark:text-neutral-400">
-                  Add new item to{' '}
+                  {t('add.item.subTitle')}
                   <Text className="text-black dark:text-white">
                     {viewModel.folderName}
                   </Text>
                 </Text>
               </View>
               <View>
-                <Text className="dark:text-white mb-2">Name</Text>
+                <Text className="dark:text-white mb-2">
+                  {t('add.item.form.name.label')}
+                </Text>
                 <Controller
                   render={({ field }) => (
                     <BaseTextInput
                       {...field}
                       autoFocus
-                      placeholder="Item name"
+                      placeholder={t('add.item.form.name.placeholder')}
                       onChangeText={field.onChange}
                       returnKeyType="next"
                       onSubmitEditing={() => setFocus('quantity')}
@@ -89,7 +93,9 @@ export default function AddItemScreen({
                 />
               </View>
               <View>
-                <Text className="dark:text-white mb-2">Quantity</Text>
+                <Text className="dark:text-white mb-2">
+                  {t('add.item.form.quantity')}
+                </Text>
                 <Controller
                   render={({ field }) => (
                     <BaseTextInput
@@ -107,7 +113,7 @@ export default function AddItemScreen({
               </View>
             </View>
             <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
-              <Button.Text>Add</Button.Text>
+              <Button.Text>{t('add.item.form.submit')}</Button.Text>
             </Button>
           </View>
         </KeyboardAvoidingView>

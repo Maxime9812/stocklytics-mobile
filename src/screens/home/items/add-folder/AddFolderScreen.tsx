@@ -12,6 +12,7 @@ import { InferType } from 'yup';
 import * as yup from 'yup';
 import { createAddFolderScreenViewModel } from './add-folder-screen.viewmodel';
 import Button from '../../../../components/buttons/Button';
+import { useTranslation } from 'react-i18next';
 
 const addFolderFormSchema = yup
   .object({
@@ -26,18 +27,18 @@ export default function AddFolderScreen({
     params: { parentId },
   },
 }: ItemsStackScreenProps<'AddFolder'>) {
+  const { t } = useTranslation('home');
   const dispatch = useAppDispatch();
   const viewModel = useSelector(
     createAddFolderScreenViewModel({ parentId, dispatch }),
   );
 
-  const { control, handleSubmit, formState, setFocus } =
-    useForm<CreateItemFormValues>({
-      defaultValues: {
-        name: '',
-      },
-      resolver: yupResolver(addFolderFormSchema),
-    });
+  const { control, handleSubmit, formState } = useForm<CreateItemFormValues>({
+    defaultValues: {
+      name: '',
+    },
+    resolver: yupResolver(addFolderFormSchema),
+  });
 
   const isLoading = formState.isSubmitting;
   const disableSubmit = !formState.isValid || isLoading;
@@ -60,23 +61,25 @@ export default function AddFolderScreen({
             <View className="space-y-4">
               <View className="space-y-2">
                 <Text className="text-2xl dark:text-white font-bold">
-                  Add folder
+                  {t('add.folder.title')}
                 </Text>
                 <Text className="text-neutral-500 dark:text-neutral-400">
-                  Add new folder to{' '}
+                  {t('add.folder.subTitle')}
                   <Text className="text-black dark:text-white">
                     {viewModel.folderName}
                   </Text>
                 </Text>
               </View>
               <View>
-                <Text className="dark:text-white mb-2">Name</Text>
+                <Text className="dark:text-white mb-2">
+                  {t('add.folder.form.name.label')}
+                </Text>
                 <Controller
                   render={({ field }) => (
                     <BaseTextInput
                       {...field}
                       autoFocus
-                      placeholder="Folder name"
+                      placeholder={t('add.folder.form.name.placeholder')}
                       onChangeText={field.onChange}
                       value={field.value.toString()}
                       returnKeyType="done"
@@ -89,7 +92,7 @@ export default function AddFolderScreen({
               </View>
             </View>
             <Button onPress={handleSubmit(onSubmit)} disabled={disableSubmit}>
-              <Button.Text>Add</Button.Text>
+              <Button.Text>{t('add.folder.form.submit')}</Button.Text>
             </Button>
           </View>
         </KeyboardAvoidingView>
