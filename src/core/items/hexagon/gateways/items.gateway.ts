@@ -48,6 +48,11 @@ export type AddItemImagePayload = {
   image: { id: string; path: string };
 };
 
+export type AdjustItemQuantityPayload = {
+  itemId: string;
+  quantity: number;
+};
+
 export interface ItemsGateway {
   getFromFolder(folderId: string | undefined): Promise<Item[]>;
   getById(id: string): Promise<Item | undefined>;
@@ -61,4 +66,5 @@ export interface ItemsGateway {
   editName(payload: EditNamePayload): Promise<void>;
   deleteImage(itemId: string): Promise<void>;
   addImage(payload: AddItemImagePayload): Promise<string>;
+  adjustQuantity(payload: AdjustItemQuantityPayload): Promise<number>;
 }

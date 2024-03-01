@@ -13,8 +13,15 @@ describe('Feature: Adjust item quantity', () => {
 
   test('Item quantity is adjusted', async () => {
     fixture.givenExistingItems([
-      itemBuilder().withId('item-id').withQuantity(10).build(),
+      itemBuilder().withId('item-id').withQuantity(11).build(),
     ]);
+    fixture.givenQuantityAdjustment(
+      {
+        itemId: 'item-id',
+        quantity: 5,
+      },
+      16,
+    );
 
     await fixture.whenAdjustQuantity({
       itemId: 'item-id',
@@ -22,7 +29,7 @@ describe('Feature: Adjust item quantity', () => {
     });
 
     fixture.thenItemsIs([
-      { ...itemBuilder().withId('item-id').withQuantity(15).build(), tags: [] },
+      { ...itemBuilder().withId('item-id').withQuantity(16).build(), tags: [] },
     ]);
   });
 });

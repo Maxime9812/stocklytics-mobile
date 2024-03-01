@@ -81,6 +81,12 @@ export const createItemsFixture = () => {
     givenImageAdded: (payload: AddItemImagePayload, url: string) => {
       itemsGateway.givenImageAdded(payload, url);
     },
+    givenQuantityAdjustment: (
+      payload: AdjustItemQuantityUseCasePayload,
+      qty: number,
+    ) => {
+      itemsGateway.givenQuantityAdjustment(payload, qty);
+    },
     whenGetItemById: (id: string) => {
       store = createTestStore({ itemsGateway });
       return store.dispatch(getItemByIdUseCase(id));

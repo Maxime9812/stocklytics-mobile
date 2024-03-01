@@ -1,6 +1,7 @@
 import {
   AddItemImagePayload,
   AddItemInFolderPayload,
+  AdjustItemQuantityPayload,
   EditNamePayload,
   EditNotePayload,
   Item,
@@ -22,6 +23,7 @@ export class StubItemsGateway implements ItemsGateway {
   lastNameChange: EditNamePayload | undefined;
   lastDeletedItemImageId: string | undefined;
   private linkBarcodeError: LinkBarcodeError | undefined;
+  private itemQuantityAdjustment: Map<string, number> = new Map();
 
   constructor(private readonly delay = 0) {}
 
@@ -126,6 +128,13 @@ export class StubItemsGateway implements ItemsGateway {
     this.imageUrlAdded.set(this.getImageAddedKey(payload), imageUrl);
   }
 
+  givenQuantityAdjustment(payload: AdjustItemQuantityPayload, qty: number) {
+    this.itemQuantityAdjustment.set(
+      this.getQuantityAdjustmentKey(payload),
+      qty,
+    );
+  }
+
   private getImageAddedKey(payload: AddItemImagePayload) {
     return `${payload.itemId}-${payload.image.id}-${payload.image.path}`;
   }
@@ -134,11 +143,27 @@ export class StubItemsGateway implements ItemsGateway {
     return JSON.stringify(payload);
   }
 
+  private getQuantityAdjustmentKey(payload: AdjustItemQuantityPayload) {
+    return `${payload.itemId}-${payload.quantity}`;
+  }
+
   async delete(id: string): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.lastDeletedItemId = id;
         resolve();
+      }, this.delay);
+    });
+  }
+
+  async adjustQuantity(payload: AdjustItemQuantityPayload): Promise<number> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(
+          this.itemQuantityAdjustment.get(
+            this.getQuantityAdjustmentKey(payload),
+          )!,
+        );
       }, this.delay);
     });
   }

@@ -7,5 +7,10 @@ export type AdjustItemQuantityUseCasePayload = {
 
 export const adjustItemQuantityUseCase = createAppAsyncThunk(
   'items/adjustQuantity',
-  async ({ itemId, quantity }: AdjustItemQuantityUseCasePayload) => {},
+  async (
+    { itemId, quantity }: AdjustItemQuantityUseCasePayload,
+    { extra: { itemsGateway } },
+  ) => {
+    return itemsGateway.adjustQuantity({ itemId, quantity });
+  },
 );
