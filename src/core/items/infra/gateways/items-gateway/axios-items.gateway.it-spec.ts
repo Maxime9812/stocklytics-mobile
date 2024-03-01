@@ -214,4 +214,21 @@ describe('AxiosItemsGateway', () => {
       ).toEqual('image-url');
     });
   });
+
+  describe('AdjustQuantity', () => {
+    it('Should return new item quantity', async () => {
+      nock(BASE_URL)
+        .post('/items/item-id/quantity/adjust', { quantity: 5 })
+        .reply(200, {
+          quantity: 10,
+        });
+
+      expect(
+        await axiosItemsGateway.adjustQuantity({
+          itemId: 'item-id',
+          quantity: 5,
+        }),
+      ).toEqual(10);
+    });
+  });
 });

@@ -99,6 +99,18 @@ const home: HomeTranslation = {
   },
   edit: {
     item: {
+      quantity: {
+        title: 'Quantité',
+        subTitle: 'Ajusté la quantité de ',
+        form: {
+          quantity: {
+            placeholder: 'Quantité',
+          },
+          submit: 'Ajuster',
+        },
+        newQuantity: 'Nouvelle quantité',
+        currentQuantity: 'Quantité actuelle',
+      },
       tags: {
         title: 'Labels',
         subTitle: 'Ajouter ou modifier les labels',

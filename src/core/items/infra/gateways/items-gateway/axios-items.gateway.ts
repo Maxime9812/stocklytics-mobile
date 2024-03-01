@@ -1,6 +1,7 @@
 import {
   AddItemImagePayload,
   AddItemInFolderPayload,
+  AdjustItemQuantityPayload,
   EditNamePayload,
   EditNotePayload,
   Item,
@@ -102,5 +103,15 @@ export class AxiosItemsGateway implements ItemsGateway {
       },
     );
     return response.data.imageUrl;
+  }
+
+  async adjustQuantity({
+    itemId,
+    quantity,
+  }: AdjustItemQuantityPayload): Promise<number> {
+    const response = await this.axios.post(`/items/${itemId}/quantity/adjust`, {
+      quantity,
+    });
+    return response.data.quantity;
   }
 }

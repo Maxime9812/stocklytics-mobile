@@ -97,6 +97,18 @@ export default {
   },
   edit: {
     item: {
+      quantity: {
+        title: 'Quantity',
+        subTitle: 'Adjust quantity of ',
+        form: {
+          quantity: {
+            placeholder: 'Quantity',
+          },
+          submit: 'Adjust',
+        },
+        newQuantity: 'New quantity',
+        currentQuantity: 'Current quantity',
+      },
       tags: {
         title: 'Tags',
         subTitle: 'Edit item tags',

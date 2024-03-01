@@ -64,7 +64,7 @@ const LoadedItemScreen = ({
   };
 
   const goToEditQuantity = () => {
-    navigation.push('DeleteItem', { id: item.id });
+    navigation.push('EditItemQuantity', { itemId: item.id });
   };
 
   const goToScanBarcode = () => {
