@@ -20,7 +20,7 @@ export default {
     },
     quantity: {
       name: 'Quantity',
-      edit: 'Edit quantity',
+      edit: 'Adjust',
     },
     delete: 'Supprimer',
     tags: {

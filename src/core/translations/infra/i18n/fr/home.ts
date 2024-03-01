@@ -22,7 +22,7 @@ const home: HomeTranslation = {
     },
     quantity: {
       name: 'Quantité',
-      edit: 'Modifier',
+      edit: 'Ajuster',
     },
     delete: 'Supprimer',
     tags: {
