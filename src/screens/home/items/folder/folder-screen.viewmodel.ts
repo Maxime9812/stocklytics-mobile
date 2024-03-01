@@ -83,7 +83,8 @@ export const createFolderScreenViewModel = ({
         };
       }
 
-      if (folders.length === 0 && items.length === 0) {
+      const folderIsEmpty = folders.length + items.length === 0;
+      if (folderIsEmpty) {
         return {
           type: 'empty',
         };

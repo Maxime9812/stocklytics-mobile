@@ -6,6 +6,40 @@ const home: HomeTranslation = {
     scan: 'Scan',
     menu: 'Menu',
   },
+  itemDetails: {
+    editName: 'Modifier le nom',
+    images: {
+      title: 'Améliorez la visibilité avec une superbe image',
+      subTitle:
+        'Téléchargez une image, avec une limite de 10 Mo. Formats pris en charge : JPG et PNG',
+      choose: 'Choisir depuis la bibliothèque',
+      delete: 'Supprimer l’image',
+    },
+    note: {
+      name: 'Note',
+      edit: 'Modifier la note',
+      add: 'Ajouter une note',
+    },
+    quantity: {
+      name: 'Quantité',
+      edit: 'Modifier',
+    },
+    delete: 'Supprimer',
+    tags: {
+      name: 'Labels',
+      edit: 'Modifier les labels',
+    },
+    barcode: {
+      name: 'Code-barres',
+      link: 'Lier le code-barres',
+      unlink: 'Dissocier',
+      alreadyLinked: {
+        title: 'Code-barres déjà lié',
+        subTitle: 'Un objet avec ce code-barres est déjà lié',
+      },
+    },
+    createdAt: 'Créé le',
+  },
   items: {
     new: 'Nouveau',
     folders: 'Dossiers',
@@ -65,6 +99,16 @@ const home: HomeTranslation = {
   },
   edit: {
     item: {
+      tags: {
+        title: 'Labels',
+        subTitle: 'Ajouter ou modifier les labels',
+        form: {
+          tags: {
+            placeholder: 'Labels',
+          },
+          submit: 'Sauvegarder',
+        },
+      },
       note: {
         title: 'Note',
         subTitle: 'Ajouter ou modifier la note',
@@ -95,6 +139,19 @@ const home: HomeTranslation = {
       title: 'Êtes-vous sûr de vouloir vous déconnecter ?',
       confirm: 'Déconnexion',
       cancel: 'Annuler',
+    },
+  },
+  scan: {
+    notFound: {
+      title: 'Aucun résultat',
+      subTitle:
+        'Vous pouvez lier un code-barres à un objet de votre inventaire',
+    },
+    item: {
+      details: 'Détails',
+      unit_zero: '{{count}} unité',
+      unit_one: '{{count}} unité',
+      unit_other: '{{count}} unités',
     },
   },
 };

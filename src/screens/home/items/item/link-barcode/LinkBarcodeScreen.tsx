@@ -10,6 +10,7 @@ import ThemedBottomSheet from '../../../../../components/bottom-sheet/ThemedBott
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { Text, View } from 'react-native';
 import { Portal } from '@gorhom/portal';
+import { useTranslation } from 'react-i18next';
 
 export default function LinkBarcodeScreen({
   navigation,
@@ -46,6 +47,7 @@ export default function LinkBarcodeScreen({
 }
 
 const LinkError = () => {
+  const { t } = useTranslation('home');
   useEffect(() => {
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
   }, []);
@@ -59,10 +61,10 @@ const LinkError = () => {
       <BottomSheetView>
         <View className="p-4 pt-0">
           <Text className="text-xl font-bold dark:text-white">
-            Already linked
+            {t('itemDetails.barcode.alreadyLinked.title')}
           </Text>
           <Text className="text-neutral-400 dark:text-neutral-500">
-            An item with this barcode is already linked
+            {t('itemDetails.barcode.alreadyLinked.subTitle')}
           </Text>
         </View>
       </BottomSheetView>

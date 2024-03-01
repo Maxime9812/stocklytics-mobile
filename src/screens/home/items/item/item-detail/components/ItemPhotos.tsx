@@ -12,7 +12,7 @@ import ThemedBottomSheet from '../../../../../../components/bottom-sheet/ThemedB
 import CameraPermission from '../../../../../../components/camera/camera-permission/CameraPermission';
 import { MediaLibraryPermission } from '../../../../../../components/media-library/MediaLibraryPermission';
 import Card from '../../../../../../components/cards/Card';
-import { useAppDispatch } from '../../../../../../store-hooks';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   itemId: string;
@@ -27,7 +27,6 @@ export default function ItemPhotos({
   deleteImage,
   addImage,
 }: Props) {
-  const dispatch = useAppDispatch();
   const bottomSheetRef = useRef<BottomSheet>(null);
   const {
     isOpen,
@@ -131,15 +130,17 @@ const NoImageView = ({
 }: {
   openMediaLibrary: () => void;
 }) => {
+  const { t } = useTranslation('home');
+
   return (
     <>
       <View className="h-72 bg-neutral-200 dark:bg-neutral-700 justify-center items-center">
         <View className="space-y-2 p-10">
           <Text className="text-center dark:text-white text-lg">
-            Enhance visibility with great image
+            {t('itemDetails.images.title')}
           </Text>
           <Text className="text-center text-neutral-500 dark:text-neutral-400">
-            Upload a image, with a limit of 10 MB. Supported formats JPG and PNG
+            {t('itemDetails.images.subTitle')}
           </Text>
 
           <View className="flex-row justify-center">
@@ -172,9 +173,8 @@ const MediaLibraryBottomSheet = ({
   takePhoto,
   deleteImage,
 }: MediaLibraryBottomSheetProps) => {
+  const { t } = useTranslation('home');
   const device = useCameraDevice('back');
-
-  if (device == null) return <View></View>;
 
   return (
     <View className="p-4 pt-0 space-y-4 mb-4">
@@ -189,11 +189,13 @@ const MediaLibraryBottomSheet = ({
       >
         <TouchableWithoutFeedback onPress={takePhoto}>
           <View className="w-24 h-24 rounded-xl overflow-hidden">
-            <Camera isActive={true} device={device} style={{ flex: 1 }}>
-              <View className="m-auto">
-                <Ionicons name="camera" size={24} color="white" />
-              </View>
-            </Camera>
+            {device && (
+              <Camera isActive={true} device={device} style={{ flex: 1 }}>
+                <View className="m-auto">
+                  <Ionicons name="camera" size={24} color="white" />
+                </View>
+              </Camera>
+            )}
           </View>
         </TouchableWithoutFeedback>
       </CameraPermission>
@@ -212,7 +214,7 @@ const MediaLibraryBottomSheet = ({
                   <Feather name="image" size={20} />
                 </Button.Icon>
                 <Button.Text className="text-royal-blue-500">
-                  Choose from media
+                  {t('itemDetails.images.choose')}
                 </Button.Text>
               </Button>
             </Card>
@@ -229,7 +231,9 @@ const MediaLibraryBottomSheet = ({
               <Button.Icon className="text-red-500">
                 <Feather name="trash" size={20} />
               </Button.Icon>
-              <Button.Text className="text-red-500">Delete image</Button.Text>
+              <Button.Text className="text-red-500">
+                {t('itemDetails.images.delete')}
+              </Button.Text>
             </Button>
           </Card>
         )}

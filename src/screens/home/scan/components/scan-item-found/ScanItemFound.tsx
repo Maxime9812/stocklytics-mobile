@@ -11,6 +11,7 @@ import { createScanItemFoundViewModel } from './scan-item-found.viewmodel';
 import { getItemByIdUseCase } from '../../../../../core/items/hexagon/usecases/get-item-by-id/get-item-by-id.usecase';
 import { Feather } from '@expo/vector-icons';
 import Card from '../../../../../components/cards/Card';
+import { useTranslation } from 'react-i18next';
 
 type ItemFoundViewProps = {
   id: string;
@@ -18,6 +19,7 @@ type ItemFoundViewProps = {
 };
 
 export default function ScanItemFound({ id, navigation }: ItemFoundViewProps) {
+  const { t } = useTranslation('home');
   const bottomSheet = useRef<BottomSheet>();
   const dispatch = useAppDispatch();
   const viewModel = useSelector(createScanItemFoundViewModel({ id }));
@@ -64,7 +66,7 @@ export default function ScanItemFound({ id, navigation }: ItemFoundViewProps) {
                   )}
                 </View>
                 <Text className="text-lg dark:text-white">
-                  {viewModel.item.quantity} unit
+                  {t('scan.item.unit', { count: viewModel.item.quantity })}
                 </Text>
               </View>
             </View>
@@ -79,7 +81,7 @@ export default function ScanItemFound({ id, navigation }: ItemFoundViewProps) {
                   <Feather name="eye" size={18} />
                 </Button.Icon>
                 <Button.Text className="text-royal-blue-500">
-                  Detail
+                  {t('scan.item.details')}
                 </Button.Text>
               </Button>
             </Card>

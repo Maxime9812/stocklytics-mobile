@@ -15,6 +15,7 @@ import Card from '../../../../../components/cards/Card';
 import Button from '../../../../../components/buttons/Button';
 import Badge from '../../../../../components/badge/Badge';
 import Barcode from '../../../../../components/barcode/Barcode';
+import { useTranslation } from 'react-i18next';
 
 export default function ItemDetailScreen({
   navigation,
@@ -49,6 +50,7 @@ const LoadedItemScreen = ({
   viewModel: { item },
   navigation,
 }: LoadedItemScreenProps) => {
+  const { t } = useTranslation('home');
   const goToEditName = () => {
     navigation.push('EditItemName', { itemId: item.id });
   };
@@ -96,7 +98,7 @@ const LoadedItemScreen = ({
                 <Button.Icon>
                   <Feather name="edit" />
                 </Button.Icon>
-                <Button.Text>Edit name</Button.Text>
+                <Button.Text>{t('itemDetails.editName')}</Button.Text>
               </Button>
             </Card.Header>
 
@@ -115,13 +117,13 @@ const LoadedItemScreen = ({
             <Card className="p-3 flex-1">
               <Card.Header className="justify-between">
                 <Text className="text-neutral-500 dark:text-neutral-400">
-                  Quantity
+                  {t('itemDetails.quantity.name')}
                 </Text>
                 <Button variant="link" onPress={goToEditQuantity}>
                   <Button.Icon>
                     <Feather name="edit" />
                   </Button.Icon>
-                  <Button.Text>Edit quantity</Button.Text>
+                  <Button.Text>{t('itemDetails.quantity.edit')}</Button.Text>
                 </Button>
               </Card.Header>
               <Text className="dark:text-white">{item.quantity}</Text>
@@ -129,7 +131,7 @@ const LoadedItemScreen = ({
             <Card className="p-3 flex-1">
               <Card.Header>
                 <Text className="text-neutral-500 dark:text-neutral-400">
-                  Created at
+                  {t('itemDetails.createdAt')}
                 </Text>
               </Card.Header>
               <Text className="dark:text-white">{item.createdAt}</Text>
@@ -139,14 +141,14 @@ const LoadedItemScreen = ({
           <Card className="p-3">
             <Card.Header className="justify-between">
               <Text className="text-neutral-500 dark:text-neutral-400">
-                Tags
+                {t('itemDetails.tags.name')}
               </Text>
               <View>
                 <Button variant="link" onPress={goToEditTags}>
                   <Button.Icon>
                     <Feather name="edit" />
                   </Button.Icon>
-                  <Button.Text>Edit tags</Button.Text>
+                  <Button.Text>{t('itemDetails.tags.edit')}</Button.Text>
                 </Button>
               </View>
             </Card.Header>
@@ -160,13 +162,13 @@ const LoadedItemScreen = ({
           <Card className="p-3">
             <Card.Header className="justify-between">
               <Text className="text-neutral-500 dark:text-neutral-400">
-                Barcode
+                {t('itemDetails.barcode.name')}
               </Text>
               <Button variant="link" onPress={goToScanBarcode}>
                 <Button.Icon>
                   <Feather name="camera" />
                 </Button.Icon>
-                <Button.Text>Link barcode</Button.Text>
+                <Button.Text>{t('itemDetails.barcode.link')}</Button.Text>
               </Button>
             </Card.Header>
             <View className="items-center space-y-2">
@@ -178,7 +180,7 @@ const LoadedItemScreen = ({
                     variant="link"
                     onPress={item.unlinkBarcode}
                   >
-                    <Button.Text>Unlink</Button.Text>
+                    <Button.Text>{t('itemDetails.barcode.unlink')}</Button.Text>
                   </Button>
                 </>
               )}
@@ -196,7 +198,9 @@ const LoadedItemScreen = ({
                     <Feather name={item.hasNote ? 'edit' : 'plus'} />
                   </Button.Icon>
                   <Button.Text>
-                    {item.hasNote ? 'Edit note' : 'Add a note'}
+                    {item.hasNote
+                      ? t('itemDetails.note.edit')
+                      : t('itemDetails.note.add')}
                   </Button.Text>
                 </Button>
               </View>
@@ -213,7 +217,7 @@ const LoadedItemScreen = ({
               className="p-3"
               onPress={goToDeleteItem}
             >
-              <Button.Text>Delete</Button.Text>
+              <Button.Text>{t('itemDetails.delete')}</Button.Text>
             </Button>
           </Card>
         </View>

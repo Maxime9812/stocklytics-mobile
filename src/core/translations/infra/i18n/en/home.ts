@@ -4,6 +4,40 @@ export default {
     scan: 'Scan',
     menu: 'Menu',
   },
+  itemDetails: {
+    editName: 'Edit name',
+    images: {
+      title: 'Enhance visibility with great image',
+      subTitle:
+        'Upload a image, with a limit of 10 MB. Supported formats JPG and PNG',
+      choose: 'Choose image from library',
+      delete: 'Delete image',
+    },
+    note: {
+      name: 'Note',
+      edit: 'Edit note',
+      add: 'Add note',
+    },
+    quantity: {
+      name: 'Quantity',
+      edit: 'Edit quantity',
+    },
+    delete: 'Supprimer',
+    tags: {
+      name: 'tags',
+      edit: 'Edit tags',
+    },
+    barcode: {
+      name: 'Barcode',
+      link: 'Link barcode',
+      unlink: 'Unlink',
+      alreadyLinked: {
+        title: 'Barcode already linked',
+        subTitle: 'An item with this barcode is already linked',
+      },
+    },
+    createdAt: 'Created at',
+  },
   items: {
     new: 'New',
     folders: 'Folders',
@@ -63,6 +97,16 @@ export default {
   },
   edit: {
     item: {
+      tags: {
+        title: 'Tags',
+        subTitle: 'Edit item tags',
+        form: {
+          tags: {
+            placeholder: 'Tags',
+          },
+          submit: 'Save',
+        },
+      },
       note: {
         title: 'Note',
         subTitle: "Edit item's note",
@@ -93,6 +137,18 @@ export default {
       title: 'Are you sure you want to sign out ?',
       confirm: 'Sign out',
       cancel: 'Cancel',
+    },
+  },
+  scan: {
+    notFound: {
+      title: 'No barcode found',
+      subTitle: 'You can link a barcode to an item from your inventory',
+    },
+    item: {
+      details: 'Details',
+      unit_zero: '{{count}} unit',
+      unit_one: '{{count}} unit',
+      unit_other: '{{count}} units',
     },
   },
 };

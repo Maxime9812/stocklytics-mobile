@@ -7,6 +7,7 @@ import CloseKeyboardOnTouch from '../../../../../components/CloseKeyboardOnTouch
 import BaseLayout from '../../../../../components/layouts/BaseLayout';
 import BaseTextInput from '../../../../../components/inputs/BaseTextInput';
 import Button from '../../../../../components/buttons/Button';
+import { useTranslation } from 'react-i18next';
 
 const formSchema = yup.object({
   search: yup.string(),
@@ -17,6 +18,7 @@ export default function EditItemTagsScreen({
     params: { itemId },
   },
 }: ItemsStackScreenProps<'EditItemTags'>) {
+  const { t } = useTranslation('home');
   const { control, handleSubmit } = useForm({
     defaultValues: {
       search: '',
@@ -37,9 +39,11 @@ export default function EditItemTagsScreen({
           <View className="p-4 pt-0 justify-between space-y-2 flex-1">
             <View className="space-y-4">
               <View className="space-y-2">
-                <Text className="text-2xl dark:text-white font-bold">Tags</Text>
+                <Text className="text-2xl dark:text-white font-bold">
+                  {t('edit.item.tags.title')}
+                </Text>
                 <Text className="text-neutral-500 dark:text-neutral-400">
-                  Edit item's tags
+                  {t('edit.item.tags.subTitle')}
                 </Text>
               </View>
               <View>
@@ -50,7 +54,7 @@ export default function EditItemTagsScreen({
                       {...field}
                       autoFocus
                       onChangeText={field.onChange}
-                      placeholder="Add a tag"
+                      placeholder={t('edit.item.tags.form.tags.placeholder')}
                     />
                   )}
                   name="search"
@@ -58,7 +62,7 @@ export default function EditItemTagsScreen({
               </View>
             </View>
             <Button onPress={handleSubmit(onSubmit)}>
-              <Button.Text>Save</Button.Text>
+              <Button.Text>{t('edit.item.tags.form.submit')}</Button.Text>
             </Button>
           </View>
         </KeyboardAvoidingView>
