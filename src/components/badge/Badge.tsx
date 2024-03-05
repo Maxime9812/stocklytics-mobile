@@ -2,7 +2,7 @@ import { Text, View } from 'react-native';
 import { clsx } from 'clsx';
 
 type BadgeProps = View['props'] & {
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
 };
 export default function Badge({
   children,
@@ -23,6 +23,7 @@ export default function Badge({
           'dark:text-white',
           size == 'sm' && 'text-xs',
           size == 'md' && 'text-md',
+          size == 'lg' && 'text-[16px]',
         )}
       >
         {children}

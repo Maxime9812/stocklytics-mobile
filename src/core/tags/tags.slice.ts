@@ -25,6 +25,8 @@ export const tagsSelectors = tagsAdapter.getSelectors<RootState>(
   (state) => state.tags,
 );
 
+export const selectAllTags = tagsSelectors.selectAll;
+
 export const selectTags = createSelector(
   [tagsSelectors.selectAll],
   (tags) => (ids: string[]) => tags.filter((tag) => ids.includes(tag.id)),

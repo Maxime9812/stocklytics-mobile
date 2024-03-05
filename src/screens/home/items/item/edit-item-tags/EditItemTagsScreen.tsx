@@ -5,12 +5,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { ItemsStackScreenProps } from '../../../../../navigation/ItemsNavigation';
 import CloseKeyboardOnTouch from '../../../../../components/CloseKeyboardOnTouch';
 import BaseLayout from '../../../../../components/layouts/BaseLayout';
-import BaseTextInput from '../../../../../components/inputs/BaseTextInput';
 import Button from '../../../../../components/buttons/Button';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { createEditItemTagsViewModel } from './edit-item-tags.viewmodel';
+import TagsInput from '../../../../../components/inputs/tags-input/TagsInput';
+import { useEffect } from 'react';
 
 const formSchema = yup.object({
-  search: yup.string(),
+  tagIds: yup.array().of(yup.string().required()).required(),
 });
 
 export default function EditItemTagsScreen({
@@ -19,12 +22,20 @@ export default function EditItemTagsScreen({
   },
 }: ItemsStackScreenProps<'EditItemTags'>) {
   const { t } = useTranslation('home');
-  const { control, handleSubmit } = useForm({
+  const dispatch = useDispatch();
+  const { tags } = useSelector(
+    createEditItemTagsViewModel({ itemId, dispatch }),
+  );
+  const { control, handleSubmit, setValue } = useForm({
     defaultValues: {
-      search: '',
+      tagIds: [],
     },
     resolver: yupResolver(formSchema),
   });
+
+  useEffect(() => {
+    setValue('tagIds', tags);
+  }, [tags, setValue]);
 
   const onSubmit = () => {};
 
@@ -37,7 +48,7 @@ export default function EditItemTagsScreen({
           keyboardVerticalOffset={50}
         >
           <View className="p-4 pt-0 justify-between space-y-2 flex-1">
-            <View className="space-y-4">
+            <View className="space-y-4 flex-1">
               <View className="space-y-2">
                 <Text className="text-2xl dark:text-white font-bold">
                   {t('edit.item.tags.title')}
@@ -46,18 +57,17 @@ export default function EditItemTagsScreen({
                   {t('edit.item.tags.subTitle')}
                 </Text>
               </View>
-              <View>
+              <View className="flex-1">
                 <Controller
                   control={control}
                   render={({ field }) => (
-                    <BaseTextInput
-                      {...field}
+                    <TagsInput
+                      tagIds={field.value}
+                      onChange={field.onChange}
                       autoFocus
-                      onChangeText={field.onChange}
-                      placeholder={t('edit.item.tags.form.tags.placeholder')}
                     />
                   )}
-                  name="search"
+                  name="tagIds"
                 />
               </View>
             </View>

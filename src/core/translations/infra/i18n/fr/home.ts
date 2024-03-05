@@ -115,11 +115,12 @@ const home: HomeTranslation = {
         title: 'Labels',
         subTitle: 'Ajouter ou modifier les labels',
         form: {
-          tags: {
-            placeholder: 'Labels',
+          search: {
+            placeholder: 'Rechercher',
           },
           submit: 'Sauvegarder',
         },
+        emptyTags: 'Aucun label disponible',
       },
       note: {
         title: 'Note',

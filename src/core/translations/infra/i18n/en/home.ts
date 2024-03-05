@@ -113,9 +113,6 @@ export default {
         title: 'Tags',
         subTitle: 'Edit item tags',
         form: {
-          tags: {
-            placeholder: 'Tags',
-          },
           submit: 'Save',
         },
       },

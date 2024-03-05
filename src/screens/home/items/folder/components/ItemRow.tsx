@@ -66,12 +66,12 @@ export default function ItemRow({
               </Text>
             )}
           </View>
-          <View className="flex-col justify-between">
+          <View className="flex-col justify-between flex-1">
             <Text className="text-lg font-bold dark:text-white">{name}</Text>
             <Text className="text-neutral-500">
               {t('items.unit', { count: quantity })}
             </Text>
-            <View className="flex-row space-x-2">
+            <View className="flex-row flex-wrap gap-2">
               {tags.map((tag) => (
                 <Badge key={tag.id} size="sm">
                   {tag.name}
