@@ -3,6 +3,7 @@ import { tagsAdapter, TagsEntityState } from './hexagon/models/tag.model';
 import { getItemsInFolderUseCase } from '../items/hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
 import { RootState } from '../create-store';
 import { getAllTagsUseCase } from './hexagon/usecases/get-all-tags/get-all-tags.usecase';
+import { createTagUseCase } from './hexagon/usecases/create-tag/create-tag.usecase';
 
 export type TagSliceState = TagsEntityState;
 
@@ -22,6 +23,9 @@ export const tagsSlice = createSlice({
       })
       .addCase(getAllTagsUseCase.fulfilled, (state, action) => {
         tagsAdapter.upsertMany(state, action.payload);
+      })
+      .addCase(createTagUseCase.fulfilled, (state, action) => {
+        tagsAdapter.addOne(state, action.payload);
       });
   },
 });

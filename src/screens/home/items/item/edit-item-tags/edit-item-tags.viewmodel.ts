@@ -17,5 +17,6 @@ export const createEditItemTagsViewModel = ({
     const setTags = (tagIds: string[]) => {
       return dispatch(setItemTagsUseCase({ itemId, tagIds }));
     };
+
     return { tags: item?.tags, setTags };
   });

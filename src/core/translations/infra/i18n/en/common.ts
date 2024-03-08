@@ -1,7 +1,7 @@
 export default {
   inputTags: {
     search: {
-      placeholder: 'Search tags',
+      placeholder: 'Search or create tags',
     },
     createAndAdd: 'Create and add ',
     emptyTags: 'No tags available',

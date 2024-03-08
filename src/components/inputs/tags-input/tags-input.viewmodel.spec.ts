@@ -3,6 +3,8 @@ import { stateBuilder } from '../../../core/state-builder';
 import { tagBuilder } from '../../../core/tags/__tests__/tag.builder';
 import { createTestStore, EMPTY_ARGS } from '../../../core/create-store';
 import { getAllTagsUseCase } from '../../../core/tags/hexagon/usecases/get-all-tags/get-all-tags.usecase';
+import { createTagUseCase } from '../../../core/tags/hexagon/usecases/create-tag/create-tag.usecase';
+import { DeterministicUUIDProvider } from '../../../core/common/uuid-provider/deterministic-uuid.provider';
 
 describe('TagsInputViewModel', () => {
   it('Should call getAllTagsUseCase when call loadTags', () => {
@@ -11,7 +13,9 @@ describe('TagsInputViewModel', () => {
     const { loadTags } = createTagsInputViewModel({
       tagIds: [],
       onChange: jest.fn(),
+      setSearch: jest.fn(),
       dispatch: store.dispatch,
+      uuidProvider: new DeterministicUUIDProvider(),
     })(store.getState());
 
     loadTags();
@@ -31,7 +35,9 @@ describe('TagsInputViewModel', () => {
     const { tags } = createTagsInputViewModel({
       tagIds: ['tag-id', 'tag-id-2'],
       onChange: jest.fn(),
+      setSearch: jest.fn(),
       dispatch: jest.fn(),
+      uuidProvider: new DeterministicUUIDProvider(),
     })(state);
 
     expect(tags).toEqual([
@@ -57,7 +63,9 @@ describe('TagsInputViewModel', () => {
     const { tags } = createTagsInputViewModel({
       tagIds,
       onChange,
+      setSearch: jest.fn(),
       dispatch: jest.fn(),
+      uuidProvider: new DeterministicUUIDProvider(),
     })(state);
 
     tags[0].delete();
@@ -75,7 +83,9 @@ describe('TagsInputViewModel', () => {
       const { availableTags } = createTagsInputViewModel({
         tagIds: [],
         onChange: jest.fn(),
+        setSearch: jest.fn(),
         dispatch: jest.fn(),
+        uuidProvider: new DeterministicUUIDProvider(),
       })(state);
 
       expect(availableTags).toEqual([
@@ -94,7 +104,9 @@ describe('TagsInputViewModel', () => {
       const { availableTags } = createTagsInputViewModel({
         tagIds: ['tag-id'],
         onChange: jest.fn(),
+        setSearch: jest.fn(),
         dispatch: jest.fn(),
+        uuidProvider: new DeterministicUUIDProvider(),
       })(state);
 
       expect(availableTags).toEqual([
@@ -118,7 +130,9 @@ describe('TagsInputViewModel', () => {
       const { availableTags } = createTagsInputViewModel({
         tagIds,
         onChange,
+        setSearch: jest.fn(),
         dispatch: jest.fn(),
+        uuidProvider: new DeterministicUUIDProvider(),
       })(state);
 
       availableTags[0].add();
@@ -131,8 +145,10 @@ describe('TagsInputViewModel', () => {
 
       const { availableTagsIsEmpty } = createTagsInputViewModel({
         tagIds: [],
+        setSearch: jest.fn(),
         onChange: jest.fn(),
         dispatch: jest.fn(),
+        uuidProvider: new DeterministicUUIDProvider(),
       })(state);
 
       expect(availableTagsIsEmpty).toEqual(true);
@@ -143,8 +159,10 @@ describe('TagsInputViewModel', () => {
 
       const { availableTagsIsEmpty } = createTagsInputViewModel({
         tagIds: [],
+        setSearch: jest.fn(),
         onChange: jest.fn(),
         dispatch: jest.fn(),
+        uuidProvider: new DeterministicUUIDProvider(),
       })(state);
 
       expect(availableTagsIsEmpty).toEqual(false);
@@ -162,8 +180,10 @@ describe('TagsInputViewModel', () => {
         const { availableTags } = createTagsInputViewModel({
           search: 'Pho',
           tagIds: [],
+          setSearch: jest.fn(),
           onChange: jest.fn(),
           dispatch: jest.fn(),
+          uuidProvider: new DeterministicUUIDProvider(),
         })(state);
 
         expect(availableTags).toEqual([
@@ -181,8 +201,10 @@ describe('TagsInputViewModel', () => {
         const { availableTags } = createTagsInputViewModel({
           search: 'pho',
           tagIds: [],
+          setSearch: jest.fn(),
           onChange: jest.fn(),
           dispatch: jest.fn(),
+          uuidProvider: new DeterministicUUIDProvider(),
         })(state);
 
         expect(availableTags).toEqual([
@@ -199,8 +221,10 @@ describe('TagsInputViewModel', () => {
       const { canAddNewTag } = createTagsInputViewModel({
         search: 'Phone',
         tagIds: [],
+        setSearch: jest.fn(),
         onChange: jest.fn(),
         dispatch: jest.fn(),
+        uuidProvider: new DeterministicUUIDProvider(),
       })(state);
 
       expect(canAddNewTag).toEqual(true);
@@ -212,8 +236,10 @@ describe('TagsInputViewModel', () => {
       const { canAddNewTag } = createTagsInputViewModel({
         search: '',
         tagIds: [],
+        setSearch: jest.fn(),
         onChange: jest.fn(),
         dispatch: jest.fn(),
+        uuidProvider: new DeterministicUUIDProvider(),
       })(state);
 
       expect(canAddNewTag).toEqual(false);
@@ -227,11 +253,87 @@ describe('TagsInputViewModel', () => {
       const { canAddNewTag } = createTagsInputViewModel({
         search: 'Pho',
         tagIds: [],
+        setSearch: jest.fn(),
         onChange: jest.fn(),
         dispatch: jest.fn(),
+        uuidProvider: new DeterministicUUIDProvider(),
       })(state);
 
       expect(canAddNewTag).toEqual(false);
+    });
+
+    it('Should call createTagUseCase when addNewTag', async () => {
+      const store = createTestStore();
+      const uuidProvider = new DeterministicUUIDProvider();
+      uuidProvider.givenUUID('tag-id');
+
+      const { addNewTag } = createTagsInputViewModel({
+        tagIds: [],
+        onChange: jest.fn(),
+        setSearch: jest.fn(),
+        search: 'Phone',
+        dispatch: store.dispatch,
+        uuidProvider,
+      })(store.getState());
+
+      await addNewTag();
+
+      expect(store.getDispatchedUseCaseArgs(createTagUseCase)).toEqual({
+        id: 'tag-id',
+        name: 'Phone',
+      });
+    });
+
+    it('Should add new tag when created', async () => {
+      const state = stateBuilder().build();
+      const store = createTestStore();
+      const uuidProvider = new DeterministicUUIDProvider();
+      uuidProvider.givenUUID('tag-id-2');
+
+      let tagIds = ['tag-id'];
+
+      const onChange = (newTagIds: string[]) => {
+        tagIds = newTagIds;
+      };
+
+      const { addNewTag } = createTagsInputViewModel({
+        tagIds,
+        onChange,
+        setSearch: jest.fn(),
+        search: 'Phone',
+        dispatch: store.dispatch,
+        uuidProvider,
+      })(state);
+
+      await addNewTag();
+
+      expect(tagIds).toEqual(['tag-id', 'tag-id-2']);
+    });
+
+    it('Should clear search when add new tag', async () => {
+      const state = stateBuilder().build();
+      const store = createTestStore();
+      const uuidProvider = new DeterministicUUIDProvider();
+      uuidProvider.givenUUID('tag-id-2');
+
+      let search = 'Phone';
+
+      const setSearch = (newSearch: string) => {
+        search = newSearch;
+      };
+
+      const { addNewTag } = createTagsInputViewModel({
+        tagIds: [],
+        onChange: jest.fn(),
+        setSearch,
+        search,
+        dispatch: store.dispatch,
+        uuidProvider,
+      })(state);
+
+      await addNewTag();
+
+      expect(search).toEqual('');
     });
   });
 });

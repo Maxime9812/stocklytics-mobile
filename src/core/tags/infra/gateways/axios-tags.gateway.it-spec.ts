@@ -31,4 +31,19 @@ describe('AxiosTagsGateway', () => {
       },
     ]);
   });
+
+  describe('create', () => {
+    it('Should create a tag', async () => {
+      const scope = nock(BASE_URL)
+        .post('/tags', { id: 'tag-id', name: 'Tag name' })
+        .reply(201);
+
+      await axiosTagsGateway.createTag({
+        id: 'tag-id',
+        name: 'Tag name',
+      });
+
+      expect(scope.isDone()).toBe(true);
+    });
+  });
 });

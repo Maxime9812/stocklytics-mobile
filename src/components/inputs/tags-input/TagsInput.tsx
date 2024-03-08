@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import Card from '../../cards/Card';
 import Button from '../../buttons/Button';
 import { useTranslation } from 'react-i18next';
+import { useUuid } from '../../../hooks/use-uuid';
 
 type Props = {
   tagIds: string[];
@@ -25,10 +26,24 @@ export default function TagsInput({ tagIds, onChange, ...inputProps }: Props) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
-  const { tags, loadTags, availableTags, availableTagsIsEmpty, canAddNewTag } =
-    useSelector(
-      createTagsInputViewModel({ tagIds, onChange, dispatch, search }),
-    );
+  const uuidProvider = useUuid();
+  const {
+    tags,
+    loadTags,
+    availableTags,
+    availableTagsIsEmpty,
+    canAddNewTag,
+    addNewTag,
+  } = useSelector(
+    createTagsInputViewModel({
+      tagIds,
+      onChange,
+      dispatch,
+      search,
+      setSearch,
+      uuidProvider,
+    }),
+  );
 
   useEffect(() => {
     loadTags();
@@ -57,7 +72,7 @@ export default function TagsInput({ tagIds, onChange, ...inputProps }: Props) {
       />
       <Card type="secondary" className="flex-1">
         {canAddNewTag && (
-          <Button variant="ghost" type="secondary" onPress={() => {}}>
+          <Button variant="ghost" type="secondary" onPress={addNewTag}>
             <Button.Text>
               {t('inputTags.createAndAdd')}
               <Text className="font-bold">{search}</Text>

@@ -1,13 +1,17 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector, isRejected } from '@reduxjs/toolkit';
 import { selectAllTags, selectTags } from '../../../core/tags/tags.slice';
 import { AppDispatch } from '../../../core/create-store';
 import { getAllTagsUseCase } from '../../../core/tags/hexagon/usecases/get-all-tags/get-all-tags.usecase';
+import { UUIDProvider } from '../../../core/common/uuid-provider/UUIDProvider';
+import { createTagUseCase } from '../../../core/tags/hexagon/usecases/create-tag/create-tag.usecase';
 
 type TagsInputViewModelParams = {
   search?: string;
+  setSearch: (search: string) => void;
   tagIds: string[];
   onChange(tags: string[]): void;
   dispatch: AppDispatch;
+  uuidProvider: UUIDProvider;
 };
 
 export const createTagsInputViewModel = ({
@@ -15,6 +19,8 @@ export const createTagsInputViewModel = ({
   onChange,
   dispatch,
   search = '',
+  uuidProvider,
+  setSearch,
 }: TagsInputViewModelParams) =>
   createSelector([selectTags, selectAllTags], (selectTags, allTags) => {
     const loadTags = () => {
@@ -51,11 +57,22 @@ export const createTagsInputViewModel = ({
 
     const canAddNewTag = search.length > 0 && availableTagsIsEmpty;
 
+    const addNewTag = async () => {
+      setSearch('');
+      const id = uuidProvider.generate();
+      const action = await dispatch(createTagUseCase({ id, name: search }));
+      if (isRejected(action)) {
+        return;
+      }
+      onChange([...tagIds, id]);
+    };
+
     return {
       tags,
       loadTags,
       availableTags,
       availableTagsIsEmpty,
       canAddNewTag,
+      addNewTag,
     };
   });
