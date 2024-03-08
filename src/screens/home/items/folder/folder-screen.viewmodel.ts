@@ -77,7 +77,7 @@ export const createFolderScreenViewModel = ({
       );
       const totalQuantity = itemsQuantity + foldersItemsQuantity;
 
-      if (isLoading) {
+      if (isLoading && !items.length && !folders.length) {
         return {
           type: 'loading',
         };

@@ -35,6 +35,32 @@ describe('FolderScreenViewModel', () => {
     expect(type).toEqual('loading');
   });
 
+  it('should be in loaded state when folders items is loading but was already loaded', () => {
+    const initialState = stateBuilder()
+      .withLoadingFoldersItems(['folder-id'])
+      .withItems([itemBuilder().withFolderId('folder-id').build()])
+      .build();
+
+    const { type } = createFolderScreenViewModel({ folderId: 'folder-id' })(
+      initialState,
+    );
+
+    expect(type).toEqual('loaded');
+  });
+
+  it('should be in loaded state when folders folders is loading but was already loaded', () => {
+    const initialState = stateBuilder()
+      .withLoadingFoldersItems(['folder-id'])
+      .withFolders([folderBuilder().withParentId('folder-id').build()])
+      .build();
+
+    const { type } = createFolderScreenViewModel({ folderId: 'folder-id' })(
+      initialState,
+    );
+
+    expect(type).toEqual('loaded');
+  });
+
   it('should be in loaded state when folders items/folders is loaded', () => {
     const initialState = stateBuilder()
       .withNotLoadingFoldersItems(['folder-id'])
