@@ -231,4 +231,14 @@ describe('AxiosItemsGateway', () => {
       ).toEqual(10);
     });
   });
+
+  describe('SetTags', () => {
+    it('Should send request', async () => {
+      const scope = nock(BASE_URL)
+        .post('/items/item-id/tags', { tagIds: ['tag-id', 'tag-id-2'] })
+        .reply(200);
+      await axiosItemsGateway.setTags('item-id', ['tag-id', 'tag-id-2']);
+      expect(scope.isDone()).toBe(true);
+    });
+  });
 });

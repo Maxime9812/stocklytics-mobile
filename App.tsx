@@ -15,6 +15,8 @@ import { AxiosScannerGateway } from './src/core/scanner/infra/gateways/axios-sca
 import { CameraVisionPermissionGateway } from './src/core/permissions/infra/gateways/camera/camera-vision-permission.gateway';
 import { ImagePickerMediaLibraryPermissionGateway } from './src/core/permissions/infra/gateways/media-library/image-picker-media-library-permission.gateway';
 import { LocalizationTransactionGateway } from './src/core/translations/infra/gateways/localization-transaction.gateway';
+import { StubTagsGateway } from './src/core/tags/infra/gateways/stub-tags.gateway';
+import { AxiosTagsGateway } from './src/core/tags/infra/gateways/axios-tags.gateway';
 
 const stubAuthGateway = new StubAuthGateway(2000);
 stubAuthGateway.givenUserWithCredentials({
@@ -30,7 +32,7 @@ stubAuthGateway.givenUserWithCredentials({
 });
 const authGateway = new AsyncStorageAuthGateway(stubAuthGateway);
 const axiosInstance = axios.create({
-  baseURL: 'http://192.168.5.63:3000',
+  baseURL: 'http://192.168.5.71:3000',
   withCredentials: true,
 });
 
@@ -81,6 +83,10 @@ foldersGateway.givenFoldersInFolder([
 
 const axiosFolderGateway = new AxiosFoldersGateway(axiosInstance);
 
+const tagsGateway = new StubTagsGateway();
+
+const axiosTagsGateway = new AxiosTagsGateway(axiosInstance);
+
 const uuidProvider = new CryptoUUIDProvider();
 const scannerGateway = new AxiosScannerGateway(axiosInstance);
 const cameraPermissionGateway = new CameraVisionPermissionGateway();
@@ -89,13 +95,14 @@ const mediaLibraryPermissionGateway =
 
 const store = createStore(
   {
-    authGateway,
-    itemsGateway,
-    foldersGateway,
+    authGateway: axiosAuthGateway,
+    itemsGateway: axiosItemGateways,
+    foldersGateway: axiosFolderGateway,
     uuidProvider,
     scannerGateway,
     cameraPermissionGateway,
     mediaLibraryPermissionGateway,
+    tagsGateway: axiosTagsGateway,
   },
   stateBuilder().build(),
 );

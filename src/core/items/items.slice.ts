@@ -16,6 +16,7 @@ import { LinkBarcodeError } from './hexagon/gateways/items.gateway';
 import { deleteItemImageUseCase } from './hexagon/usecases/delete-item-image/delete-item-image.usecase';
 import { addImageToItemUseCase } from './hexagon/usecases/add-image-to-item/add-image-to-item.usecase';
 import { adjustItemQuantityUseCase } from './hexagon/usecases/adjust-item-quantity/adjust-item-quantity.usecase';
+import { setItemTagsUseCase } from './hexagon/usecases/set-item-tags/set-item-tags.usecase';
 
 export type ItemsSliceState = ItemsEntityState & {
   isLoadingById: Record<string, boolean>;
@@ -124,6 +125,12 @@ export const itemsSlice = createSlice({
         itemsAdapter.updateOne(state, {
           id: action.meta.arg.itemId,
           changes: { quantity: action.payload },
+        });
+      })
+      .addCase(setItemTagsUseCase.fulfilled, (state, action) => {
+        itemsAdapter.updateOne(state, {
+          id: action.meta.arg.itemId,
+          changes: { tags: action.meta.arg.tagIds },
         });
       });
   },

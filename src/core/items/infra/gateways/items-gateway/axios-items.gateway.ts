@@ -114,4 +114,8 @@ export class AxiosItemsGateway implements ItemsGateway {
     });
     return response.data.quantity;
   }
+
+  async setTags(itemId: string, tagIds: string[]): Promise<void> {
+    await this.axios.post(`/items/${itemId}/tags`, { tagIds });
+  }
 }

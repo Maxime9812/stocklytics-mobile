@@ -2,6 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { tagsAdapter, TagsEntityState } from './hexagon/models/tag.model';
 import { getItemsInFolderUseCase } from '../items/hexagon/usecases/get-items-in-folder/get-items-in-folder.usecase';
 import { RootState } from '../create-store';
+import { getAllTagsUseCase } from './hexagon/usecases/get-all-tags/get-all-tags.usecase';
 
 export type TagSliceState = TagsEntityState;
 
@@ -12,12 +13,16 @@ export const tagsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getItemsInFolderUseCase.fulfilled, (state, action) => {
-      tagsAdapter.upsertMany(
-        state,
-        action.payload.flatMap((item) => item.tags),
-      );
-    });
+    builder
+      .addCase(getItemsInFolderUseCase.fulfilled, (state, action) => {
+        tagsAdapter.upsertMany(
+          state,
+          action.payload.flatMap((item) => item.tags),
+        );
+      })
+      .addCase(getAllTagsUseCase.fulfilled, (state, action) => {
+        tagsAdapter.upsertMany(state, action.payload);
+      });
   },
 });
 

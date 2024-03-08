@@ -152,10 +152,12 @@ const LoadedItemScreen = ({
                 </Button>
               </View>
             </Card.Header>
-            <View className="flex-row flex-wrap gap-2">
-              {item.tags.map((tag) => (
-                <Badge key={tag.id}>{tag.name}</Badge>
-              ))}
+            <View>
+              <View className="flex-row flex-wrap gap-2">
+                {item.tags.map((tag) => (
+                  <Badge key={tag.id}>{tag.name}</Badge>
+                ))}
+              </View>
             </View>
           </Card>
 

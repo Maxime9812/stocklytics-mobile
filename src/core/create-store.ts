@@ -24,6 +24,8 @@ import { onLoadCheckCameraPermissions } from './permissions/hexagon/listeners/on
 import { MediaLibraryPermissionGateway } from './permissions/hexagon/gateways/media-library-permission.gateway';
 import { StubMediaLibraryPermissionGateway } from './permissions/infra/gateways/media-library/stub-media-library-permission.gateway';
 import { onLoadCheckMediaLibraryPermissions } from './permissions/hexagon/listeners/on-load-check-media-library-permissions/on-load-check-media-library-permissions';
+import { TagsGateway } from './tags/hexagon/gateways/tags.gateway';
+import { StubTagsGateway } from './tags/infra/gateways/stub-tags.gateway';
 
 export type Dependencies = {
   authGateway: AuthGateway;
@@ -33,6 +35,7 @@ export type Dependencies = {
   scannerGateway: ScannerGateway;
   cameraPermissionGateway: CameraPermissionGateway;
   mediaLibraryPermissionGateway: MediaLibraryPermissionGateway;
+  tagsGateway: TagsGateway;
 };
 
 export const EMPTY_ARGS = 'EMPTY_ARGS' as const;
@@ -75,6 +78,7 @@ export const createTestStore = (
     scannerGateway = new StubScannerGateway(),
     cameraPermissionGateway = new StubCameraPermissionGateway(),
     mediaLibraryPermissionGateway = new StubMediaLibraryPermissionGateway(),
+    tagsGateway = new StubTagsGateway(),
   }: Partial<Dependencies> = {},
   preloadedState: Partial<RootState> = {},
 ) => {
@@ -95,6 +99,7 @@ export const createTestStore = (
       scannerGateway,
       cameraPermissionGateway,
       mediaLibraryPermissionGateway,
+      tagsGateway,
     },
     preloadedState,
     [logActionsMiddleware],

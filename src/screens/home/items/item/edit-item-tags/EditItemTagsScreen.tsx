@@ -11,22 +11,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createEditItemTagsViewModel } from './edit-item-tags.viewmodel';
 import TagsInput from '../../../../../components/inputs/tags-input/TagsInput';
 import { useEffect } from 'react';
+import { InferType } from 'yup';
+import { isRejected } from '@reduxjs/toolkit';
 
 const formSchema = yup.object({
   tagIds: yup.array().of(yup.string().required()).required(),
 });
 
+type FormValues = InferType<typeof formSchema>;
+
 export default function EditItemTagsScreen({
+  navigation,
   route: {
     params: { itemId },
   },
 }: ItemsStackScreenProps<'EditItemTags'>) {
   const { t } = useTranslation('home');
   const dispatch = useDispatch();
-  const { tags } = useSelector(
+  const { tags, setTags } = useSelector(
     createEditItemTagsViewModel({ itemId, dispatch }),
   );
-  const { control, handleSubmit, setValue } = useForm({
+  const { control, handleSubmit, setValue } = useForm<FormValues>({
     defaultValues: {
       tagIds: [],
     },
@@ -37,7 +42,12 @@ export default function EditItemTagsScreen({
     setValue('tagIds', tags);
   }, [tags, setValue]);
 
-  const onSubmit = () => {};
+  const onSubmit = (form: FormValues) => {
+    const action = setTags(form.tagIds);
+    if (isRejected(action)) return;
+
+    navigation.goBack();
+  };
 
   return (
     <CloseKeyboardOnTouch>

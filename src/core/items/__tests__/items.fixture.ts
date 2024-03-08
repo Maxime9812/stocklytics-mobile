@@ -44,6 +44,10 @@ import {
   adjustItemQuantityUseCase,
   AdjustItemQuantityUseCasePayload,
 } from '../hexagon/usecases/adjust-item-quantity/adjust-item-quantity.usecase';
+import {
+  setItemTagsUseCase,
+  SetItemTagsUseCasePayload,
+} from '../hexagon/usecases/set-item-tags/set-item-tags.usecase';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
@@ -133,6 +137,13 @@ export const createItemsFixture = () => {
     whenAdjustQuantity: (payload: AdjustItemQuantityUseCasePayload) => {
       store = createTestStore({ itemsGateway }, initialState.build());
       return store.dispatch(adjustItemQuantityUseCase(payload));
+    },
+    whenSetTags: (payload: SetItemTagsUseCasePayload) => {
+      store = createTestStore({ itemsGateway }, initialState.build());
+      return store.dispatch(setItemTagsUseCase(payload));
+    },
+    thenSetTagsIsRequested: (itemId: string, tagIds: string[]) => {
+      expect(itemsGateway.lastTagsSet).toEqual({ itemId, tagIds });
     },
     thenUnlinkBarcodeIsRequestedFor: (itemId: string) => {
       expect(itemsGateway.lastUnlinkedItemId).toEqual(itemId);

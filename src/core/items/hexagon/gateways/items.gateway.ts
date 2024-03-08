@@ -67,4 +67,5 @@ export interface ItemsGateway {
   deleteImage(itemId: string): Promise<void>;
   addImage(payload: AddItemImagePayload): Promise<string>;
   adjustQuantity(payload: AdjustItemQuantityPayload): Promise<number>;
+  setTags(itemId: string, tagIds: string[]): Promise<void>;
 }

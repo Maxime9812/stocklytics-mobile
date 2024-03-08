@@ -22,6 +22,7 @@ export class StubItemsGateway implements ItemsGateway {
   lastUnlinkedItemId: string | undefined;
   lastNameChange: EditNamePayload | undefined;
   lastDeletedItemImageId: string | undefined;
+  lastTagsSet: { itemId: string; tagIds: string[] } | undefined;
   private linkBarcodeError: LinkBarcodeError | undefined;
   private itemQuantityAdjustment: Map<string, number> = new Map();
 
@@ -104,6 +105,15 @@ export class StubItemsGateway implements ItemsGateway {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.imageUrlAdded.get(this.getImageAddedKey(payload))!);
+      }, this.delay);
+    });
+  }
+
+  async setTags(itemId: string, tagIds: string[]): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.lastTagsSet = { itemId, tagIds };
+        resolve();
       }, this.delay);
     });
   }
