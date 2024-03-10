@@ -1,8 +1,8 @@
 import { Text, View } from 'react-native';
-import Card from '../../../../../../components/cards/Card';
+import Card from '../../../../../../../components/cards/Card';
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
-import Button from '../../../../../../components/buttons/Button';
+import Button from '../../../../../../../components/buttons/Button';
 import { styled } from 'nativewind';
 import { useTranslation } from 'react-i18next';
 

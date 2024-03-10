@@ -9,7 +9,7 @@ import {
 import { RootStack, RootStackScreenProps } from './NavigationProvider';
 import FolderScreen from '../screens/home/items/folder/FolderScreen';
 import StackBackButton from '../components/stack-navigation/StackBackButton';
-import FolderScreenHeader from '../screens/home/items/folder/components/header/FolderScreenHeader';
+import FolderScreenHeader from '../screens/home/items/folder/components/header/right/FolderScreenHeader';
 import AddFolderScreen from '../screens/home/items/add-folder/AddFolderScreen';
 import DeleteFolderScreen from '../screens/home/items/delete-folder/DeleteFolderScreen';
 import LinkBarcodeScreen from '../screens/home/items/item/link-barcode/LinkBarcodeScreen';
@@ -65,7 +65,9 @@ export default function ItemsNavigation() {
           headerTitle: () => (
             <FolderScreenTitle route={route} navigation={navigation} />
           ),
-          headerRight: () => <FolderScreenHeader />,
+          headerRight: () => (
+            <FolderScreenHeader route={route} navigation={navigation} />
+          ),
         })}
       />
       <Stack.Group

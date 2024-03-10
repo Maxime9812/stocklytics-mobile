@@ -50,7 +50,7 @@ const LoadedItemScreen = ({
   viewModel: { item },
   navigation,
 }: LoadedItemScreenProps) => {
-  const { t } = useTranslation('home');
+  const { t } = useTranslation(['home', 'common']);
   const goToEditName = () => {
     navigation.push('EditItemName', { itemId: item.id });
   };
@@ -108,7 +108,7 @@ const LoadedItemScreen = ({
               </Button.Icon>
 
               <Button.Text>
-                {item.folder ? item.folder.name : 'Root'}
+                {item.folder ? item.folder.name : t('common:folder.rootName')}
               </Button.Text>
             </Button>
           </Card>

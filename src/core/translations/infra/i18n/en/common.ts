@@ -1,4 +1,7 @@
 export default {
+  folder: {
+    rootName: 'Root',
+  },
   inputTags: {
     search: {
       placeholder: 'Search or create tags',

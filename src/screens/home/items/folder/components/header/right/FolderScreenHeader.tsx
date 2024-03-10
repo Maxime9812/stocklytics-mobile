@@ -4,19 +4,27 @@ import { Feather } from '@expo/vector-icons';
 import { Portal } from '@gorhom/portal';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useRef, useState } from 'react';
-import ThemedBottomSheet from '../../../../../../components/bottom-sheet/ThemedBottomSheet';
+import ThemedBottomSheet from '../../../../../../../components/bottom-sheet/ThemedBottomSheet';
 import NewElementBottomSheetContent from './NewElementBottomSheetContent';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { ItemsStackScreenProps } from '../../../../../../navigation/ItemsNavigation';
-import Button from '../../../../../../components/buttons/Button';
+import { ItemsStackScreenProps } from '../../../../../../../navigation/ItemsNavigation';
+import Button from '../../../../../../../components/buttons/Button';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { createFolderScreenHeaderRightViewModel } from './folder-screen-header-right.viewmodel';
 
 const Icon = styled(Feather, 'text-white text-lg');
 
-export default function FolderScreenHeader(props: View['props']) {
+export default function FolderScreenHeader({
+  route: { params: { id } = {} },
+}: ItemsStackScreenProps<'Folder'>) {
   const { t } = useTranslation('home');
+  const { t: commonT } = useTranslation('common');
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const { folderName } = useSelector(
+    createFolderScreenHeaderRightViewModel(id),
+  );
 
   const navigation =
     useNavigation<ItemsStackScreenProps<'Folder'>['navigation']>();
@@ -38,7 +46,7 @@ export default function FolderScreenHeader(props: View['props']) {
   };
 
   return (
-    <View {...props}>
+    <View>
       <Button size="sm" onPress={openBottomSheet}>
         <Icon name="plus" />
         <Button.Text className="text-white font-bold">
@@ -56,7 +64,7 @@ export default function FolderScreenHeader(props: View['props']) {
           >
             <BottomSheetView>
               <NewElementBottomSheetContent
-                folderName="Folder"
+                folderName={commonT(folderName, { defaultValue: folderName })}
                 onAddFolder={onPressFolder}
                 onAddItem={onPressItem}
               />

@@ -1,6 +1,9 @@
 import { CommonTranslation } from '../type';
 
 const common: CommonTranslation = {
+  folder: {
+    rootName: 'Racine',
+  },
   inputTags: {
     search: {
       placeholder: 'Rechercher ou créer des labels',
