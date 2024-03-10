@@ -20,6 +20,7 @@ import EditItemTagsScreen from '../screens/home/items/item/edit-item-tags/EditIt
 import EditItemNameScreen from '../screens/home/items/item/edit-item-name/EditItemNameScreen';
 import AddItemScreen from '../screens/home/items/item/add-item/AddItemScreen';
 import EditQuantityScreen from '../screens/home/items/item/edit-quantity/EditQuantityScreen';
+import FolderScreenTitle from '../screens/home/items/folder/components/header/title/FolderScreenTitle';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
@@ -60,9 +61,12 @@ export default function ItemsNavigation() {
       <Stack.Screen
         name="Folder"
         component={FolderScreen}
-        options={{
+        options={({ route, navigation }) => ({
+          headerTitle: () => (
+            <FolderScreenTitle route={route} navigation={navigation} />
+          ),
           headerRight: () => <FolderScreenHeader />,
-        }}
+        })}
       />
       <Stack.Group
         screenOptions={{
