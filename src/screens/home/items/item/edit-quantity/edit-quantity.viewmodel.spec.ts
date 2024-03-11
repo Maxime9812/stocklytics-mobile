@@ -64,4 +64,34 @@ describe('EditQuantityViewModel', () => {
 
     expect(itemName).toEqual('item-name');
   });
+
+  describe('Can adjust', () => {
+    it('Should return true when newQuantity is positive', () => {
+      const state = stateBuilder()
+        .withItems([itemBuilder().withId('item-id').withQuantity(100).build()])
+        .build();
+
+      const { canAdjust } = createEditQuantityViewModel({
+        dispatch: jest.fn,
+        itemId: 'item-id',
+        quantityToAdjust: -5,
+      })(state);
+
+      expect(canAdjust).toBeTruthy();
+    });
+
+    it('Should return false when newQuantity is negative', () => {
+      const state = stateBuilder()
+        .withItems([itemBuilder().withId('item-id').withQuantity(100).build()])
+        .build();
+
+      const { canAdjust } = createEditQuantityViewModel({
+        dispatch: jest.fn,
+        itemId: 'item-id',
+        quantityToAdjust: -101,
+      })(state);
+
+      expect(canAdjust).toBeFalsy();
+    });
+  });
 });

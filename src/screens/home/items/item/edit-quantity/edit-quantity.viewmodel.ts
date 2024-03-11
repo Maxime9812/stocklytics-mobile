@@ -23,5 +23,7 @@ export const createEditQuantityViewModel = ({
     const adjustedQuantity = currentQuantity + (quantityToAdjust ?? 0);
     const itemName = item?.name;
 
-    return { adjust, currentQuantity, adjustedQuantity, itemName };
+    const canAdjust = adjustedQuantity > 0;
+
+    return { adjust, currentQuantity, adjustedQuantity, itemName, canAdjust };
   });

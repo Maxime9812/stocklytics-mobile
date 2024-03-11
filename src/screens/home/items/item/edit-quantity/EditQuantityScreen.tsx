@@ -37,15 +37,16 @@ export default function EditQuantityScreen({
   const { handleSubmit, control, formState, watch } = useForm<FormValues>({
     resolver: yupResolver(formSchema),
   });
-  const { adjustedQuantity, adjust, currentQuantity, itemName } = useSelector(
-    createEditQuantityViewModel({
-      itemId,
-      dispatch,
-      quantityToAdjust,
-    }),
-  );
+  const { adjustedQuantity, adjust, currentQuantity, itemName, canAdjust } =
+    useSelector(
+      createEditQuantityViewModel({
+        itemId,
+        dispatch,
+        quantityToAdjust,
+      }),
+    );
 
-  const canSubmit = formState.isValid;
+  const canSubmit = formState.isValid && canAdjust;
 
   watch((value) => {
     setQuantityToAdjust(value.quantity);
