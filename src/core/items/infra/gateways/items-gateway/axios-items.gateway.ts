@@ -91,7 +91,7 @@ export class AxiosItemsGateway implements ItemsGateway {
     };
 
     formData.append('image', file as any);
-    formData.append('imageId', '152840e0-48e0-4632-8f77-8f2d312ae627');
+    formData.append('imageId', payload.itemId);
 
     const response = await this.axios.post(
       `/items/${payload.itemId}/images`,
