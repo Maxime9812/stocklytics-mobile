@@ -93,5 +93,19 @@ describe('EditQuantityViewModel', () => {
 
       expect(canAdjust).toBeFalsy();
     });
+
+    it('Should return true when newQuantity is 0', () => {
+      const state = stateBuilder()
+        .withItems([itemBuilder().withId('item-id').withQuantity(100).build()])
+        .build();
+
+      const { canAdjust } = createEditQuantityViewModel({
+        dispatch: jest.fn,
+        itemId: 'item-id',
+        quantityToAdjust: -100,
+      })(state);
+
+      expect(canAdjust).toBeTruthy();
+    });
   });
 });
