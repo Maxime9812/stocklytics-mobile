@@ -2,7 +2,7 @@ import { createAppAsyncThunk } from '../../../../create-app-async-thunk';
 
 export type MoveItemUseCasePayload = {
   itemId: string;
-  folderId: string;
+  folderId?: string;
 };
 
 export const moveItemUseCase = createAppAsyncThunk(

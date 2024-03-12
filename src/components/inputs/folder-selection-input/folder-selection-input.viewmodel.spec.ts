@@ -251,7 +251,6 @@ describe('FolderSelectionInputViewModel', () => {
         expect(value).toEqual('folder-id');
       });
     });
-
     describe('When folder is selected', () => {
       describe('When folder is already selected', () => {
         it('should unselect folder', async () => {
@@ -293,6 +292,52 @@ describe('FolderSelectionInputViewModel', () => {
           expect(value).toEqual('folder-id');
         });
       });
+    });
+    describe('When folder is root', () => {
+      it('should select root folder', async () => {
+        let value: string | undefined = 'folder-id';
+        const onChange = (folderId?: string) => {
+          value = folderId;
+        };
+
+        const { toggleSelectFolder } = createFolderSelectionInputViewModel({
+          dispatch: jest.fn(),
+          openFolderIds: [],
+          setOpenFolderIds: jest.fn(),
+          selectedFolderId: value,
+          onChange,
+        })(stateBuilder().build());
+
+        toggleSelectFolder();
+
+        expect(value).toEqual('root');
+      });
+    });
+  });
+
+  describe('Root is selected', () => {
+    it('should be true when root is selected', () => {
+      const { isRootSelected } = createFolderSelectionInputViewModel({
+        dispatch: jest.fn(),
+        openFolderIds: [],
+        setOpenFolderIds: jest.fn(),
+        selectedFolderId: 'root',
+        onChange: jest.fn(),
+      })(stateBuilder().build());
+
+      expect(isRootSelected).toEqual(true);
+    });
+
+    it('should be false when root is NOT selected', () => {
+      const { isRootSelected } = createFolderSelectionInputViewModel({
+        dispatch: jest.fn(),
+        openFolderIds: [],
+        setOpenFolderIds: jest.fn(),
+        selectedFolderId: 'folder-id',
+        onChange: jest.fn(),
+      })(stateBuilder().build());
+
+      expect(isRootSelected).toEqual(false);
     });
   });
 });

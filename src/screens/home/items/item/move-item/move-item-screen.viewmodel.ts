@@ -5,7 +5,7 @@ import { moveItemUseCase } from '../../../../../core/items/hexagon/usecases/move
 
 type MoveItemScreenViewModelParams = {
   itemId: string;
-  selectedFolderId?: string;
+  selectedFolderId?: string | 'root';
   dispatch: AppDispatch;
 };
 export const createMoveItemScreenViewModel = ({
@@ -15,8 +15,9 @@ export const createMoveItemScreenViewModel = ({
 }: MoveItemScreenViewModelParams) =>
   createSelector([selectItemById(itemId)], (item) => {
     const moveItem = () => {
-      if (!selectedFolderId) return;
-      return dispatch(moveItemUseCase({ itemId, folderId: selectedFolderId }));
+      const folderId =
+        selectedFolderId == 'root' ? undefined : selectedFolderId;
+      return dispatch(moveItemUseCase({ itemId, folderId }));
     };
 
     return {

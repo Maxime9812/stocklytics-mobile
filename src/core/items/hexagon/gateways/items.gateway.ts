@@ -55,7 +55,7 @@ export type AdjustItemQuantityPayload = {
 
 export type MoveItemPayload = {
   itemId: string;
-  folderId: string;
+  folderId?: string;
 };
 
 export interface ItemsGateway {

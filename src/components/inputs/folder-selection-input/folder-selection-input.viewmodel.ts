@@ -57,13 +57,16 @@ export const createFolderSelectionInputViewModel = ({
       return dispatch(getFoldersInFolderUseCase(folderId));
     };
 
-    const toggleSelectFolder = (folderId: string) => {
-      if (folderId === selectedFolderId) {
+    const toggleSelectFolder = (folderId?: string) => {
+      const folder = !folderId ? 'root' : folderId;
+      if (folder === selectedFolderId) {
         onChange();
         return;
       }
-      onChange(folderId);
+      onChange(folder);
     };
 
-    return { folders, toggleFolder, toggleSelectFolder };
+    const isRootSelected = selectedFolderId === 'root';
+
+    return { folders, toggleFolder, toggleSelectFolder, isRootSelected };
   });

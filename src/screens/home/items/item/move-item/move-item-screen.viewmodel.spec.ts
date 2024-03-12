@@ -24,6 +24,26 @@ describe('MoveItemScreenViewModel', () => {
       folderId: 'folder-id',
     });
   });
+
+  it('should call moveItemUseCase when call moveItem when folder selected is root', async () => {
+    const state = stateBuilder()
+      .withItems([itemBuilder().withId('item-id').build()])
+      .build();
+    const store = createTestStore({}, state);
+
+    const { moveItem } = createMoveItemScreenViewModel({
+      dispatch: store.dispatch,
+      itemId: 'item-id',
+      selectedFolderId: 'root',
+    })(store.getState());
+
+    await moveItem();
+
+    expect(store.getDispatchedUseCaseArgs(moveItemUseCase)).toEqual({
+      itemId: 'item-id',
+    });
+  });
+
   it('Should return item name', async () => {
     const state = stateBuilder()
       .withItems([
