@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 type ItemRowProps = {
   onPress: (itemId: string) => void;
   onDelete: (itemId: string) => void;
+  onMove: (itemId: string) => void;
   item: {
     id: string;
     name: string;
@@ -21,6 +22,7 @@ type ItemRowProps = {
 export default function ItemRow({
   onPress,
   onDelete,
+  onMove,
   item: { id, name, quantity, tags, imageUrl },
 }: ItemRowProps) {
   const swipeableRef = useRef<Swipeable>(null);
@@ -29,6 +31,11 @@ export default function ItemRow({
   const onDeleteHandler = () => {
     swipeableRef.current?.close();
     onDelete(id);
+  };
+
+  const onMoveHandler = () => {
+    swipeableRef.current?.close();
+    onMove(id);
   };
 
   return (
@@ -41,7 +48,8 @@ export default function ItemRow({
       renderRightActions={(progressAnimatedValue) => {
         return (
           <ItemActions
-            onPress={onDeleteHandler}
+            onDelete={onDeleteHandler}
+            onMove={onMoveHandler}
             progress={progressAnimatedValue}
           />
         );
@@ -86,29 +94,46 @@ export default function ItemRow({
 }
 
 type ItemActionsProps = {
-  onPress: () => void;
+  onDelete: () => void;
+  onMove: () => void;
   progress: Animated.AnimatedInterpolation<string | number>;
 };
 
 const ActionIcon = styled(Feather, 'text-lg text-white');
 
-const ItemActions = ({ onPress, progress }: ItemActionsProps) => {
+const ItemActions = ({ onDelete, onMove, progress }: ItemActionsProps) => {
+  const actionWith = 60;
+  const actionsCount = 2;
+  const outputRange = actionWith * actionsCount;
   const trans = progress.interpolate({
     inputRange: [0, 1],
-    outputRange: [60, 0],
+    outputRange: [outputRange, 0],
   });
 
   return (
-    <View style={{ width: 60 }}>
-      <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
-        <Button
-          type="destructive"
-          className="flex-1 rounded-none justify-center"
-          onPress={onPress}
-        >
-          <ActionIcon name="trash" />
-        </Button>
-      </Animated.View>
+    <View className="flex-row">
+      <View style={{ width: actionWith }}>
+        <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+          <Button
+            variant="ghost"
+            className="flex-1 rounded-none justify-center items-center bg-neutral-500"
+            onPress={onMove}
+          >
+            <ActionIcon name="folder" />
+          </Button>
+        </Animated.View>
+      </View>
+      <View style={{ width: actionWith }}>
+        <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+          <Button
+            type="destructive"
+            className="flex-1 rounded-none justify-center"
+            onPress={onDelete}
+          >
+            <ActionIcon name="trash" />
+          </Button>
+        </Animated.View>
+      </View>
     </View>
   );
 };

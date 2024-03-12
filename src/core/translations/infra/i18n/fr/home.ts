@@ -115,12 +115,8 @@ const home: HomeTranslation = {
         title: 'Labels',
         subTitle: 'Ajouter ou modifier les labels',
         form: {
-          search: {
-            placeholder: 'Rechercher',
-          },
           submit: 'Sauvegarder',
         },
-        emptyTags: 'Aucun label disponible',
       },
       note: {
         title: 'Note',
@@ -165,6 +161,16 @@ const home: HomeTranslation = {
       unit_zero: '{{count}} unité',
       unit_one: '{{count}} unité',
       unit_other: '{{count}} unités',
+    },
+  },
+  move: {
+    item: {
+      title: 'Déplacer l’objet',
+      subTitle: {
+        start: 'Déplacer ',
+        end: ' vers un autre dossier',
+      },
+      submit: 'Déplacer',
     },
   },
 };

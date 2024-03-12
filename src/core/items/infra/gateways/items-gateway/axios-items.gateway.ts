@@ -8,6 +8,7 @@ import {
   ItemsGateway,
   LinkBarcodeError,
   LinkBarcodeToItemPayload,
+  MoveItemPayload,
 } from '../../../hexagon/gateways/items.gateway';
 import { AxiosError, AxiosInstance } from 'axios';
 import { Either, left, right } from 'fp-ts/Either';
@@ -117,5 +118,9 @@ export class AxiosItemsGateway implements ItemsGateway {
 
   async setTags(itemId: string, tagIds: string[]): Promise<void> {
     await this.axios.post(`/items/${itemId}/tags`, { tagIds });
+  }
+
+  async moveToFolder({ itemId, folderId }: MoveItemPayload): Promise<void> {
+    await this.axios.post(`/items/${itemId}/move`, { folderId });
   }
 }

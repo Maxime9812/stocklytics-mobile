@@ -241,4 +241,17 @@ describe('AxiosItemsGateway', () => {
       expect(scope.isDone()).toBe(true);
     });
   });
+
+  describe('MoveToFolder', () => {
+    it('Should send request', async () => {
+      const scope = nock(BASE_URL)
+        .post('/items/item-id/move', { folderId: 'folder-id' })
+        .reply(200);
+      await axiosItemsGateway.moveToFolder({
+        itemId: 'item-id',
+        folderId: 'folder-id',
+      });
+      expect(scope.isDone()).toBe(true);
+    });
+  });
 });

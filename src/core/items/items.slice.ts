@@ -17,6 +17,7 @@ import { deleteItemImageUseCase } from './hexagon/usecases/delete-item-image/del
 import { addImageToItemUseCase } from './hexagon/usecases/add-image-to-item/add-image-to-item.usecase';
 import { adjustItemQuantityUseCase } from './hexagon/usecases/adjust-item-quantity/adjust-item-quantity.usecase';
 import { setItemTagsUseCase } from './hexagon/usecases/set-item-tags/set-item-tags.usecase';
+import { moveItemUseCase } from './hexagon/usecases/move-item/move-item.usecase';
 
 export type ItemsSliceState = ItemsEntityState & {
   isLoadingById: Record<string, boolean>;
@@ -131,6 +132,13 @@ export const itemsSlice = createSlice({
         itemsAdapter.updateOne(state, {
           id: action.meta.arg.itemId,
           changes: { tags: action.meta.arg.tagIds },
+        });
+      })
+      .addCase(moveItemUseCase.fulfilled, (state, action) => {
+        const { itemId, folderId } = action.meta.arg;
+        itemsAdapter.updateOne(state, {
+          id: itemId,
+          changes: { folderId },
         });
       });
   },

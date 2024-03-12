@@ -16,6 +16,7 @@ import {
   EditNotePayload,
   Item,
   LinkBarcodeError,
+  MoveItemPayload,
 } from '../hexagon/gateways/items.gateway';
 import { Tag } from '../../tags/hexagon/models/tag.model';
 import {
@@ -48,6 +49,10 @@ import {
   setItemTagsUseCase,
   SetItemTagsUseCasePayload,
 } from '../hexagon/usecases/set-item-tags/set-item-tags.usecase';
+import {
+  moveItemUseCase,
+  MoveItemUseCasePayload,
+} from '../hexagon/usecases/move-item/move-item.usecase';
 
 type ExpectedItem = Omit<ItemModel, 'tags'> & { tags: Tag[] };
 
@@ -141,6 +146,13 @@ export const createItemsFixture = () => {
     whenSetTags: (payload: SetItemTagsUseCasePayload) => {
       store = createTestStore({ itemsGateway }, initialState.build());
       return store.dispatch(setItemTagsUseCase(payload));
+    },
+    whenMoveItemToFolder: (payload: MoveItemUseCasePayload) => {
+      store = createTestStore({ itemsGateway }, initialState.build());
+      return store.dispatch(moveItemUseCase(payload));
+    },
+    thenItemIsMoved: (payload: MoveItemPayload) => {
+      expect(itemsGateway.lastMovedItem).toEqual(payload);
     },
     thenSetTagsIsRequested: (itemId: string, tagIds: string[]) => {
       expect(itemsGateway.lastTagsSet).toEqual({ itemId, tagIds });

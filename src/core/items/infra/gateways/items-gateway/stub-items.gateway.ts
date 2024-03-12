@@ -8,6 +8,7 @@ import {
   ItemsGateway,
   LinkBarcodeError,
   LinkBarcodeToItemPayload,
+  MoveItemPayload,
 } from '../../../hexagon/gateways/items.gateway';
 import { Either, left, right } from 'fp-ts/Either';
 
@@ -23,6 +24,7 @@ export class StubItemsGateway implements ItemsGateway {
   lastNameChange: EditNamePayload | undefined;
   lastDeletedItemImageId: string | undefined;
   lastTagsSet: { itemId: string; tagIds: string[] } | undefined;
+  lastMovedItem?: MoveItemPayload;
   private linkBarcodeError: LinkBarcodeError | undefined;
   private itemQuantityAdjustment: Map<string, number> = new Map();
 
@@ -174,6 +176,15 @@ export class StubItemsGateway implements ItemsGateway {
             this.getQuantityAdjustmentKey(payload),
           )!,
         );
+      }, this.delay);
+    });
+  }
+
+  moveToFolder(payload: MoveItemPayload): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.lastMovedItem = payload;
+        resolve();
       }, this.delay);
     });
   }

@@ -50,6 +50,12 @@ export const selectFoldersInFolder = (folderId: string | null) =>
     folders.filter((folder) => folder.parentId === folderId),
   );
 
+export const createSelectFoldersInFolder = createSelector(
+  [folderSelectors.selectAll],
+  (folders) => (folderId: string | null) =>
+    folders.filter((folder) => folder.parentId === folderId),
+);
+
 export const selectFolderById = (id: string) => (state: RootState) =>
   folderSelectors.selectById(state, id);
 

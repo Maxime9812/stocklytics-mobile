@@ -160,4 +160,14 @@ export default {
       unit_other: '{{count}} units',
     },
   },
+  move: {
+    item: {
+      title: 'Move item',
+      subTitle: {
+        start: 'Move ',
+        end: ' to another folder',
+      },
+      submit: 'Move',
+    },
+  },
 };

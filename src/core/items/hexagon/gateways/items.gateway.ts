@@ -53,6 +53,11 @@ export type AdjustItemQuantityPayload = {
   quantity: number;
 };
 
+export type MoveItemPayload = {
+  itemId: string;
+  folderId: string;
+};
+
 export interface ItemsGateway {
   getFromFolder(folderId: string | undefined): Promise<Item[]>;
   getById(id: string): Promise<Item | undefined>;
@@ -68,4 +73,5 @@ export interface ItemsGateway {
   addImage(payload: AddItemImagePayload): Promise<string>;
   adjustQuantity(payload: AdjustItemQuantityPayload): Promise<number>;
   setTags(itemId: string, tagIds: string[]): Promise<void>;
+  moveToFolder(payload: MoveItemPayload): Promise<void>;
 }
