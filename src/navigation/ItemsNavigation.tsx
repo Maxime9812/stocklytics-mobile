@@ -22,6 +22,7 @@ import AddItemScreen from '../screens/home/items/item/add-item/AddItemScreen';
 import EditQuantityScreen from '../screens/home/items/item/edit-quantity/EditQuantityScreen';
 import FolderScreenTitle from '../screens/home/items/folder/components/header/title/FolderScreenTitle';
 import MoveItemScreen from '../screens/home/items/item/move-item/MoveItemScreen';
+import MoveFolderScreen from '../screens/home/items/move-folder/MoveFolderScreen';
 
 export type ItemsStack = {
   Folder: { id?: string } | undefined;
@@ -36,6 +37,7 @@ export type ItemsStack = {
   EditItemName: { itemId: string };
   EditItemQuantity: { itemId: string };
   MoveItem: { itemId: string };
+  MoveFolder: { folderId: string };
 };
 
 export type ItemsStackScreenProps<T extends keyof ItemsStack> =
@@ -108,6 +110,7 @@ export default function ItemsNavigation() {
           <Stack.Screen name="DeleteItem" component={DeleteItemScreen} />
           <Stack.Screen name="MoveItem" component={MoveItemScreen} />
           <Stack.Screen name="DeleteFolder" component={DeleteFolderScreen} />
+          <Stack.Screen name="MoveFolder" component={MoveFolderScreen} />
           <Stack.Screen name="EditItemNote" component={EditItemNoteScreen} />
           <Stack.Screen name="EditItemTags" component={EditItemTagsScreen} />
           <Stack.Screen name="EditItemName" component={EditItemNameScreen} />

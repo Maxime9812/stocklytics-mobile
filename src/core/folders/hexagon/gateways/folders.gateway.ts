@@ -6,8 +6,14 @@ export type AddFolderPayload = {
   parentId?: string;
 };
 
+export type MoveFolderPayload = {
+  id: string;
+  parentId?: string;
+};
+
 export interface FoldersGateway {
   getInFolder(folderId: string | null): Promise<FolderModel[]>;
   addFolder(payload: AddFolderPayload): Promise<FolderModel>;
   delete(folderId: string): Promise<void>;
+  move(payload: MoveFolderPayload): Promise<void>;
 }

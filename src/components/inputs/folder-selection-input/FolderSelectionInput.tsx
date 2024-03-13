@@ -11,10 +11,15 @@ import { useTranslation } from 'react-i18next';
 
 type Props = {
   value?: string;
+  hideFolderId?: string;
   onChange: (folderId?: string) => void;
 };
 
-export default function FolderSelectionInput({ value, onChange }: Props) {
+export default function FolderSelectionInput({
+  value,
+  onChange,
+  hideFolderId,
+}: Props) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [openFolderIds, setOpenFolderIds] = useState<string[]>([]);
@@ -26,6 +31,7 @@ export default function FolderSelectionInput({ value, onChange }: Props) {
         setOpenFolderIds,
         selectedFolderId: value,
         onChange,
+        hideFolderId,
       }),
     );
 

@@ -8,8 +8,15 @@ import {
   AddFolderUseCasePayload,
 } from '../hexagon/usecases/add-folder/add-folder.usecase';
 import { DeterministicUUIDProvider } from '../../common/uuid-provider/deterministic-uuid.provider';
-import { AddFolderPayload } from '../hexagon/gateways/folders.gateway';
+import {
+  AddFolderPayload,
+  MoveFolderPayload,
+} from '../hexagon/gateways/folders.gateway';
 import { deleteFolderUseCase } from '../hexagon/usecases/delete-folder/delete-folder.usecase';
+import {
+  moveFolderUseCase,
+  MoveFolderUseCasePayload,
+} from '../hexagon/usecases/move-folder/move-folder.usecase';
 
 export const createFoldersFixture = () => {
   const foldersGateway = new StubFoldersGateway();
@@ -41,6 +48,13 @@ export const createFoldersFixture = () => {
     whenDeleteFolder: (folderId: string) => {
       store = createTestStore({ foldersGateway }, initialState.build());
       return store.dispatch(deleteFolderUseCase(folderId));
+    },
+    whenMoveFolder: (payload: MoveFolderUseCasePayload) => {
+      store = createTestStore({ foldersGateway }, initialState.build());
+      return store.dispatch(moveFolderUseCase(payload));
+    },
+    thenFolderShouldBeMoved: (payload: MoveFolderPayload) => {
+      expect(foldersGateway.lastMovedFolder).toEqual(payload);
     },
     thenFolderDeletionShouldBeRequested: (folderId: string) => {
       expect(foldersGateway.lastDeletedFolder).toEqual(folderId);

@@ -54,4 +54,17 @@ describe('AxiosFoldersGateway', () => {
       expect(scope.isDone()).toEqual(true);
     });
   });
+
+  describe('move', () => {
+    it('Should send move request', async () => {
+      const scope = nock(BASE_URL)
+        .post('/folders/folder-id/move', { parentFolderId: 'new-parent-id' })
+        .reply(204);
+      await axiosFoldersGateway.move({
+        id: 'folder-id',
+        parentId: 'new-parent-id',
+      });
+      expect(scope.isDone()).toEqual(true);
+    });
+  });
 });

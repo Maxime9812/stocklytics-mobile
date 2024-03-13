@@ -1,13 +1,15 @@
 import {
   AddFolderPayload,
   FoldersGateway,
+  MoveFolderPayload,
 } from '../../hexagon/gateways/folders.gateway';
 import { FolderModel } from '../../hexagon/models/folder.model';
 
 export class StubFoldersGateway implements FoldersGateway {
   private _foldersInFolder: Map<string, FolderModel[]> = new Map();
   private _folderAdded: Map<string, FolderModel> = new Map();
-  lastDeletedFolder: string | undefined;
+  lastDeletedFolder?: string;
+  lastMovedFolder?: MoveFolderPayload;
 
   constructor(private readonly delay = 0) {}
 
@@ -36,6 +38,15 @@ export class StubFoldersGateway implements FoldersGateway {
     return new Promise((resolve) =>
       setTimeout(() => {
         this.lastDeletedFolder = folderId;
+        resolve();
+      }, this.delay),
+    );
+  }
+
+  async move(payload: MoveFolderPayload): Promise<void> {
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        this.lastMovedFolder = payload;
         resolve();
       }, this.delay),
     );

@@ -84,6 +84,10 @@ const LoadedFolderScreen = ({
     navigation.push('MoveItem', { itemId });
   };
 
+  const goToMoveFolder = (folderId: string) => {
+    navigation.push('MoveFolder', { folderId });
+  };
+
   return (
     <BaseLayout>
       <ScrollView>
@@ -96,6 +100,7 @@ const LoadedFolderScreen = ({
                 onPress={goToFolder}
                 folder={folder}
                 onDelete={goToDeleteFolder}
+                onMove={goToMoveFolder}
               />
             ))}
 

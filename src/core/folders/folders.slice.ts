@@ -7,6 +7,7 @@ import { getFoldersInFolderUseCase } from './hexagon/usecases/get-folders-in-fol
 import { RootState } from '../create-store';
 import { addFolderUseCase } from './hexagon/usecases/add-folder/add-folder.usecase';
 import { deleteFolderUseCase } from './hexagon/usecases/delete-folder/delete-folder.usecase';
+import { moveFolderUseCase } from './hexagon/usecases/move-folder/move-folder.usecase';
 
 export type FolderSliceState = FolderEntityState & {
   foldersInFolderLoading: Record<string, boolean>;
@@ -33,6 +34,13 @@ export const foldersSlice = createSlice({
       })
       .addCase(deleteFolderUseCase.fulfilled, (state, action) => {
         folderAdapter.removeOne(state, action.meta.arg);
+      })
+      .addCase(moveFolderUseCase.fulfilled, (state, action) => {
+        const { folderId, parentId } = action.meta.arg;
+        folderAdapter.updateOne(state, {
+          id: folderId,
+          changes: { parentId },
+        });
       });
   },
 });

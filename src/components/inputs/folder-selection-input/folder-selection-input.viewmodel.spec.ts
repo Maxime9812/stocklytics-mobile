@@ -228,6 +228,30 @@ describe('FolderSelectionInputViewModel', () => {
         ]);
       });
     });
+
+    describe('Hide some folders', () => {
+      it('should hide requested folder', async () => {
+        const state = stateBuilder()
+          .withFolders([
+            folderBuilder().withId('folder-id').withName('Folder 1').build(),
+            folderBuilder().withId('folder-id-2').withName('Folder 2').build(),
+          ])
+          .build();
+
+        const { folders } = createFolderSelectionInputViewModel({
+          dispatch: jest.fn(),
+          openFolderIds: [],
+          setOpenFolderIds: jest.fn(),
+          selectedFolderId: 'folder-id',
+          onChange: jest.fn(),
+          hideFolderId: 'folder-id-2',
+        })(state);
+
+        expect(folders).toEqual([
+          expect.objectContaining({ id: 'folder-id', name: 'Folder 1' }),
+        ]);
+      });
+    });
   });
 
   describe('Toggle select folder', () => {

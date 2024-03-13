@@ -172,6 +172,14 @@ const home: HomeTranslation = {
       },
       submit: 'Déplacer',
     },
+    folder: {
+      title: 'Déplacer le dossier',
+      subTitle: {
+        start: 'Déplacer ',
+        end: ' vers un autre dossier',
+      },
+      submit: 'Déplacer',
+    },
   },
 };
 

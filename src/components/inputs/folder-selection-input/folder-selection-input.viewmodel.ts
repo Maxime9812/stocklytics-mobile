@@ -9,6 +9,7 @@ type FolderSelectionInputViewModelParams = {
   setOpenFolderIds: (ids: string[]) => void;
   selectedFolderId?: string;
   onChange: (folderId?: string) => void;
+  hideFolderId?: string;
 };
 type Folder = {
   id: string;
@@ -27,16 +28,19 @@ export const createFolderSelectionInputViewModel = ({
   setOpenFolderIds,
   selectedFolderId,
   onChange,
+  hideFolderId,
 }: FolderSelectionInputViewModelParams) =>
   createSelector([createSelectFoldersInFolder], (selectFolderInFolder) => {
     const getChildFolders = (folderId: string | null): Folder[] =>
-      selectFolderInFolder(folderId).map((folder) => ({
-        id: folder.id,
-        name: folder.name,
-        isOpen: openFolderIds.includes(folder.id),
-        folders: getChildFolders(folder.id),
-        isSelected: folder.id === selectedFolderId,
-      }));
+      selectFolderInFolder(folderId)
+        .filter((folder) => folder.id != hideFolderId)
+        .map((folder) => ({
+          id: folder.id,
+          name: folder.name,
+          isOpen: openFolderIds.includes(folder.id),
+          folders: getChildFolders(folder.id),
+          isSelected: folder.id === selectedFolderId,
+        }));
 
     const folders = getChildFolders(null);
 

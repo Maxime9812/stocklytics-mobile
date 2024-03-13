@@ -169,5 +169,13 @@ export default {
       },
       submit: 'Move',
     },
+    folder: {
+      title: 'Move folder',
+      subTitle: {
+        start: 'Move ',
+        end: ' to another folder',
+      },
+      submit: 'Move',
+    },
   },
 };
