@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { createFolderSelectionInputViewModel } from './folder-selection-input.viewmodel';
 import { useAppDispatch } from '../../../store-hooks';
@@ -74,21 +74,23 @@ export default function FolderSelectionInput({
 
   return (
     <Card type="secondary" className="p-3 flex-1">
-      <View className="space-x-4">
-        <Button variant="ghost" onPress={() => toggleSelectFolder()}>
-          <Button.Icon
-            className={clsx(isRootSelected && 'text-royal-blue-500')}
-          >
-            <Feather name="folder" size={24} />
-          </Button.Icon>
-          <Button.Text
-            className={clsx(isRootSelected && 'text-royal-blue-500')}
-          >
-            {t('folder.rootName')}
-          </Button.Text>
-        </Button>
-        {generateFolders(folders)}
-      </View>
+      <ScrollView>
+        <View className="space-x-4">
+          <Button variant="ghost" onPress={() => toggleSelectFolder()}>
+            <Button.Icon
+              className={clsx(isRootSelected && 'text-royal-blue-500')}
+            >
+              <Feather name="folder" size={24} />
+            </Button.Icon>
+            <Button.Text
+              className={clsx(isRootSelected && 'text-royal-blue-500')}
+            >
+              {t('folder.rootName')}
+            </Button.Text>
+          </Button>
+          {generateFolders(folders)}
+        </View>
+      </ScrollView>
     </Card>
   );
 }
