@@ -79,6 +79,10 @@ const LoadedItemScreen = ({
     navigation.replace('Folder', { id: item.folder?.id });
   };
 
+  const goToMoveItem = () => {
+    navigation.push('MoveItem', { itemId: item.id });
+  };
+
   return (
     <BaseLayout>
       <ScrollView>
@@ -213,6 +217,9 @@ const LoadedItemScreen = ({
           </Card>
 
           <Card className="p-1">
+            <Button variant="ghost" className="p-3" onPress={goToMoveItem}>
+              <Button.Text>{t('itemDetails.move')}</Button.Text>
+            </Button>
             <Button
               variant="ghost"
               type="destructive"

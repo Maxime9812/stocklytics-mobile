@@ -23,6 +23,7 @@ export default {
       edit: 'Adjust',
     },
     delete: 'Supprimer',
+    move: 'Move',
     tags: {
       name: 'tags',
       edit: 'Edit tags',

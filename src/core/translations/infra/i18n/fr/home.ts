@@ -25,6 +25,7 @@ const home: HomeTranslation = {
       edit: 'Ajuster',
     },
     delete: 'Supprimer',
+    move: 'Déplacer',
     tags: {
       name: 'Labels',
       edit: 'Modifier les labels',
